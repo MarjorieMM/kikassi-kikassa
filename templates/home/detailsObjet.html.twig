@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+{% endblock %}
+{% block body %}
+	<div class="row margin-top">
+		<div class="col-6">
+			<h1 class="text-right">{{objet.denomination | title}}</h1>
+		</div>
+		<div class="col-6">
+			<p class="text-left">id:
+				{{objet.id}}</p>
+		</div>
+		<div class="col-12">
+			<p class="text-center">
+				{{objet.sousCategorie.categorie.nomCategorie}}
+				{{objet.sousCategorie.nomSsCategorie}}</p>
+		</div>
+	</div>
+	<div class="bg-creme row">
+		<div class="col-12 col-lg-6">
+			{{dump(objet.photos)}}
+			<div id="primary-slider" class="splide">
+				<div class="splide__track">
+					<ul class="splide__list">
+						<li class="splide__slide">
+							<img alt="photo 1 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
+						</li>
+						<li class="splide__slide">
+							<img alt="photo 2 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
+						</li>
+						<li class="splide__slide">
+							<img alt="photo 1 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="secondary-slider" class="splide">
+				<div class="splide__track">
+					<ul class="splide__list">
+						<li class="splide__slide">
+							<img alt="photo 1 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
+						</li>
+						<li class="splide__slide">
+							<img alt="photo 2 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
+						</li>
+						<li class="splide__slide">
+							<img alt="photo 1 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-lg-6 bg-green calendrier d-flex">
+			<p class="ml-3 mt-3">Disponibilité:</p>
+			<div id="calendrier"></div>
+			<div class="align-self-end">
+				<button type="button" class="btn btn-light">Réserver</button>
+			</div>
+		</div>
+		<div class="col-12">
+			<p>catalogue :
+				<span>{{objet.catalogue.nomCatalogue}}</span>
+			</p>
+		</div>
+		<div class="shadow-sm p-3 mb-5 bg-white rounded col-12 col-lg-5 h-25">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-6 ">
+						<p>Prix d'emprunt :
+							<span>{% set prix = objet.pourcentCalcul / 100 * objet.valeurAchat * objet.coefUsure / 5 %}
+								{{prix}}</span>
+							€ par jour</p>
+					</div>
+					<div class="col-lg-12 col-6">
+						<p>Valeur de l'emprunt :
+							<span>{% set valeur = objet.valeurAchat * objet.coefUsure / 5 %}
+								{{valeur}}</span>€</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="shadow-sm p-3 mb-5 bg-white rounded col-12 offset-lg-1 col-lg-6">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-6">
+						<h2>Où et quand récupérer l'objet</h2>
+						<p>{{objet.lieu.nom}}</p>
+						<p>{{objet.lieu.adresse}}</p>
+						<p>{{objet.lieu.cp}}</p>
+						<p>{{objet.lieu.ville}}</p>
+						<p>{{objet.lieu.telephone}}</p>
+					</div>
+					<div class="col-lg-12 col-6">
+						<p>Horaire d'ouverture</p>
+						<p>ouvert le:</p>
+						<p>{{dump(objet.lieu.horaireLieu)}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 shadow-sm p-3 mb-5 bg-white rounded">
+			<p>Informations:</p>
+			<p>{{objet.description}}</p>
+		</div>
+		<div class="col-12 shadow-sm p-3 mb-5 bg-white rounded">
+			<p>Etat:</p>
+			<p>{{objet.observation}}</p>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+	<script src='../js/script.js'></script>
+{% endblock %}
