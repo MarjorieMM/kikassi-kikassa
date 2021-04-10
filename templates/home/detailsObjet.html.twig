@@ -6,13 +6,14 @@
 		<div class="col-6">
 			<h1 class="text-right">{{objet.denomination | title}}</h1>
 		</div>
-		<div class="col-6">
+		<div class="col-6 d-flex align-items-end">
 			<p class="text-left">id:
 				{{objet.id}}</p>
 		</div>
 		<div class="col-12">
 			<p class="text-center">
-				{{objet.sousCategorie.categorie.nomCategorie}}
+				Catégories :
+				{{objet.sousCategorie.categorie.nomCategorie}},
 				{{objet.sousCategorie.nomSsCategorie}}</p>
 		</div>
 	</div>
@@ -48,11 +49,15 @@
 				<button type="button" class="btn btn-light">Réserver</button>
 			</div>
 		</div>
-		<div class="col-12">
-			<p>catalogue :
-				<span class="{{objet.catalogue.nomCatalogue | url_encode | lower}}">{{objet.catalogue.nomCatalogue | url_encode | lower}}</span>
+		<div class="col-1">
+			<p class="ml-3">catalogue
+				{# <span class="{{objet.catalogue.nomCatalogue | url_encode | lower}}">{{objet.catalogue.nomCatalogue | url_encode | lower}}</span> #}
 			</p>
 		</div>
+		<div class="col-2 mt-2 d-flex justify-content-lg-start justify-content-center">
+			<div class="rond-catalogue"></div>
+		</div>
+		<div class="col-9"></div>
 		<div class="shadow-sm p-3 mb-5 bg-white rounded col-12 col-lg-5 h-25">
 			<div class="container-fluid">
 				<div class="row">
@@ -105,12 +110,12 @@
 			</div>
 		</div>
 		<div class="col-12 shadow-sm p-3 mb-5 bg-white rounded">
-			<p>Informations:</p>
-			<p>{{objet.description}}</p>
+			<p class="ml-3">Informations:</p>
+			<p class="ml-3">{{objet.description}}</p>
 		</div>
 		<div class="col-12 shadow-sm p-3 mb-5 bg-white rounded">
-			<p>Etat:</p>
-			<p>{{objet.observation}}</p>
+			<p class="ml-3">Etat:</p>
+			<p class="ml-3">{{objet.observation}}</p>
 		</div>
 	</div>
 {% endblock %}
