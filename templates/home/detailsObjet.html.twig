@@ -1,9 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{% endblock %}
-{% block stylesheets %}
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
-{% endblock %}
 {% block body %}
 	<div class="row margin-top">
 		<div class="col-6">
@@ -21,34 +18,25 @@
 	</div>
 	<div class="bg-creme row">
 		<div class="col-12 col-lg-6">
-			{{dump(objet.photos)}}
 			<div id="primary-slider" class="splide">
 				<div class="splide__track">
 					<ul class="splide__list">
-						<li class="splide__slide">
-							<img alt="photo 1 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
-						</li>
-						<li class="splide__slide">
-							<img alt="photo 2 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
-						</li>
-						<li class="splide__slide">
-							<img alt="photo 1 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
-						</li>
+						{% for photo in objet.photos %}
+							<li class="splide__slide">
+								<img alt="photo de {{objet.denomination}}" src=" {{photo.lien}} ">
+							</li>
+						{% endfor %}
 					</ul>
 				</div>
 			</div>
 			<div id="secondary-slider" class="splide">
 				<div class="splide__track">
 					<ul class="splide__list">
-						<li class="splide__slide">
-							<img alt="photo 1 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
-						</li>
-						<li class="splide__slide">
-							<img alt="photo 2 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
-						</li>
-						<li class="splide__slide">
-							<img alt="photo 1 de {{objet.denomination}}" src="/photos/aspirateur.jpg">
-						</li>
+						{% for photo in objet.photos %}
+							<li class="splide__slide">
+								<img alt="photo de {{objet.denomination}}" src=" {{photo.lien}} ">
+							</li>
+						{% endfor %}
 					</ul>
 				</div>
 			</div>
@@ -62,7 +50,7 @@
 		</div>
 		<div class="col-12">
 			<p>catalogue :
-				<span>{{objet.catalogue.nomCatalogue}}</span>
+				<span class="{{objet.catalogue.nomCatalogue | url_encode | lower}}">{{objet.catalogue.nomCatalogue | url_encode | lower}}</span>
 			</p>
 		</div>
 		<div class="shadow-sm p-3 mb-5 bg-white rounded col-12 col-lg-5 h-25">
@@ -95,8 +83,23 @@
 					</div>
 					<div class="col-lg-12 col-6">
 						<p>Horaire d'ouverture</p>
-						<p>ouvert le:</p>
-						<p>{{dump(objet.lieu.horaireLieu)}}</p>
+						{% for horaire in objet.lieu.horaireLieu %}
+							{{horaire.jour}}
+							{% if horaire.ouvAm is not null %}
+								de
+								{{horaire.ouvAm | date('H:i')}}
+								à
+								{{horaire.fermeAm | date('H:i')}}
+								{% if horaire.ouvPm is not null %}et
+								{% endif %}
+							{% endif %}
+							{% if horaire.ouvPm is not null %}
+								de
+								{{horaire.ouvPm | date('H:i')}}
+								à
+								{{horaire.fermePm | date('H:i')}}
+							{% endif %}
+						{% endfor %}
 					</div>
 				</div>
 			</div>

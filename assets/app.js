@@ -11,4 +11,5 @@ import "./styles/test.sass";
 import "./styles/detail.sass";
 
 // start the Stimulus application
+import "./styles/splide.min.css";
 import "./bootstrap";
