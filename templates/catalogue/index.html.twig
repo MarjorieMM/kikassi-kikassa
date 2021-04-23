@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}kikassi{% endblock %}
+
+{% block body %}
+
+
+<nav class="navbar navbar-light bg-success">
+  <a class="navbar-brand" href="#">
+    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+   catalogue
+  </a>
+</nav>
+
+<br>
+<br>
+
+<div class=" container-fluid row bg-secondary mx-auto w-75 mb-5 mt-5 pb-4 pt-2">
+
+<div class="col-md-3 align-self-center pl-5 ml-5">
+  <input type="search" class="form-control rounded" placeholder="entrer votre recherge" aria-label="Search"
+    aria-describedby="search-addon" />
+ 
+  </div>
+
+  <div class = "col-md-2 align-self-center">
+  <span style="font-size: 2em;">
+<i class="fas fa-search"></i>
+</span>
+</div>
+
+<div class = "col-md-2 align-self-center"><p class ="lign-self-center h4">Trier par:
+</p>
+</div>
+
+<div class = "col-md-2 align-self-center">
+<select class="form-control">
+  <option>tout catalogue</option>
+  <option>catalogue vert</option>
+  <option>catalogue bleu</option>
+</select>
+</div>
+
+<div class= "col-md-2 align-self-center">
+<select class="form-control">
+  <option>tout lieu</option>
+  <option>Arles</option>
+</select>
+</div>
+</div>
+
+<br>
+<br>
+
+<div class="container-fluid row bg-white mx-auto  align-self-center pl-5 ml-5">
+
+
+<div class = "col-md-2 pl-5 ml-5">
+<span style="font-size: 5em;">
+<i class="fas fa-chess"></i>
+</span>
+<p>nom de la catégorie</p>
+</div>
+
+<div class = "col-md-2">
+<span style="font-size: 5em;">
+<i class="fas fa-robot"></i>
+</span>
+<p>nom de la catégorie</p>
+</div>
+
+<div class = "col-md-2">
+<span style="font-size: 5em;">
+<i class="fas fa-tools"></i>
+</span>
+<p>nom de la catégorie</p>
+</div>
+
+<div class = "col-md-2">
+<span style="font-size: 5em;">
+<i class="fas fa-guitar"></i>
+</span>
+<p>nom de la catégorie</p>
+</div>
+
+
+<div class = "col-md-2">
+<span style="font-size: 5em;">
+<i class="fas fa-car "></i>
+</span>
+<p>nom de la catégorie</p>
+</div>
+
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!--<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="..." alt="First slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="..." alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="..." alt="Third slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div> -->
+
+<div id="image-slider" class="splide">
+	<div class="splide__track">
+		<ul class="splide__list">
+			<li class="splide__slide">
+				<img src="{{ asset('photos/aspirateur.jpg') }}">
+			</li>
+			<li class="splide__slide">
+				<img src="{{ asset('photos/casseroles.jpg') }}">
+			</li>
+			<li class="splide__slide">
+				<img src="{{ asset('photos/jouet.jpg')}}">
+			</li>
+		</ul>
+	</div>
+</div>
+
+{% endblock %}
