@@ -11,6 +11,7 @@
 		{# Run `composer require symfony/webpack-encore-bundle`
 		and uncomment the following Encore helpers to start using Symfony UX #}
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+
 		
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
@@ -25,11 +26,34 @@
 	</head>
 	<body>
 		{% block body %}{% endblock %}
+
+
 		<script>
-			document.addEventListener( 'DOMContentLoaded', function () {
+			{# document.addEventListener( 'DOMContentLoaded', function () {
 				new Splide( '#image-slider' ).mount();
-			} );
+			} ); #}
+
+			{# document.addEventListener( 'DOMContentLoaded', function () {
+	new Splide( '#secondary-slider', {
+		fixedWidth: 100,
+		rewind    : true,
+		gap       : 10,
+		pagination: false,
+	} ).mount();
+} ); #}
+
+document.addEventListener( 'DOMContentLoaded', function () {
+	new Splide( '#secondary-slider', {
+		fixedWidth : 200,
+		height     : 200,
+		gap        : 10,
+		rewind     : true,
+		cover      : true,
+		pagination : false,
+	} ).mount();
+} );
 		</script>
+
 
 	</body>
 </html>
