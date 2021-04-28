@@ -12,6 +12,7 @@ require('@fortawesome/fontawesome-free/js/all.js');
 import "./styles/app.sass";
 import "./styles/test.sass";
 import "./styles/admin.sass";
+import "./styles/catalogue.sass";
 
 // start the Stimulus application
 import "./bootstrap";
