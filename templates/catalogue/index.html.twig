@@ -5,14 +5,12 @@
 {% block title %}kikassi{% endblock %}
 
 {% block body %}
+
+	{# {% include "/partials/header.html.twig" %} #}
+
 <div class='bg-white'>
 
-<nav class="navbar navbar-light bg-success">
-  <a class="navbar-brand" href="#">
-    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-   catalogue
-  </a>
-</nav>
+
 
 <br>
 <br>
@@ -54,47 +52,62 @@
 <br>
 <br>
 
-<div class="container-fluide row bg-white mx-auto align-items-center ">
 
+{# <div class =" container-fluid">
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner"> #}
+   
 
-<div class = "col-md-3 row justify-content-end  ">
-<span style="font-size: 5em; " class ="survole-vert">
-<i class="fas fa-chess "></i>
+<div class=" container-fluid row">
 
+<span style="font-size: 5em;" class=" survole-vert col-md-3" >
+ <i class="fas fa-chess"></i>
 </span>
-<p class ="h6">nom de la catégorie</p>
-</div>
+{# <p>nom de la catégorie</p> #}
 
-<div class = "col-md-2">
-<span style="font-size: 5em;">
-<i class="fas fa-robot"></i>
+<span style="font-size: 5em;" class=" survole-vert col-md-3" >
+ <i class="fas fa-robot"></i>
 </span>
-<p>nom de la catégorie</p>
-</div>
+{# <p>nom de la catégorie</p> #}
 
-<div class = "col-md-2">
-<span style="font-size: 5em;">
+
+<span style="font-size: 5em;" class=" survole-vert col-md-3" > 
 <i class="fas fa-tools"></i>
 </span>
-<p>nom de la catégorie</p>
-</div>
+{# <p>nom de la catégorie</p> #}
 
-<div class = "col-md-2">
-<span style="font-size: 5em;">
+<span style="font-size: 5em;" class=" survole-vert col-md-3" >
 <i class="fas fa-guitar"></i>
 </span>
-<p>nom de la catégorie</p>
+{# <p>nom de la catégorie</p> #}
+
+<span style="font-size: 5em;" class=" survole-vert col-md-3" >
+<i class="fas fa-car align-middle "></i>
+</span>	
+ {# <p>nom de la catégorie</p> #} 
+
+
 </div>
 
-
-<div class = "col-md-3">
-<span style="font-size: 5em;" class="align-middle">
+<div class="carousel-item">
+<span style="font-size: 5em;" class=" survole-vert col-md-2" >
 <i class="fas fa-car align-middle "></i>
 </span>
-<p >nom de la catégorie</p>
+ {# <p>nom de la catégorie</p> #} 
 </div>
 
-</div>
+ {# </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div> #}
+
 
 <br>
 <br>
@@ -110,8 +123,8 @@
 <br>
 <br>
 
-<div id="secondary-slider" class="splide">
-	<div class="splide__track">
+<div id="fourth-slider" class="splide">
+	<div class=" slider__el">
 		<ul class="splide__list">
 			<li class="splide__slide">
 				<img src="{{ asset('photos/aspirateur.jpg') }}">
@@ -155,9 +168,12 @@
 		</ul>
 	</div>
 </div>
+</div>
+
+
 
 </div>
 
-</div>
+	{% include "/partials/footer.html.twig" %}
 
 {% endblock %}

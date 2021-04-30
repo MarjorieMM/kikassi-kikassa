@@ -14,6 +14,9 @@ import "./styles/test.sass";
 import "./styles/admin.sass";
 import "./styles/catalogue.sass";
 
+
+
 // start the Stimulus application
 import "./bootstrap";
-
+import "./slider.js";
+import "./verticalslider.js";
