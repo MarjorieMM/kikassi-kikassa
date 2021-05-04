@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CatalogueController extends AbstractController
 {
-    #[Route('/', name: 'catalogue')]
+    #[Route('/catalogue', name: 'catalogue')]
     public function index(): Response
     {
         return $this->render('catalogue/index.html.twig', [
