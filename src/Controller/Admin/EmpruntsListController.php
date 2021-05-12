@@ -2,20 +2,22 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Emprunt;
+use DateTime;
 use App\Entity\Objet;
+use App\Entity\Emprunt;
 use App\Form\SearchFormType;
 use App\Form\EmpruntFormType;
+use Doctrine\ORM\EntityManager;
+// use App\Classes\CalculDepotRajoute;
 use App\Repository\ObjetRepository;
 use App\Repository\EmpruntRepository;
 use App\Repository\AdherentRepository;
-use App\Repository\AdhesionBibliothequeRepository;
 use App\Repository\SuperAdminRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\AdhesionBibliothequeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EmpruntsListController extends AbstractController
@@ -200,6 +202,7 @@ class EmpruntsListController extends AbstractController
             'color' => 'emprunts-color',
         ]);
     }
+
     #[Route('/admin/emprunts/accepter_reservations/{slug}', name: 'accepter_reservation')]
     public function ValResa(
         Emprunt $emprunt,
@@ -232,5 +235,72 @@ class EmpruntsListController extends AbstractController
         );
 
         return $this->redirectToRoute('admin_emprunts_resa');
+    }
+
+    #[Route('/admin/emprunts/departs', name: 'admin_emprunts_depart')]
+    public function ValidDepart(
+        EmpruntRepository $repo,
+        EntityManagerInterface $manager
+    ): Response {
+        $now = new DateTime('now');
+
+        $reservations = [];
+        $searchedStatut = 'Accepté par l\'Admin';
+        $resaEmprunts = $repo->findBy([
+            'statut' => strtolower($searchedStatut),
+        ]);
+        foreach ($resaEmprunts as $emprunt) {
+            if ($emprunt->getDateDebut() <= $now) {
+                $reservations[] = $emprunt;
+            }
+            // if ($emprunt->getDateDebut() < $now) {
+            //     $emprunt->setDateDebut($now);
+            //     $manager->persist($emprunt);
+            //     $manager->flush();
+            // }
+        }
+
+        return $this->render('admin/lists/emprunts_depart.html.twig', [
+            'controller_name' => 'EmpruntsListController',
+            'emprunts' => $reservations,
+            'section' => 'section-emprunts',
+            'return_path' => 'menu-emprunt',
+            'color' => 'emprunts-color',
+        ]);
+    }
+
+    #[Route('/admin/emprunts/departs/non-paye/{slug}', name: 'enregistrer_depart')]
+    public function EnregistrerDepart(
+        Emprunt $emprunt,
+        EntityManagerInterface $manager
+    ): Response {
+        $emprunt->setStatut('Emprunt en cours');
+        $manager->persist($emprunt);
+        $manager->flush();
+
+        $this->addFlash(
+            'warning',
+            "Le départ de l'objet {$emprunt->getObjet()->getDenomination()} est bien enregistré, l'adhérent n'a pas été effectué de paiement ce jour."
+        );
+
+        return $this->redirectToRoute('admin_emprunts_depart');
+    }
+
+    #[Route('/admin/emprunts/departs/paye/{slug}', name: 'enregistrer_depart_paye')]
+    public function EnregistrerDepartPaye(
+        Emprunt $emprunt,
+        EntityManagerInterface $manager
+    ): Response {
+        $emprunt->setStatut('Emprunt en cours');
+        $emprunt->setEmpruntRegle(true);
+        $manager->persist($emprunt);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            "Le départ de l'objet {$emprunt->getObjet()->getDenomination()} est bien enregistré, le réglement de l'adhérent a bien été pris en compte."
+        );
+
+        return $this->redirectToRoute('admin_emprunts_depart');
     }
 }

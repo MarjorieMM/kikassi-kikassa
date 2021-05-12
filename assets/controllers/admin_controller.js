@@ -295,6 +295,16 @@ export default class extends Controller {
      
     })
     
+    $('#modal-paiement').on('show.bs.modal', function (event) {
+      console.log("modal")
+      const button = $(event.relatedTarget)
+      const objet = button.data('objet') 
+      const prix = button.data('prix') 
+      const emprunt = button.data('emprunt') 
+      const modal = $(this)
+      modal.find('.modal-title').text(`Valider le départ de : ${objet}`)
+      modal.find('.modal-body').text(`L'emprunt n° ${emprunt} d'une valeur de ${prix} € a-t'il été payé ce jour ?` )
+    })
 
   }
 }

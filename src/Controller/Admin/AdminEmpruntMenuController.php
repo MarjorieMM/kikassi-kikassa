@@ -25,7 +25,7 @@ class AdminEmpruntMenuController extends AbstractController
                 [
                     'text' => "ENREGISTRER UN DÉPART D'OBJET",
                     'icon' => 'leave',
-                    'link' => 'test',
+                    'link' => 'admin_emprunts_depart',
                 ],
                 [
                     'text' => "ENREGISTRER UN RETOUR D'OBJET",

@@ -1,0 +1,125 @@
+{% extends './admin/base-admin.html.twig' %}
+{% import './admin/_macros.html.twig' as macros %}
+
+{% block title %}Liste des Emprunts
+{% endblock %}
+
+{% block body %}
+	<body class={{color}}>
+		<div class="mx-4 main-title font-raleway">
+			<h1 class="text-center font-raleway mb-5">Enregistrer
+				<br>
+				les départs d'objets</h1>
+			<div class="mx-5" data-controller="admin">
+				{{ macros.flash_message() }}
+				<table class="table admin-table-emprunts tb-design table-bordered" id="admin-t">
+					<thead>
+						<tr class="text-center">
+							<th scope="col">Id</th>
+							<th scope="col">
+								Nom de l'emprunteur
+							</th>
+							<th scope="col">Objet emprunté</th>
+							<th scope="col">Date de réservation</th>
+							<th scope="col">Statut de l'emprunt</th>
+							<th scope="col">Date de début de l'emprunt</th>
+							<th scope="col">Date de fin de l'emprunt</th>
+							<th scope="col">Remarque de l'emprunteur</th>
+							<th scope="col">Prix de l'emprunt</th>
+							<th scope="col">Montant du dépôt de garantie à rajouter</th>
+							<th scope="col">Emprunt payé</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for emprunt in emprunts %}
+							{% set nomEmprunteur = emprunt.adherent ? emprunt.adherent.nom|capitalize : emprunt.superadmin.nom|capitalize %}
+							{% set prenomEmprunteur = emprunt.adherent ? emprunt.adherent.prenom|capitalize : emprunt.superadmin.prenom|capitalize %}
+
+							{% if emprunt.statut %}
+								{% set statutEmprunt = emprunt.statut %}
+							{% elseif emprunt.dateretourobjet %}
+								{% set statutEmprunt = "Terminé" %}
+							{% elseif emprunt.datedebut > date() %}
+								{% set statutEmprunt = "Objet réservé" %}
+							{% elseif emprunt.datedebut < date() and emprunt.datefin > date() %}
+								{% set statutEmprunt = "Emprunt en cours" %}
+							{% elseif emprunt.dateretourobjet == null and emprunt.datefin < date() %}
+								{% set statutEmprunt = "En retard" %}
+							{% endif %}
+
+							{% set empruntRegle = emprunt.empruntregle ? "Oui" : "Non" %}
+
+							<tr class="text-nowrap">
+								<td>
+									<a href="{{path('test')}}">{{emprunt.id}}</a>
+								</td>
+								<td>
+									{{nomEmprunteur}}
+									{{prenomEmprunteur}}
+								</td>
+								<td class="text-center">{{emprunt.objet.denomination|capitalize}}
+									{{emprunt.objet.marque|capitalize}}
+								</td>
+								<td class="text-center">{{emprunt.datereservation|date("d/m/Y")}}</td>
+								<td class="text-center">{{statutEmprunt}}</td>
+								<td class="text-center">{{emprunt.datedebut|date("d/m/Y")}}</td>
+								<td class="text-center">{{emprunt.datefin|date("d/m/Y")}}</td>
+								<td class="text-center">{{emprunt.remarque ? emprunt.remarque : "-"}}
+								</td>
+								<td class="text-center">{{emprunt.prixemprunt}}
+									€</td>
+								<td class="text-center">{{emprunt.depotRajoute}}
+									€</td>
+
+								<td class="text-center">{{empruntRegle}}</td>
+								<td class="text-center">
+
+									<button class="btn btn-success px-3" data-toggle="modal" data-target="#modal-paiement" data-objet="{{emprunt.objet.denomination}}" data-prix="{{emprunt.prixemprunt}}" data-emprunt="{{emprunt.id}}">
+										Enregistrer
+										<br>
+										le départ de l'objet
+									</button>
+
+								</td>
+							</tr>
+							<div class="modal fade" id="modal-paiement" tabindex="-1" aria-labelledby="empruntModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h3 class="modal-title" id="empruntModalLabel">Valider le départ de l'objet
+											</h3>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body mx-5 my-2">
+											<h4>Le paiement de l'emprunt n°</h4>
+										</div>
+										<div class="modal-footer">
+											<div class="col pl-0">
+												<button type="button" class="btn btn-secondary btn-md  btn-block" data-dismiss="modal" aria-label="Close">
+													Annuler
+												</button>
+											</div>
+											<div class="col pr-0 pl-5">
+												<a href="{{path('enregistrer_depart', {'slug': emprunt.slug})}}">
+													<button type="submit" class="btn btn-danger btn-md btn-block" data-dismiss="modal">Non</button>
+												</a>
+											</div>
+											<div class="col p-0">
+												<a href="{{path('enregistrer_depart_paye', {'slug': emprunt.slug})}}">
+													<button type="submit" class="btn btn-success btn-md btn-block">Oui</button>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+{% endblock %}
