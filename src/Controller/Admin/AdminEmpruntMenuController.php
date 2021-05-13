@@ -30,7 +30,7 @@ class AdminEmpruntMenuController extends AbstractController
                 [
                     'text' => "ENREGISTRER UN RETOUR D'OBJET",
                     'icon' => 'return',
-                    'link' => 'test',
+                    'link' => 'admin_emprunts_retour',
                 ],
                 [
                     'text' => 'CRÉER UN NOUVEL EMPRUNT',

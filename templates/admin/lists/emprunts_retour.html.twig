@@ -1,0 +1,92 @@
+{% extends './admin/base-admin.html.twig' %}
+{% import './admin/_macros.html.twig' as macros %}
+
+{% block title %}Liste des Emprunts
+{% endblock %}
+
+{% block body %}
+	<body class={{color}}>
+		<div class="mx-4 main-title font-raleway">
+			<h1 class="text-center font-raleway mb-5">Enregistrer
+				<br>
+				les retours d'objets</h1>
+			<div class="mx-5" data-controller="admin">
+				{{ macros.flash_message() }}
+				<table class="table admin-table-emprunts tb-design table-bordered" id="admin-t">
+					<thead>
+						<tr class="text-center">
+							<th scope="col">Id</th>
+							<th scope="col">
+								Nom de l'emprunteur
+							</th>
+							<th scope="col">Objet emprunté</th>
+							<th scope="col">Date de début de l'emprunt</th>
+							<th scope="col">Date de fin de l'emprunt</th>
+							<th scope="col">Prix de l'emprunt</th>
+							<th scope="col">Montant du dépôt de garantie à rajouter</th>
+							<th scope="col">Emprunt payé</th>
+							<th scope="col">Pénalités</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for emprunt in emprunts %}
+							{# {% set prixTotal = (emprunt.prixemprunt + emprunt.penalites)|number_format(2) %} #}
+							{% set nomEmprunteur = emprunt.adherent ? emprunt.adherent.nom|capitalize : emprunt.superadmin.nom|capitalize %}
+							{% set prenomEmprunteur = emprunt.adherent ? emprunt.adherent.prenom|capitalize : emprunt.superadmin.prenom|capitalize %}
+							{% set empruntRegle = emprunt.empruntregle ? "Oui" : "Non" %}
+							<tr class="text-nowrap">
+								<td>
+									<a href="{{path('test')}}">{{emprunt.id}}</a>
+								</td>
+								<td>{{nomEmprunteur}}{{prenomEmprunteur}}
+								</td>
+								<td class="text-center">{{emprunt.objet.denomination|capitalize}}
+									{{emprunt.objet.marque|capitalize}}
+								</td>
+								<td class="text-center">{{emprunt.datedebut|date("d/m/Y")}}</td>
+								<td class="text-center">{{emprunt.datefin|date("d/m/Y")}}</td>
+								<td class="text-center">{{emprunt.prixemprunt}}
+									€</td>
+								<td class="text-center">{{emprunt.depotRajoute}}
+									€</td>
+								<td class="text-center {{empruntRegle == 'Non' ? 'text-danger' : '' }}">{{empruntRegle}}</td>
+								<td class="text-center {{emprunt.penalites > 0 ? 'text-danger' : ''}}">{{emprunt.penalites|number_format(2)}}
+									€</td>
+								<td class="text-center">
+									<button class="btn btn-secondary px-3" data-toggle="modal" data-target="#modal-paiement" data-depot="{{emprunt.depotRajoute}}" data-objet="{{emprunt.objet.denomination}}" data-penalites="{{emprunt.penalites|number_format(2)}}" data-emprunt-id="{{emprunt.id}}" data-emprunt="{{emprunt.prixemprunt}}" data-emprunt-regle="{{emprunt.empruntregle}}">Enregistrer
+										<br>
+										le retour de l'objet</button>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="modal fade" id="modal-paiement" tabindex="-1" aria-labelledby="empruntModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered  modal-xl">
+				<div class="modal-content">
+					<form method="post" action="{{path('validation-retour')}}">
+						<div class="modal-header {{color}}">
+							<h3 class="modal-title m-auto" id="empruntModalLabel"></h3>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body mx-5 my-2"></div>
+						<div class="modal-footer">
+							<div class="col-5"></div>
+							<div class="col p-0">
+								<button type="button" class="btn btn-secondary btn-md  btn-block" data-dismiss="modal" aria-label="Close">
+									<div class="btn-text font-raleway-small">Annuler</div>
+								</button>
+							</div>
+							<div class="col pr-0" id="button-submit"></div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+{% endblock %}

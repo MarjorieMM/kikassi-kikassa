@@ -106,6 +106,11 @@ class Emprunt
     private $emprunt_regle;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $penalites_payees;
+
+    /**
      *
      *@ORM\PrePersist
      *
@@ -294,6 +299,18 @@ class Emprunt
     public function setEmpruntRegle(bool $emprunt_regle): self
     {
         $this->emprunt_regle = $emprunt_regle;
+
+        return $this;
+    }
+
+    public function getPenalitesPayees(): ?bool
+    {
+        return $this->penalites_payees;
+    }
+
+    public function setPenalitesPayees(?bool $penalites_payees): self
+    {
+        $this->penalites_payees = $penalites_payees;
 
         return $this;
     }

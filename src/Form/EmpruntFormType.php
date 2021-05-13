@@ -51,7 +51,6 @@ class EmpruntFormType extends AbstractType
                     'Non' => false,
                 ],
             ])
-
             ->add('save', SubmitType::class, [
                 'label' =>
                     '<div class="btn-text p-1 px-2">Enregister <br> l\'emprunt</div>',

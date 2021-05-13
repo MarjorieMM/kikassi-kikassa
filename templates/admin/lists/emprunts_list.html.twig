@@ -48,12 +48,11 @@
 
 							{% endif %}
 
-
-							{% set dureeEmprunt = date(emprunt.datefin).diff(date(emprunt.datedebut)) %}
+							{% set dureeEmp = date(emprunt.datefin).diff(date(emprunt.datedebut)).format('%d') %}
+							{% set dureeEmprunt = dureeEmp|number_format == 0 ? 1 : dureeEmp %}
 							{% set dureeSup =  date(emprunt.dateretourobjet).diff(date(emprunt.datefin)) %}
 							{% set dureeSupNonRetourne = date("now").diff(date(emprunt.datefin)) %}
-							{% set prixParJour = emprunt.prixemprunt / dureeEmprunt.days %}
-
+							{% set prixParJour = emprunt.prixemprunt / dureeEmprunt|number_format %}
 							{% if date(emprunt.datefin) < date() %}
 								{% if emprunt.dateretourobjet is null %}
 									{% set penalites = (dureeSupNonRetourne.days * 1.75 * prixParJour)|number_format(2)  ~ " €" %}
@@ -80,10 +79,13 @@
 									<a href="{{path('test')}}">{{emprunt.id}}</a>
 								</td>
 								<td>
-									{{nomEmprunteur}}
-									{{prenomEmprunteur}}
+									<a href="{{path('admin_adherents_details', {'slug': emprunt.adherent.slug})}}">
+										{{nomEmprunteur}}
+										{{prenomEmprunteur}}
+									</a>
 								</td>
-								<td class="text-center">{{emprunt.objet.denomination|capitalize}}
+								<td class="text-center">
+									<a href="{{path('admin_details_objet', {'slug': emprunt.objet.slug})}}">{{emprunt.objet.denomination|capitalize}}</a>
 								</td>
 								<td class="text-center">{{emprunt.datereservation|date("d/m/Y")}}</td>
 								<td class="text-center">{{statutEmprunt}}</td>
@@ -93,13 +95,11 @@
 								</td>
 								<td class="text-center">
 									{{dateRetour}}</td>
-
 								<td class="text-center">{{emprunt.prixemprunt}}
 									€</td>
 								<td class="text-center">{{empruntRegle}}</td>
 								<td class="text-center">{{penalites}}</td>
 								<td class="text-center">{{penalitesPayees}}</td>
-
 							</tr>
 						{% endfor %}
 					</tbody>

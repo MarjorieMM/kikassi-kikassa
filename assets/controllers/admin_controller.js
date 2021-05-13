@@ -299,15 +299,57 @@ export default class extends Controller {
       console.log("modal")
       const button = $(event.relatedTarget)
       const objet = button.data('objet') 
-      const prix = button.data('prix') 
+      const emprunt_id = button.data('emprunt-id') 
       const emprunt = button.data('emprunt') 
+      const emprunt_regle = button.data('emprunt-regle')
+      const penalites = button.data('penalites')
+      const depotRajoute = button.data('depot')
       const modal = $(this)
-      modal.find('.modal-title').text(`Valider le départ de : ${objet}`)
-      modal.find('.modal-body').text(`L'emprunt n° ${emprunt} d'une valeur de ${prix} € a-t'il été payé ce jour ?` )
+      const depot = depotRajoute > 0 ? `<div><p class="text-warning font-raleway text-center"><i class="fas fa-exclamation-triangle"></i>L'adhérent a remis un chèque de caution pour cet emprunt</p></div>` : ""
+      const ardoise = !emprunt_regle ? `<div><p class="text-danger font-raleway text-center">L'adhérent doit la somme de ${emprunt} € pour cet emprunt</p></div>` : ''
+      const penalitesDues = penalites > 0 ? `<div><p class="text-danger font-raleway text-center">L'adhérent doit la somme de ${penalites} € <br> de pénalités de retard pour cet emprunt</p></div>` : ''
+      const paiementEmprunt = !emprunt_regle ? `
+ <label class="mr-5 py-3">Le paiement de l'emprunt ( ${emprunt} € ) a-t'il été effectué ce jour ?</label>
+      <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" id="paiement-radio1" name="paiement" class="custom-control-input mb-4" value=true required>
+      <label class="custom-control-label" for="paiement-radio1">Oui</label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" id="paiement-radio2" name="paiement" class="custom-control-input mb-4" value=false required>
+      <label class="custom-control-label" for="paiement-radio2">Non</label>
+    </div>` : ''
+    const paiementPenalites = penalites > 0 ? `
+    <label class="mr-5">Le paiement des pénalités ( ${penalites} € ) a-t'il été effectué ce jour ?</label>
+         <div class="custom-control custom-radio custom-control-inline">
+         <input type="radio" id="penalites-radio1" name="penalites" class="custom-control-input mb-4" value=true  required>
+         <label class="custom-control-label" for="penalites-radio1">Oui</label>
+       </div>
+       <div class="custom-control custom-radio custom-control-inline">
+         <input type="radio" id="penalites-radio2" name="penalites" class="custom-control-input mb-4" value=false  required>
+         <label class="custom-control-label" for="penalites-radio2">Non</label>
+       </div>` : ''
+      modal.find('.modal-title').text(`Validation du retour de l'objet ${objet} de l'emprunt n°${emprunt_id}`)
+      modal.find('.modal-body').html(`${ardoise} ${depot} ${penalitesDues}
+     <div class="font-raleway">
+      <div class="form-group">
+      <input type="hidden" name="emprunt_id" value="${emprunt_id}">
+        <label for="statut-objet">L' état de l'objet permet-il sa remise en ligne ? :</label>
+        <select class="form-control select-height mb-4" id="statut-objet" name="dispo" required>
+          <option value="">Choisir...</option>
+          <option value='disponible'>Oui</option>
+          <option value='en maintenance'>Non</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="obs-objet">Veuillez entrer une observation sur l'état de l'objet (celle-ci sera reprise sur le bon de retour)</label>
+        <textarea name="obs" type="text" class="form-control mb-4" id="obs-objet" required></textarea>
+      </div> ${paiementEmprunt} ${paiementPenalites}
+      </div>`)
+modal.find("#button-submit").html(`<button type="submit" class="btn btn-success btn-md btn-block" ><div class="font-raleway-small btn-text">Valider</div></button>`)
     })
-
   }
 }
+
 
 
 
