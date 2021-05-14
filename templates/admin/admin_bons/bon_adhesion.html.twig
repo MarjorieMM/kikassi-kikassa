@@ -1,0 +1,137 @@
+{% extends './admin/base-admin.html.twig' %}
+
+
+{% block title %}
+	Détails de l'adhérent
+{% endblock %}
+
+{% block header %}
+	<div class='bon-header bg-info text-nowrap'>
+		<h2 class='text-center text-white'>
+			BULLETIN D’ADHESION</h2>
+	</div>
+	<div class='bon-header mb-5'>
+		<h5 class='text-center'>KIKASSI KIKASSA - ASSOCIATION LOI 1901 - 3 BOULEVARD DES LICES À ARLES</h5>
+	</div>
+</div>{% endblock %}{% block body %}
+<body class="bon-body mx-3">
+	<div class="first-half mb-3">
+		<p>
+			<span class="font-weight-bold">N° d’adhérent :
+			</span>
+			{{adherent.id}}
+			<span class="font-weight-bold">- Adhésion prenant fin le :</span>
+			{{adherent.dateadhesion|date_modify("+1 year")|date('d/m/Y')}}</p>
+		<p>
+			<span class="font-weight-bold">Je soussigné(e) :
+			</span>
+			{{adherent.nom}}
+			{{adherent.prenom}}
+		</p>
+		<p>
+			<span class="font-weight-bold">Né(e) le :
+			</span>
+			{{adherent.datenaissance|date('d/m/Y')}}
+			<span class="font-weight-bold">à :
+			</span>
+			{{adherent.lieunaissance}}</p>
+		<p>
+			<span class="font-weight-bold">Demeurant à l’adresse suivante :</span>
+			{{adherent.adresse}},
+			{{adherent.cp}}
+			{{adherent.ville}}</p>
+
+		<p class='bon-text'>joins à la présente
+			<strong>demande d’adhésion à l’association KIKASSI KIKASSA</strong>
+			le paiement de la somme de
+			{{adherent.montantcotisation}}
+			€ pour aquitter la cotisation annuelle due pour la période du
+			{{adherent.dateadhesion|date('d/m/Y')}}
+			au
+			{{adherent.dateadhesion|date_modify("+1 year")|date('d/m/Y')}}</p>
+		<p class='bon-text'>Le moyen de paiement utilisé est :
+			{{adherent.moyenpaiement}}</p>
+		<div class='mt-5'>
+			<div class="my-5 font-weight-bold ml-5">
+				Fait et signé à Arles, le :
+				{{ "now"|date('d/m/Y') }},
+				<span class="font-weight-bold float-right mr-5 text-nowrap">Signature de l’adhérent(e) :</span>
+			</div>
+			<p class='text-center font-weight-bold'>Cadre à remplir par l'Association</p>
+			<div class="bon-cadre border border-dark container">
+				{% if adherent.etatcotisation|lower == "payée" %}
+					<p>Kikassi Kikassa à bien reçue la somme de
+						{{adherent.montantcotisation}}
+						en
+						{{adherent.moyenpaiement}}
+						€ le
+						{{ "now"|date('d/m/Y') }}</p>
+				{% else %}
+					<p>Cotisation non encaissée ce jour.</p>
+				{% endif %}
+				<p>Signature du représentant de l’association :</p>
+			</div>
+		</div>
+	</div>
+
+	<hr class="dashed">
+
+	<div class='second-half'>
+		<h3 class='text-center text-info mb-3'>
+			BULLETIN D’ADHESION</h3>
+		<div>
+			<p class='text-center font-weight-bold pb-0'>Cadre à remplir par l'Association</p>
+			<div class="border border-dark p-2">
+				<p>Numéro d'adhérent:
+					{{adherent.id}}</p>
+				<p>Cotisation
+					{{adherent.montantcotisation}}
+					€ en
+					{{adherent.moyenpaiement}}</p>
+			</div>
+		</div>
+		<div class="row">
+
+			<p>
+				<span class="font-weight-bold">Je soussigné(e) :
+				</span>
+				{{adherent.nom}}
+				{{adherent.prenom}}
+			</p>
+			<p>
+				<span class="font-weight-bold">Né(e) le :
+				</span>
+				{{adherent.datenaissance|date('d/m/Y')}}
+				<span class="font-weight-bold">à :
+				</span>
+				{{adherent.lieunaissance}}</p>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<p>
+			<span class="font-weight-bold">Demeurant à l’adresse suivante :</span>
+			{{adherent.adresse}},
+			{{adherent.cp}}
+			{{adherent.ville}}</p>
+		<p>
+			<span class="font-weight-bold">Adresse email :</span>
+			{{adherent.email}}</p>
+		<p>
+			<span class="font-weight-bold">N° de Téléphone :</span>
+			{{adherent.telephone}}</p>
+		<p>
+			<strong>déclare solliciter mon adhésion à l’association KIKASSI KIKASSA.</strong>
+		</p>
+		<p>Je déclare avoir pris connaissance des statuts et du règlement intérieur de l’association. Je déclare m’engager à respecter toutes les obligations des membres de l’association qui y figurent. Je déclare avoir été également informé des dispositions de la loi du6 janvier 1978 qui règlemente le droit de communication dans le fichier des membres de l’association des données personnelles me concernant.
+		</p>
+		<div class='mt-5'>
+			<div class="my-5 font-weight-bold ml-5">
+				Fait et signé à Arles, le :
+				{{ "now"|date('d/m/Y') }},
+				<span class="font-weight-bold float-right mr-5 text-nowrap">Signature de l’adhérent(e) :</span>
+			</div>
+		</div>
+	</div>
+</body>{% endblock %}{% block footer %}{% endblock %}

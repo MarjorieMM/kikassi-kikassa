@@ -134,11 +134,28 @@
 						{% endif %}
 					</div>
 				</div>
-				<div class="row">
-					<div class="col text-center mb-5">
+				<div class="row mb-5">
+					<div class="col-12 text-center mb-3">
 						<a href="{{ path('admin_adherents_edit', {'slug': adherent.slug}) }}">
 							<button type='button' class='btn modify-btn bar-btn '>
-								<div class="font-raleway btn-text">Modifier les informations</div>
+								<div class="font-raleway btn-ws-normal">Modifier les informations</div>
+							</button>
+						</a>
+					</div>
+
+					<div class="col-12 text-center  mb-3">
+						<a href="{{ path('admin_adherents_adh_pdf', {'slug': adherent.slug}) }}">
+							<button type='button' class='btn btn-info large-btn'>
+								<div class="font-raleway text-dark p-1">Générer le bulletin d'adhésion</div>
+							</button>
+						</a>
+					</div>
+					<div class="col-12 text-center">
+						<a href="{{ path('admin_adherents_biblio_pdf', {'slug': adherent.slug}) }}">
+							<button type='button' class='btn btn-warning large-btn'>
+								<div class="font-raleway ">Générer le bulletin
+									<br>
+									d'inscription à la bibliothèque d'objets</div>
 							</button>
 						</a>
 					</div>

@@ -95,6 +95,7 @@ class AdherentsListController extends AbstractController
                     'success',
                     "Le nouvel adhérent {$adherent->getNomprenom()} a bien été créé"
                 );
+
                 return $this->redirectToRoute('admin_adherents_details', [
                     'slug' => $adherent->getSlug(),
                 ]);
