@@ -39,9 +39,10 @@ class ObjetsListController extends AbstractController
     #[Route('/admin/details/objet/{slug}', name: 'admin_details_objet')]
     public function showDetails(
         $slug,
-        ObjetRepository $objetRepository
+        ObjetRepository $objetRepository,
+        Objet $objet
     ): Response {
-        $objet = $objetRepository->findOneBySlug($slug);
+        // $objet = $objetRepository->findOneBySlug($slug);
 
         return $this->render('admin/pages_details/details_objet.html.twig', [
             'controller_name' => 'DetailsObjetController',

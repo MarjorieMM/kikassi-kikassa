@@ -2,16 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\Emprunt;
-use App\Form\ObjetFormType;
-use App\Form\EmpruntFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -54,7 +48,6 @@ class FinEmpruntFormType extends AbstractType
                     "Le paiement de l\'emprunt a-t'il été effectué ce jour ?",
                 'label_attr' => [
                     'class' => 'mr-5 py-3',
-                    // 'for' => 'penalites-radio2',
                 ],
                 'choices' => [
                     'Oui' => true,
@@ -85,7 +78,6 @@ class FinEmpruntFormType extends AbstractType
                     "Le paiement des pénalités a-t'il été effectué ce jour ?",
                 'label_attr' => [
                     'class' => 'mr-5',
-                    // 'for' => 'penalites-radio2',
                 ],
                 'choices' => [
                     'Oui' => true,

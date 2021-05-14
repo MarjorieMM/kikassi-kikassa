@@ -36,24 +36,24 @@
 							{% set prenomEmprunteur = emprunt.adherent ? emprunt.adherent.prenom|capitalize : emprunt.superadmin.prenom|capitalize %}
 							{% set empruntRegle = emprunt.empruntregle ? "Oui" : "Non" %}
 							<tr class="text-nowrap">
-								<td>
+								<td class='align-middle'>
 									<a href="{{path('test')}}">{{emprunt.id}}</a>
 								</td>
-								<td>{{nomEmprunteur}}{{prenomEmprunteur}}
+								<td class='align-middle'>{{nomEmprunteur}}{{prenomEmprunteur}}
 								</td>
-								<td class="text-center">{{emprunt.objet.denomination|capitalize}}
+								<td class="text-center align-middle">{{emprunt.objet.denomination|capitalize}}
 									{{emprunt.objet.marque|capitalize}}
 								</td>
-								<td class="text-center">{{emprunt.datedebut|date("d/m/Y")}}</td>
-								<td class="text-center">{{emprunt.datefin|date("d/m/Y")}}</td>
-								<td class="text-center">{{emprunt.prixemprunt}}
+								<td class="text-center align-middle">{{emprunt.datedebut|date("d/m/Y")}}</td>
+								<td class="text-center align-middle">{{emprunt.datefin|date("d/m/Y")}}</td>
+								<td class="text-center align-middle">{{emprunt.prixemprunt}}
 									€</td>
-								<td class="text-center">{{emprunt.depotRajoute}}
+								<td class="text-center align-middle">{{emprunt.depotRajoute}}
 									€</td>
-								<td class="text-center {{empruntRegle == 'Non' ? 'text-danger' : '' }}">{{empruntRegle}}</td>
-								<td class="text-center {{emprunt.penalites > 0 ? 'text-danger' : ''}}">{{emprunt.penalites|number_format(2)}}
+								<td class="text-center align-middle {{empruntRegle == 'Non' ? 'text-danger' : '' }}">{{empruntRegle}}</td>
+								<td class="text-center align-middle {{emprunt.penalites > 0 ? 'text-danger' : ''}}">{{emprunt.penalites|number_format(2)}}
 									€</td>
-								<td class="text-center">
+								<td class="text-center align-middle">
 									<button class="btn btn-secondary px-3" data-toggle="modal" data-target="#modal-paiement" data-depot="{{emprunt.depotRajoute}}" data-objet="{{emprunt.objet.denomination}}" data-penalites="{{emprunt.penalites|number_format(2)}}" data-emprunt-id="{{emprunt.id}}" data-emprunt="{{emprunt.prixemprunt}}" data-emprunt-regle="{{emprunt.empruntregle}}">Enregistrer
 										<br>
 										le retour de l'objet</button>
