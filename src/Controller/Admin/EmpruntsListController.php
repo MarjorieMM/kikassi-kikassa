@@ -47,6 +47,7 @@ class EmpruntsListController extends AbstractController
     ): Response {
         $emprunt = new Emprunt();
         $objet = new Objet();
+        $now = new \DateTime();
 
         $formObjSearch = $this->createForm(SearchFormType::class);
         $formSearch = $this->createForm(SearchFormType::class);
@@ -75,8 +76,41 @@ class EmpruntsListController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             //  Je vérifie si l'objet peut être emprunté
+
             if ($objet) {
-                if ($objet->getStatut() == 'Disponible') {
+                $empObjet = $objet->getEmprunts();
+                $dateFin = $request->request->get('emprunt_form[date_debut]');
+                $dateDebut = $request->request->get('emprunt_form[date_fin]');
+                $empruntOk = [];
+
+                foreach ($empObjet as $obj) {
+                    $empruntDebut = $obj->getDateDebut()->getTimestamp();
+                    $empruntFin = $obj->getDateFin()->getTimestamp();
+                    $objRetour = $obj->getDateRetourObjet();
+                    $objStatut = $obj->getObjet()->getStatut();
+                    dump($empruntDebut, $empruntFin);
+                    if ($empruntDebut) {
+                        if ($empruntFin < $now->getTimestamp() && !$objRetour) {
+                            $empruntOk[] = false;
+                            dump('pas rendu');
+                        } elseif (
+                            $dateFin > $empruntDebut &&
+                            $dateDebut < $empruntFin
+                        ) {
+                            $empruntOk[] = false;
+                            dump('chevauche');
+                        } else {
+                            dump('chevauche pas');
+                            $empruntOk[] = true;
+                        }
+                    } else {
+                        dump('pas d\'emprunt');
+                        $empruntOk[] = true;
+                    }
+                }
+                dump($empruntOk);
+                // if ($objet->getStatut() == 'Disponible') {
+                if ($objet->getStatut()) {
                     $emprunt->setObjet($objet);
                     //Je vérifie si l'emprunteur est bien un adhérent inscrit à la
                     // bibliothèque ou un super-admin
@@ -85,7 +119,7 @@ class EmpruntsListController extends AbstractController
                         $admin
                     ) {
                         // Je set la date de réservation uniquement si l'emprunt ne débute pas le jour même, et je la met à aujourd'hui
-                        $now = new \DateTime();
+
                         if ($emprunt->getDateDebut() > $now) {
                             $emprunt->setDateReservation($now);
                         }
@@ -132,18 +166,15 @@ class EmpruntsListController extends AbstractController
                                         5 /
                                         3 -
                                     $depot_perm;
-                                dump('rc valide');
                             } else {
                                 $depot_rajoute =
                                     ($obj->getValeurAchat() *
                                         $obj->getCoefUsure()) /
                                         5 -
                                     $depot_perm;
-                                dump('pas rc ou rc perimee');
                             }
                         } else {
                             $depot_rajoute = 0;
-                            dump('est admin');
                         }
 
                         $emprunt->setDepotRajoute(
