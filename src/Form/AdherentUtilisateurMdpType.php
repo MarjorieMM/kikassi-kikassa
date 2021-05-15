@@ -14,7 +14,7 @@ class AdherentUtilisateurMdpType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('password', PasswordType::class, [
+            ->add('motDePasse', PasswordType::class, [
                 'label' => 'Nouveau mot de passe',
                 'attr' => ['placeholder' => 'Tapez votre mot de passe ici']
             ])
