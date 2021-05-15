@@ -117,7 +117,7 @@ class AppUserAuthenticator extends AbstractFormLoginAuthenticator implements
         }
 
         return new RedirectResponse(
-            $this->urlGenerator->generate('/mon_compte')
+            $this->urlGenerator->generate('compte')
         );
         throw new \Exception(
             'TODO: provide a valid redirect inside ' . __FILE__

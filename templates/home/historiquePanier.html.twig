@@ -7,16 +7,16 @@
 		<div class="row">
 			<div
 				class="margin-top-panier col-6 mb-4">{# <div class="input-group rounded">
-											<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
-											<span class="input-group-text border-0" id="search-addon">
-										<i class="fas fa-search"></i>
-										</span>
-										</div> #}
+																																																																							<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
+																																																																							<span class="input-group-text border-0" id="search-addon">
+																																																																						<i class="fas fa-search"></i>
+																																																																						</span>
+																																																																						</div> #}
 			</div>
-			<div class="col-12">
-				<h3 class="mx-4">Historique des réservations</h3>
+			<div class="col-12 text-center">
+				<h3 class="mx-4 mb-5">Historique des réservations</h3>
 			</div>
-			<div class="col-12">
+			<div class="col-10 offset-2 text-center">
 				<table class="mx-2 table table-responsive">
 					<thead>
 						<tr class="text-center">
@@ -25,8 +25,8 @@
 							<th scope="col">Date de retour</th>
 							<th scope="col">Retour enregistré</th>
 							<th scope="col">Frais de retard</th>
-							{# <th scope="col">Ré-emprunté
-															</th> #}
+							<th scope="col">Ré-emprunté
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -59,9 +59,15 @@
 										<td>
 											{{emprunt.penalites}}
 										</td>
-										{# <td>
-																					<i class="fas fa-redo"></i>
-																					</td> #}
+										<td class="text-center">
+											{% for objet in objets %}
+												{% if objet.id == emprunt.objet.id %}
+													<a class="text-dark" href="{{ path('objetDetail', {'slug' : emprunt.objet.slug }) }}">
+														<i class="fas fa-redo"></i>
+													</a>
+												{% endif %}
+											{% endfor %}
+										</td>
 									</tr>
 								{% endif %}
 							{% endif %}
