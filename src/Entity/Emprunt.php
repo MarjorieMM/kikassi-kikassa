@@ -108,6 +108,11 @@ class Emprunt
     private $titre;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $penalites_payees;
+
+    /**
      *
      *@ORM\PrePersist
      *
@@ -316,7 +321,16 @@ class Emprunt
     public function setTitre($titre)
     {
         $this->titre = $titre;
+        return $this;
+    }
+    public function getPenalitesPayees(): ?bool
+    {
+        return $this->penalites_payees;
+    }
 
+    public function setPenalitesPayees(?bool $penalites_payees): self
+    {
+        $this->penalites_payees = $penalites_payees;
         return $this;
     }
 }
