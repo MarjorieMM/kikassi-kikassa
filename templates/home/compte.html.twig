@@ -7,19 +7,24 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12 margin-top">
-				<h1>Compte utilisateur</h1>
-				{% for message in app.flashes('success') %}
-					<span class="alert alert-success mx-2">
-						{{ message|raw }}
-					</span>
-				{% endfor %}
-
+				<div class="text-center">
+					<h1>Compte utilisateur</h1>
+					{% for message in app.flashes('success') %}
+						<span class="alert alert-success mx-2">
+							{{ message|raw }}
+						</span>
+					{% endfor %}
+					<h3>{{app.user.adherent.nom}}
+						{{app.user.adherent.prenom}}</h3>
+					<p>couleur de fourmis:
+						{{app.user.adherent.adhesionBibliotheque.categorieFourmi}}
+					</p>
+				</div>
 				{{ include('adherent/_form.html.twig') }}
 				{{ include('adherent/_formMdp.html.twig') }}
-				<p>couleur de fourmis:
-					{{app.user.adherent.adhesionBibliotheque.categorieFourmi}}
-				</p>
-				<a href="{{ path('home') }}" class="btn bg-green text-light">Retour à la page du catalogue</a>
+				<div class="text-center">
+					<a href="{{ path('home') }}" class="btn bg-green text-light">Retour à la page du catalogue</a>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -15,20 +15,13 @@ class AdherentUtilisateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class, [
-                'label' => 'Nom',
-                'attr' => ['placeholder' => 'Tapez votre nom ici']
-            ])
-            ->add('prenom', TextType::class, [
-                'label' => 'Prénom',
-                'attr' => ['placeholder' => 'Tapez votre prénom ici']
-            ])
+
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'attr' => ['placeholder' => 'Tapez votre adresse email ici']
             ])
             ->add('telephone', TelType::class, [
-                'label' => 'Prénom',
+                'label' => 'Numéro de téléphone',
                 'attr' => ['placeholder' => 'Tapez votre prénom ici']
             ])
             ->add('adresse', TextType::class, [

@@ -118,77 +118,80 @@
 						</div>
 					{% endif %}
 				</div>
-			</div>
-			<div class="col-3 col-lg-1">
-				<p class="ml-3">catalogue
-					{# <span class="{{objet.catalogue.nomCatalogue | url_encode | lower}}">{{objet.catalogue.nomCatalogue | url_encode | lower}}</span> #}
-				</p>
-			</div>
-			<div class="col-2 mt-2 d-flex justify-content-lg-start justify-content-end">
+			</body>
+		</div>
+		<div class="col-3 col-lg-1">
+			<p class="ml-3">catalogue
+			</p>
+		</div>
+		<div class="col-2 mt-2 d-flex justify-content-lg-start justify-content-end">
+			{% if objet.catalogue.nomCatalogue == "Catalogue Vert" %}
 				<div class="rond-catalogue"></div>
-			</div>
-			<div class="col-7 col-lg-9"></div>
-			<div class="shadow-sm p-3 mb-5 bg-white rounded col-12 col-lg-5 h-25">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-lg-12 col-6 ">
-							<p>Prix d'emprunt :
-								<span>{% set prix = objet.pourcentCalcul / 100 * objet.valeurAchat * objet.coefUsure / 5 %}
-									{{prix}}</span>
-								€ par jour</p>
-						</div>
-						<div class="col-lg-12 col-6">
-							<p>Valeur de l'emprunt :
-								<span>{% set valeur = objet.valeurAchat * objet.coefUsure / 5 %}
-									{{valeur}}</span>€</p>
-						</div>
+			{% else %}
+				<div class="rond-catalogue-bleu"></div>
+			{% endif %}
+		</div>
+		<div class="col-7 col-lg-9"></div>
+		<div class="shadow-sm p-3 mb-5 bg-white rounded col-12 col-lg-5 h-25">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-6 ">
+						<p>Prix d'emprunt :
+							<span>{% set prix = objet.pourcentCalcul / 100 * objet.valeurAchat * objet.coefUsure / 5 %}
+								{{prix}}</span>
+							€ par jour</p>
+					</div>
+					<div class="col-lg-12 col-6">
+						<p>Valeur de l'emprunt :
+							<span>{% set valeur = objet.valeurAchat * objet.coefUsure / 5 %}
+								{{valeur}}</span>€</p>
 					</div>
 				</div>
-			</div>
-			<div class="shadow-sm p-3 mb-5 bg-white rounded col-12 offset-lg-1 col-lg-6">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-12">
-							<h2>Où et quand récupérer l'objet</h2>
-						</div>
-						<div class="col-lg-12 col-6">
-							<p>{{objet.lieu.nom}}</p>
-							<p>{{objet.lieu.adresse}}</p>
-							<p>{{objet.lieu.cp}}</p>
-							<p>{{objet.lieu.ville}}</p>
-							<p>{{objet.lieu.telephone}}</p>
-						</div>
-						<div class="col-lg-12 col-6">
-							<p>Horaire d'ouverture</p>
-							{% for horaire in objet.lieu.horaireLieu %}
-								{{horaire.jour}}
-								{% if horaire.ouvAm is not null %}
-									de
-									{{horaire.ouvAm}}
-									à
-									{{horaire.fermeAm}}
-									{% if horaire.ouvPm is not null %}et
-									{% endif %}
-								{% endif %}
-								{% if horaire.ouvPm is not null %}
-									de
-									{{horaire.ouvPm}}
-									à
-									{{horaire.fermePm}}
-								{% endif %}
-							{% endfor %}
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-12 shadow-sm p-3 mb-5 bg-white rounded">
-				<p class="ml-3">Informations:</p>
-				<p class="ml-3">{{objet.description}}</p>
-			</div>
-			<div class="col-12 shadow-sm p-3 mb-5 bg-white rounded">
-				<p class="ml-3">Etat:</p>
-				<p class="ml-3">{{objet.observation}}</p>
 			</div>
 		</div>
+		<div class="shadow-sm p-3 mb-5 bg-white rounded col-12 offset-lg-1 col-lg-6">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<h2>Où et quand récupérer l'objet</h2>
+					</div>
+					<div class="col-lg-12 col-6">
+						<p>{{objet.lieu.nom}}</p>
+						<p>{{objet.lieu.adresse}}</p>
+						<p>{{objet.lieu.cp}}</p>
+						<p>{{objet.lieu.ville}}</p>
+						<p>{{objet.lieu.telephone}}</p>
+					</div>
+					<div class="col-lg-12 col-6">
+						<p>Horaire d'ouverture</p>
+						{% for horaire in objet.lieu.horaireLieu %}
+							{{horaire.jour}}
+							{% if horaire.ouvAm is not null %}
+								de
+								{{horaire.ouvAm}}
+								à
+								{{horaire.fermeAm}}
+								{% if horaire.ouvPm is not null %}et
+								{% endif %}
+							{% endif %}
+							{% if horaire.ouvPm is not null %}
+								de
+								{{horaire.ouvPm}}
+								à
+								{{horaire.fermePm}}
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 shadow-sm p-3 mb-5 bg-white rounded">
+			<p class="ml-3">Informations:</p>
+			<p class="ml-3">{{objet.description}}</p>
+		</div>
+		<div class="col-12 shadow-sm p-3 mb-5 bg-white rounded">
+			<p class="ml-3">Etat:</p>
+			<p class="ml-3">{{objet.observation}}</p>
+		</div>
 	</body>
-</div></body>{% include "./partials/footer.html.twig" %}{% endblock %}
+</div></body></div></body>{% include "./partials/footer.html.twig" %}{% endblock %}

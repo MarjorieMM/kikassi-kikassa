@@ -8,6 +8,7 @@ use App\Entity\Emprunt;
 use App\Entity\Adherent;
 use App\Form\EmpruntType;
 use App\Repository\ObjetRepository;
+use App\Repository\PhotoRepository;
 use App\Entity\AdhesionBibliotheque;
 use App\Form\AdherentUtilisateurType;
 use App\Repository\EmpruntRepository;
@@ -27,10 +28,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(): Response
+
+    public function index(ObjetRepository $objetRepository, PhotoRepository $photoRepository, CategorieRepository $categorieRepository, SousCategorieRepository $sousCategorieRepository): Response
     {
+        $objets = $objetRepository->findAll();
+        $photos = $photoRepository->findAll();
+        $categories = $categorieRepository->findAll();
+        $sousCategories = $sousCategorieRepository->findAll();
+
+        //  dd($sousCategories);
+
         return $this->render('home/catalogue.html.twig', [
             'controller_name' => 'HomeController',
+            'objets' => $objets,
+            'photos' => $photos,
+            'categories' => $categories,
+            'sousCategories' => $sousCategories,
         ]);
     }
 
@@ -245,9 +258,9 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
         $formMdp->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $formMdp->isSubmitted() && $formMdp->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() || $formMdp->isSubmitted() && $formMdp->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', "Votre demande d'emprunt a bien été prise en compte.");
+            $this->addFlash('success', "Votre demande de changement a bien été prise en compte.");
             // return $this->redirectToRoute('home');
         }
 
