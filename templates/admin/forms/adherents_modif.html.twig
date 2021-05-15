@@ -19,15 +19,9 @@
 			{% else %}
 				<h1 class="text-center font-raleway mb-5">{{ modifTitle }}</h1>
 			{% endif %}
-			{% set formErrors = form.vars.errors.form.getErrors(true) %}
-			{% if formErrors|length %}
-				<ul class="text-center list-group mb-1">
-					<li class="list-group-item list-group-item-danger my-1">Formulaire non valide :</li>
-					{% for error in formErrors %}
-						<li class="list-group-item list-group-item-danger my-1">{{ error.message }}</li>
-					{% endfor %}
-				</ul>
-			{% endif %}
+			<div class="container">
+				{% include './admin/error_mess.html.twig' %}
+			</div>
 			{% include '/admin/forms/adherent_search.html.twig' %}
 			{% if param == 'adherent-reinscription' %}
 				<form method="post" class='d-flex justify-content-center'>

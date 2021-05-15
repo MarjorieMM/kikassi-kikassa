@@ -109,7 +109,6 @@ export default class extends Controller {
         replaceClass("continue", 'd-block', 'd-none')
         replaceClass("continue", 'padding-footer', 's-padding')
 
-          
       }
     })
   
@@ -131,7 +130,6 @@ export default class extends Controller {
         type: 'POST',
         url: url
       }).done(function (json) {
-        // console.log(json)
         res(json)
       }).fail(function (jqXHR, textStatus, errorThrown) {
      
@@ -156,6 +154,7 @@ export default class extends Controller {
           $('#search-results-adherent').append("<tr><td class='text-center' colspan='4'>Pas d'adhérent ou de super-admin trouvé</td></tr>")
        }
         function appendRes(item) {
+          console.log(item)
           item.map(el => $('#search-results-adherent').append(`<tr><td class='text-center'>${el.nom}</td><td class='text-center'>${el.prenom}</td><td class='text-center'>${el.email}</td><td class="text-center">
         <div class="form-check adh-check">
          <input name="adherent-select" class="text-center form-check-input" type="radio" value=${el.id}>
@@ -174,10 +173,11 @@ export default class extends Controller {
       $('#hidden-adh').val($.trim(selected))
       $('#hidden-btn').empty()
       const res = (json) => {
+        console.log(json)
         if (json.param === 'objets' || json.param === 'adherents' || json.param === 'emprunts' || json.param === 'adherent-reinscription') {
           function appendSel(item, titre) {
             $('#selected-adherent').append(`<div class="row font-raleway form-control select-height width-auto ml-1" ><p class="p-2"> ${titre} : ${$.trim(item.prenom)} ${$.trim(item.nom)} </p></div>`)
-           
+
             $('#hidden-btn').append(`<button type="submit" class='btn btn-danger p-3'>Modifier ${$.trim(item.prenom)} ${$.trim(item.nom)}</button>`)
           
           }
@@ -208,9 +208,6 @@ export default class extends Controller {
           $('#admin-form').append(`<option value="ROLE_ADMIN" ${json.roles.length > 0 ? 'selected': '' }>Oui</option><option value="ROLE_USER"  ${json.roles.length === 0 ? 'selected': '' }>Non</option>`)
 
           }
-
-         
-
         }
         
 

@@ -123,6 +123,8 @@ class Objet
     /**
      * @ORM\OneToMany(targetEntity=Emprunt::class, mappedBy="objet", orphanRemoval=true)
      */
+
+
     private $emprunts;
 
     /**

@@ -199,6 +199,7 @@ class Adherent
     /**
      * @ORM\OneToMany(targetEntity=Emprunt::class, mappedBy="adherent", orphanRemoval=true)
      */
+    #[Groups(['person'])]
 
     private $emprunts;
 

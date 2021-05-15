@@ -1,0 +1,9 @@
+{% set formErrors = form.vars.errors.form.getErrors(true) %}
+{% if formErrors|length %}
+	<ul class="text-center list-group mb-1">
+		<li class="list-group-item list-group-item-danger my-1">Formulaire non valide :</li>
+		{% for error in formErrors %}
+			<li class="list-group-item list-group-item-danger my-1">{{ error.message }}</li>
+		{% endfor %}
+	</ul>
+{% endif %}

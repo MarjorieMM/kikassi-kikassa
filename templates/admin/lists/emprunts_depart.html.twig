@@ -1,6 +1,8 @@
 {% extends './admin/base-admin.html.twig' %}
 {% import './admin/_macros.html.twig' as macros %}
 
+{% set param = 'emprunts' %}
+
 {% block title %}Liste des Emprunts
 {% endblock %}
 
@@ -10,7 +12,10 @@
 			<h1 class="text-center font-raleway mb-5">Enregistrer
 				<br>
 				les départs d'objets</h1>
-			<div class="mx-5" data-controller="admin">
+			<div class="search-module">
+				{% include '/admin/forms/adherent_search.html.twig' %}
+			</div>
+			<div class="mx-5">
 				{{ macros.flash_message() }}
 				<table class="table admin-table-emprunts tb-design table-bordered" id="admin-t">
 					<thead>
@@ -28,7 +33,7 @@
 							<th scope="col">Prix de l'emprunt</th>
 							<th scope="col">Montant du dépôt de garantie à rajouter</th>
 							<th scope="col">Emprunt payé</th>
-							<th scope="col">Action</th>
+							<th scope="col">Sélection</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -71,16 +76,12 @@
 									€</td>
 								<td class="text-center">{{emprunt.depotRajoute}}
 									€</td>
-
 								<td class="text-center">{{empruntRegle}}</td>
 								<td class="text-center">
-
-									<button class="btn btn-success px-3" data-toggle="modal" data-target="#modal-paiement" data-objet="{{emprunt.objet.denomination}}" data-prix="{{emprunt.prixemprunt}}" data-emprunt="{{emprunt.id}}">
-										Enregistrer
-										<br>
-										le départ de l'objet
-									</button>
-
+									<div class="custom-control custom-switch custom-switch-md custom-padding">
+										<input type="checkbox" class="custom-control-input" id="depart-switch">
+										<label class="custom-control-label" for="depart-switch"></label>
+									</div>
 								</td>
 							</tr>
 							<div class="modal fade" id="modal-paiement" tabindex="-1" aria-labelledby="empruntModalLabel" aria-hidden="true">

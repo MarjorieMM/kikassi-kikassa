@@ -271,9 +271,18 @@ class EmpruntsListController extends AbstractController
 
     #[Route('/admin/emprunts/departs', name: 'admin_emprunts_depart')]
     public function ValidDepart(
+        Request $request,
         EmpruntRepository $repo,
-        EntityManagerInterface $manager
+        EntityManagerInterface $manager,
+        AdherentRepository $adherentRepository
     ): Response {
+        $formSearch = $this->createForm(SearchFormType::class);
+        $formSearch->handleRequest($request);
+
+        $adherent = $adherentRepository->findOneById(
+            $request->request->get('adherent')
+        );
+
         $now = new DateTime('now');
 
         $reservations = [];
@@ -298,6 +307,7 @@ class EmpruntsListController extends AbstractController
             'section' => 'section-emprunts',
             'return_path' => 'menu-emprunt',
             'color' => 'emprunts-color',
+            'formSearch' => $formSearch->createView(),
         ]);
     }
 

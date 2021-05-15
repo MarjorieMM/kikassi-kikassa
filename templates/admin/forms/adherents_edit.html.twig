@@ -29,15 +29,7 @@
 				{{adherent.nom}}
 			</h1>
 			<div class="container">
-				{% set formErrors = form.vars.errors.form.getErrors(true) %}
-				{% if formErrors|length %}
-					<ul class="text-center list-group mb-1">
-						<li class="list-group-item list-group-item-danger my-1">Formulaire non valide :</li>
-						{% for error in formErrors %}
-							<li class="list-group-item list-group-item-danger my-1">{{ error.message }}</li>
-						{% endfor %}
-					</ul>
-				{% endif %}
+				{% include './admin/error_mess.html.twig' %}
 				<div class='{{perime ? 'd-block' : 'd-none'}} alert-warning mx-3'>
 					<p class='text-center p-2'>Cette adhésion est périmée depuis le
 						{{adherent.dateadhesion|date_modify("+1 year")|date('d-m-Y')}},
@@ -134,10 +126,7 @@
 						</div>
 					</div>
 				</div>
-				{# <div class="row">
-																	
-																	
-																</div> #}
+
 				{% if adherent.adhesionbibliotheque is not null %}
 					<div class="mt-4 row text-center">
 						<div class="col">{{form_widget(form.saveAndContinue, {'label': 'Modifier <br> l\'Inscription à la Bibliothèque', 'attr' : {'class' : 'btn btn-danger p-2'} })}}</div>
@@ -154,23 +143,23 @@
 </div>
 {{macros.footer_color(section, return_path, arrow, envoi, continue, arrowClass, footerPadding )}}
 {{ form_end(form)}}</body>{% endblock %}{% block footer %}{% endblock %}{# {% if adherent.adhesionBibliotheque is not null %}
-									<div class="col">
-										<div class="form-group biblio-select-edit">
-											<label for="biblio">Inscription à la bibliothèque</label>
-											<select type="radio" name="biblio" class="biblio form-control select-height" required disabled>
-												<option value="">Inscription à la bibliothèque</option>
-												<option value="oui" selected>Oui</option>
-												<option value="non">Non</option>
-											</select>
-										</div>
-									</div> #}{# {% else %}
-															<div class="col">
-																<div class="form-group biblio-select-edit">
-																	<label for="biblio">Inscription à la bibliothèque</label>
-																	<select type="radio" name="biblio" class="biblio form-control select-height" required>
-																		<option value="">Inscription à la bibliothèque</option>
-																		<option value="oui">Oui</option>
-																		<option value="non">Non</option>
-																	</select>
-																</div>
-															</div> #}{# {% endif %} #}
+											<div class="col">
+												<div class="form-group biblio-select-edit">
+													<label for="biblio">Inscription à la bibliothèque</label>
+													<select type="radio" name="biblio" class="biblio form-control select-height" required disabled>
+														<option value="">Inscription à la bibliothèque</option>
+														<option value="oui" selected>Oui</option>
+														<option value="non">Non</option>
+													</select>
+												</div>
+											</div> #}{# {% else %}
+																	<div class="col">
+																		<div class="form-group biblio-select-edit">
+																			<label for="biblio">Inscription à la bibliothèque</label>
+																			<select type="radio" name="biblio" class="biblio form-control select-height" required>
+																				<option value="">Inscription à la bibliothèque</option>
+																				<option value="oui">Oui</option>
+																				<option value="non">Non</option>
+																			</select>
+																		</div>
+																	</div> #}{# {% endif %} #}

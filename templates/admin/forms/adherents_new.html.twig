@@ -18,17 +18,8 @@
 			<h1 class="first-part text-center font-raleway mb-5">Entrer un nouvel Adhérent</h1>
 			<h1 class="second-part d-none text-center font-raleway mb-5">Entrer un nouvel Adhérent (suite)</h1>
 			<div class="container">
-				{% set formErrors = form.vars.errors.form.getErrors(true) %}
-				{% if formErrors|length %}
-					<ul class="text-center list-group mb-1">
-						<li class="list-group-item list-group-item-danger my-1">Formulaire non valide :</li>
-						{% for error in formErrors %}
-							<li class="list-group-item list-group-item-danger my-1">{{ error.message }}</li>
-						{% endfor %}
-					</ul>
-				{% endif %}
+				{% include './admin/error_mess.html.twig' %}
 			</div>
-
 			<div class="container first-part">
 				<div class="row">
 					<div class="col">

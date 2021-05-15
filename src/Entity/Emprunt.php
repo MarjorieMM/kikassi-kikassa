@@ -5,6 +5,7 @@ namespace App\Entity;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EmpruntRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -31,6 +32,8 @@ class Emprunt
     #[Assert\Type("\DateTimeInterface", message:"Veuillez entrer une date de début valide pour l'emprunt")]
     #[Assert\NotBlank(message:"Veuillez entrer une date de début d'emprunt")]
     #[Assert\GreaterThan('yesterday', message:"Veuillez entrer une date de début d'emprunt correcte")]
+
+    #[Groups(['person'])]
     private $date_debut;
 
     /**
@@ -40,32 +43,39 @@ class Emprunt
     #[Assert\Type("\DateTimeInterface", message:"Veuillez entrer une date de fin valide pour l'emprunt au format 12/12/2021")]
     #[Assert\NotBlank(message:"Veuillez entrer une date de fin d'emprunt")]
     #[Assert\GreaterThan('yesterday', message:"Veuillez entrer une date de fin d'emprunt correcte")]
+
+    #[Groups(['person'])]
     private $date_fin;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    #[Groups(['person'])]
     private $remarque;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
     #[Assert\Type("\DateTimeInterface", message:"Veuillez entrer une date de retour de l'objet valide au format 12/12/2021")]
+    #[Groups(['person'])]
     private $date_retour_objet;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[Groups(['person'])]
     private $depot_rajoute;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
+    #[Groups(['person'])]
     private $penalites;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
      */
+    #[Groups(['person'])]
     private $prix_emprunt;
 
     /**
@@ -78,6 +88,8 @@ class Emprunt
      * @ORM\JoinColumn(nullable=false)
      */
     // #[Assert\NotNull(message:"Veuillez choisir un objet à emprunter")]
+
+    #[Groups(['person', 'objet'])]
 
     private $objet;
 
@@ -95,6 +107,7 @@ class Emprunt
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['person'])]
     private $statut;
 
     /**
@@ -102,12 +115,13 @@ class Emprunt
      */
 
     #[Assert\NotNull(message:"Veuillez choisir si l'emprunt est réglé ce jour ou non")]
-
+    #[Groups(['person'])]
     private $emprunt_regle;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[Groups(['person'])]
     private $penalites_payees;
 
     /**

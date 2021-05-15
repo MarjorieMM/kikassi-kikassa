@@ -8,6 +8,7 @@ use App\Entity\SousCategorie;
 use App\Entity\SuperAdmin;
 use App\Repository\AdherentRepository;
 use App\Repository\AdhesionBibliothequeRepository;
+use App\Repository\EmpruntRepository;
 use App\Repository\SousCategorieRepository;
 use App\Repository\SuperAdminRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +48,8 @@ class SearchAdhController extends AbstractController
         $param,
         Request $request,
         AdherentRepository $adherentRepository,
-        SuperAdminRepository $superAdminRepository
+        SuperAdminRepository $superAdminRepository,
+        EmpruntRepository $empruntRepository
     ): Response {
         $selectedAdh = new Adherent();
         $selectedAdmin = new SuperAdmin();
@@ -63,6 +65,11 @@ class SearchAdhController extends AbstractController
             ]
             : ['admin' => $selectedAdmin, 'param' => $param];
 
-        return $this->json($selectedPerson, 200, [], ['groups' => 'person']);
+        return $this->json(
+            $selectedPerson,
+            200,
+            [],
+            ['groups' => ['person', 'objet']]
+        );
     }
 }
