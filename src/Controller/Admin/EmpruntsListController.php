@@ -5,10 +5,10 @@ namespace App\Controller\Admin;
 use DateTime;
 use App\Entity\Objet;
 use App\Entity\Emprunt;
+use App\Classes\Calculs;
 use App\Form\SearchFormType;
 use App\Form\EmpruntFormType;
 use Doctrine\ORM\EntityManager;
-// use App\Classes\CalculDepotRajoute;
 use App\Form\FinEmpruntFormType;
 use App\Repository\ObjetRepository;
 use App\Repository\EmpruntRepository;
@@ -68,136 +68,108 @@ class EmpruntsListController extends AbstractController
             ? $emprunt->setAdherent($adherent)
             : $emprunt->setSuperAdmin($admin);
 
-        //Je récupère l'objet
+        // Je récupère l'objet
 
         $objet = $objetRepository->findOneById($request->request->get('objet'));
 
         $submitted = $form->isSubmitted() ? 'was-validated' : '';
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //  Je vérifie si l'objet peut être emprunté
+            $dateFin = $form
+                ->get('date_fin')
+                ->getData()
+                ->getTimestamp();
+            $dateDebut = $form
+                ->get('date_debut')
+                ->getData()
+                ->getTimestamp();
 
-            if ($objet) {
-                $empObjet = $objet->getEmprunts();
-                $dateFin = $request->request->get('emprunt_form[date_debut]');
-                $dateDebut = $request->request->get('emprunt_form[date_fin]');
-                $empruntOk = [];
+            //Je vérifie si l'emprunteur est bien un adhérent inscrit à la
+            // bibliothèque ou un super-admin
+            if (($adherent && $adherent->getAdhesionBibliotheque()) || $admin) {
+                //  Je vérifie si l'objet peut être emprunté
+                if ($objet && $objet->getStatut() == 'Disponible') {
+                    $empObjet = $objet->getEmprunts();
+                    $empruntOk = [];
+                    // Je compare avec les autres emprunts attachés à l'objet
+                    foreach ($empObjet as $obj) {
+                        $empruntDebut = $obj->getDateDebut()->getTimestamp();
+                        $empruntFin = $obj->getDateFin()->getTimestamp();
+                        $objRetour = $obj->getDateRetourObjet();
 
-                foreach ($empObjet as $obj) {
-                    $empruntDebut = $obj->getDateDebut()->getTimestamp();
-                    $empruntFin = $obj->getDateFin()->getTimestamp();
-                    $objRetour = $obj->getDateRetourObjet();
-                    $objStatut = $obj->getObjet()->getStatut();
-                    dump($empruntDebut, $empruntFin);
-                    if ($empruntDebut) {
-                        if ($empruntFin < $now->getTimestamp() && !$objRetour) {
-                            $empruntOk[] = false;
-                            dump('pas rendu');
-                        } elseif (
-                            $dateFin > $empruntDebut &&
-                            $dateDebut < $empruntFin
-                        ) {
-                            $empruntOk[] = false;
-                            dump('chevauche');
+                        if ($empruntDebut) {
+                            if (
+                                $empruntFin < $now->getTimestamp() &&
+                                !$objRetour
+                            ) {
+                                $empruntOk[] = false;
+                                dump('pas rendu');
+                            } elseif (
+                                $dateFin > $empruntDebut &&
+                                $dateDebut < $empruntFin
+                            ) {
+                                $empruntOk[] = false;
+                                dump('chevauche');
+                            } else {
+                                dump('chevauche pas');
+                                $empruntOk[] = true;
+                            }
                         } else {
-                            dump('chevauche pas');
+                            dump('pas d\'emprunt');
                             $empruntOk[] = true;
                         }
-                    } else {
-                        dump('pas d\'emprunt');
-                        $empruntOk[] = true;
                     }
-                }
-                dump($empruntOk);
-                // if ($objet->getStatut() == 'Disponible') {
-                if ($objet->getStatut()) {
-                    $emprunt->setObjet($objet);
-                    //Je vérifie si l'emprunteur est bien un adhérent inscrit à la
-                    // bibliothèque ou un super-admin
-                    if (
-                        ($adherent && $adherent->getAdhesionBibliotheque()) ||
-                        $admin
-                    ) {
-                        // Je set la date de réservation uniquement si l'emprunt ne débute pas le jour même, et je la met à aujourd'hui
-
-                        if ($emprunt->getDateDebut() > $now) {
-                            $emprunt->setDateReservation($now);
-                        }
+                    if (in_array(false, $empruntOk)) {
+                        $this->addFlash(
+                            'danger',
+                            "L'objet {$objet->getDenomination()} n'est pas disponible pour un emprunt aux dates choisies"
+                        );
+                    } else {
                         if ($emprunt->getDateFin() < $emprunt->getDateDebut()) {
                             $this->addFlash(
                                 'danger',
                                 "La date de fin d'emprunt ne peut pas être avant la date de début"
                             );
-                        }
-
-                        //je set le statut de l'emprunt et je le met à "en cours" si l'emprunt débute aujourd'hui ou à "accepté par l'admin" si non
-                        $emprunt->setStatut(
-                            $emprunt->getDateDebut() == $now
-                                ? 'Emprunt en cours'
-                                : 'Accepté par l\'Admin'
-                        );
-                        // calcul du prix de l'emprunt :
-                        $obj = $emprunt->getObjet();
-                        $days = $emprunt
-                            ->getDateDebut()
-                            ->diff($emprunt->getDateFin())->days;
-                        $prix =
-                            (((($obj->getValeurAchat() *
-                                $obj->getPourcentCalcul()) /
-                                100) *
-                                $obj->getCoefUsure()) /
-                                5) *
-                            $days;
-                        $emprunt->setPrixEmprunt($prix);
-
-                        // calcul du montant de dépôt de garantie à rajouter au dépôt permanent :
-                        $finrc = $adherent
-                            ->getAdhesionBibliotheque()
-                            ->getFinRc();
-                        $depot_perm = $adherent
-                            ->getAdhesionBibliotheque()
-                            ->getDepotPermanent();
-
-                        if ($adherent) {
-                            if ($finrc > $now) {
-                                $depot_rajoute =
-                                    ($obj->getValeurAchat() *
-                                        $obj->getCoefUsure()) /
-                                        5 /
-                                        3 -
-                                    $depot_perm;
-                            } else {
-                                $depot_rajoute =
-                                    ($obj->getValeurAchat() *
-                                        $obj->getCoefUsure()) /
-                                        5 -
-                                    $depot_perm;
-                            }
                         } else {
-                            $depot_rajoute = 0;
-                        }
+                            $emprunt->setObjet($objet);
+                            //je set le statut de l'emprunt et je le met à "en cours" si l'emprunt débute aujourd'hui ou à "accepté par l'admin" si non
 
-                        $emprunt->setDepotRajoute(
-                            $depot_rajoute < 0 ? 0 : $depot_rajoute
-                        );
-                        //Je set le  statut de l'objet à réservé
-                        $objet->setStatut('Réservé');
-                        $manager->persist($emprunt);
-                        $manager->flush();
-                    } else {
-                        $this->addFlash(
-                            'danger',
-                            'Emprunteur non choisi ou adhérent non inscrit à la bibliothèque'
-                        );
+                            $emprunt->setStatut(
+                                $emprunt->getDateDebut() == $now
+                                    ? 'Emprunt en cours'
+                                    : 'Accepté par l\'Admin'
+                            );
+                            $biblio = $adherent->getAdhesionBibliotheque();
+                            $finrc = $biblio->getFinRc();
+                            $depot_perm = $biblio->getDepotPermanent();
+
+                            $calc = new Calculs(
+                                $finrc,
+                                $objet,
+                                $depot_perm,
+                                $emprunt
+                            );
+
+                            $emprunt->setPrixEmprunt($calc->calculPrix());
+                            $emprunt->setDepotRajoute(
+                                $calc->calculDepot($adherent)
+                            );
+
+                            $manager->persist($emprunt);
+                            $manager->flush();
+                        }
                     }
                 } else {
                     $this->addFlash(
                         'danger',
-                        "L'objet {$objet->getDenomination()} n'est pas disponible pour un emprunt"
+                        "Veuillez choisir un objet ou l'objet n'est pas disponible pour un emprunt"
                     );
                 }
             } else {
-                $this->addFlash('danger', 'Veuillez choisir un objet');
+                $this->addFlash(
+                    'danger',
+                    'Veuillez choisir un emprunteur ou l\'emprunteur n\'est pas inscrit à la bibliothèque'
+                );
             }
         }
 

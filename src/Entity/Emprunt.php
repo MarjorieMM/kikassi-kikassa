@@ -33,7 +33,7 @@ class Emprunt
     #[Assert\NotBlank(message:"Veuillez entrer une date de début d'emprunt")]
     #[Assert\GreaterThan('yesterday', message:"Veuillez entrer une date de début d'emprunt correcte")]
 
-    #[Groups(['person'])]
+    #[Groups(['person', 'objet'])]
     private $date_debut;
 
     /**
@@ -44,7 +44,7 @@ class Emprunt
     #[Assert\NotBlank(message:"Veuillez entrer une date de fin d'emprunt")]
     #[Assert\GreaterThan('yesterday', message:"Veuillez entrer une date de fin d'emprunt correcte")]
 
-    #[Groups(['person'])]
+    #[Groups(['person', 'objet'])]
     private $date_fin;
 
     /**
@@ -57,7 +57,7 @@ class Emprunt
      * @ORM\Column(type="date", nullable=true)
      */
     #[Assert\Type("\DateTimeInterface", message:"Veuillez entrer une date de retour de l'objet valide au format 12/12/2021")]
-    #[Groups(['person'])]
+    #[Groups(['person', 'objet'])]
     private $date_retour_objet;
 
     /**
@@ -89,7 +89,7 @@ class Emprunt
      */
     // #[Assert\NotNull(message:"Veuillez choisir un objet à emprunter")]
 
-    #[Groups(['person', 'objet'])]
+    #[Groups(['person'])]
 
     private $objet;
 
@@ -139,6 +139,20 @@ class Emprunt
                     time() .
                     hash('sha1', $this->getObjet()->getDenomination())
             );
+        }
+    }
+
+    /**
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function updateDate()
+    {
+        if (empty($this->date_reservation)) {
+            $this->date_reservation = new \DateTime();
         }
     }
 

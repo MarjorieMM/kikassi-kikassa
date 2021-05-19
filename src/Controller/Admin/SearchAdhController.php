@@ -48,8 +48,7 @@ class SearchAdhController extends AbstractController
         $param,
         Request $request,
         AdherentRepository $adherentRepository,
-        SuperAdminRepository $superAdminRepository,
-        EmpruntRepository $empruntRepository
+        SuperAdminRepository $superAdminRepository
     ): Response {
         $selectedAdh = new Adherent();
         $selectedAdmin = new SuperAdmin();
@@ -65,11 +64,6 @@ class SearchAdhController extends AbstractController
             ]
             : ['admin' => $selectedAdmin, 'param' => $param];
 
-        return $this->json(
-            $selectedPerson,
-            200,
-            [],
-            ['groups' => ['person', 'objet']]
-        );
+        return $this->json($selectedPerson, 200, [], ['groups' => ['person']]);
     }
 }

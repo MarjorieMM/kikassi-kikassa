@@ -223,9 +223,10 @@ export default class extends Controller {
       const searched = $('.search-objet').find('#search_form_nom').val();
       const url = 'new/obj'
       const res = (json) => {
-   
-          if (json.length > 0) {
-        $.each(json, function (index, value) {
+        
+        if (json.length > 0) {
+            
+          $.each(json, function (index, value) {
           $('#search-results-objet').append(`<tr><td class='text-center'>${value.denomination}</td><td class='text-center'>${value.marque}</td><td class='text-center'>${value.statut}</td>
           <td class='text-center'>xxx</td>
            <td class="text-center">
@@ -247,9 +248,10 @@ export default class extends Controller {
         const selected = $('input:radio[name="objet-select"]:checked').val()
       $('#hidden-obj').val($.trim(selected))
 
-      const res = (json) =>
-    
+      const res = (json) =>{
+    console.log(json)
         $('#selected-objet').append(`<div class="row font-raleway form-control select-height width-auto ml-1" ><p class="p-2">Objet : ${$.trim(json.denomination)} ${$.trim(json.marque)} </p></div>`);
+      $('#reserved-objet').append(`<div class="row font-raleway text-center">L'objet ${$.trim(json.denomination)} ${$.trim(json.marque)} est déjà réservé du au </div>`)}
       
       const url = 'new/selobj';
       selectOption(selected, res, url);

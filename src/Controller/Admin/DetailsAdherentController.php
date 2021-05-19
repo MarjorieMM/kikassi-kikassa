@@ -18,6 +18,7 @@ use Symfony\Component\Form\ClickableInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AdhesionBibliothequeRepository;
+use App\Classes\CalculDepotRajoute;
 use DateTime;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,6 +48,7 @@ class DetailsAdherentController extends AbstractController
     public function editAdherent(
         Adherent $adherent,
         Request $request,
+        AdhesionBibliothequeRepository $repoBiblio,
         EntityManagerInterface $manager
     ): Response {
         // Si l'adhésion de l'adhérent date de + d'un an :
@@ -78,8 +80,11 @@ class DetailsAdherentController extends AbstractController
                 $adherent->setCompteActif(true);
                 $adherent->setDateAdhesion($now);
             }
+            $biblio = $adherent->getAdhesionBibliotheque();
+            $biblio->setEmail($adherent->getEmail());
 
             $manager->persist($adherent);
+            $manager->persist($biblio);
             $manager->flush();
 
             /** @var ClickableInterface $button  */
