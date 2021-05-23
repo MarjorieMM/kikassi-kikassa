@@ -225,10 +225,13 @@ export default class extends Controller {
       const res = (json) => {
         
         if (json.length > 0) {
-            
+          
           $.each(json, function (index, value) {
-          $('#search-results-objet').append(`<tr><td class='text-center'>${value.denomination}</td><td class='text-center'>${value.marque}</td><td class='text-center'>${value.statut}</td>
+            $('#search-results-objet').append(`<tr><td class='text-center'>${value.denomination}</td><td class='text-center'>${value.marque}</td><td class='text-center'>${value.statut}</td>
           <td class='text-center'>xxx</td>
+          <td class='text-center'>${value.emprunts.map(val => 
+            new Date(val.date_fin) > new Date() ? `du ${new Date(val.date_debut).toLocaleDateString()} au ${new Date(val.date_fin).toLocaleDateString()} <br>` : 'Pas d\'emprunt prévu'
+           )}</td>
            <td class="text-center">
             <div class="form-check obj-check">
               <input name="objet-select" class="text-center form-check-input" type="radio" value=${value.id}>

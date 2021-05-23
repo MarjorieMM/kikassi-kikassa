@@ -22,7 +22,9 @@
 			<div class="col">
 				{% include '/admin/forms/adherent_search.html.twig' %}
 			</div>
-			<div class="col">{% include '/admin/forms/objet_search.html.twig' %}</div>
+			<div class="col">
+				{% include '/admin/forms/objet_search.html.twig' %}
+			</div>
 			{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" }})}}
 			<input id='hidden-adh' hidden type="text" name='adherent'/>
 			<input id='hidden-obj' hidden type="text" name='objet'/>

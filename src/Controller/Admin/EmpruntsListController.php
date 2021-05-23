@@ -106,7 +106,7 @@ class EmpruntsListController extends AbstractController
                                 dump('pas rendu');
                             } elseif (
                                 $dateFin > $empruntDebut &&
-                                $dateDebut < $empruntFin
+                                $dateDebut <= $empruntFin
                             ) {
                                 $empruntOk[] = false;
                                 dump('chevauche');
