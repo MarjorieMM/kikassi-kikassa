@@ -2,9 +2,8 @@
 {% import './admin/_macros.html.twig' as macros %}
 
 
-{% set envoi = "<div class='d-none envoi'>" ~ form_widget(form.save) ~ "</div>" %}
-{% set continue = "<div class='d-none s-padding continue'>" ~ form_widget(form.saveAndContinue) ~ "</div>" %}
-{% set arrowClass = 'visible' %}
+{% set envoi = "<div class='envoi' data-action='click->arrows#envoi' data-arrows-target='envoi'>" ~ form_widget(form.save) ~ "</div>" %}
+{% set continue = "<div class='s-padding continue' data-action='click->arrows#continue'>" ~ form_widget(form.saveAndContinue) ~ "</div>" %}
 {% set footerPadding = 's-padding' %}
 
 {% block title %}Adhérents
@@ -12,104 +11,106 @@
 
 
 {% block body %}
-	<body class={{color}}>
+	<body class={{color}} data-controller="arrows">
 		{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" }})}}
 		<div class="main-title font-raleway">
-			<h1 class="first-part text-center font-raleway mb-5">Entrer un nouvel Adhérent</h1>
-			<h1 class="second-part d-none text-center font-raleway mb-5">Entrer un nouvel Adhérent (suite)</h1>
+			<h1 class="text-center font-raleway mb-5" data-arrows-target="firstTitle">Entrer un nouvel Adhérent</h1>
+			<h1 class="text-center font-raleway mb-5" data-arrows-target="secondTitle">Entrer un nouvel Adhérent (suite)</h1>
 			<div class="container">
 				{% include './admin/error_mess.html.twig' %}
 			</div>
-			<div class="container first-part">
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.nom, {'attr': {'class': 'form-control p-4'}}) }}
+			<div>
+				<div class="container" data-arrows-target="firstPart">
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.nom, {'attr': {'class': 'form-control p-4'}}) }}
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.prenom, {'attr': {'class': 'form-control p-4'}}) }}
+							</div>
 						</div>
 					</div>
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.prenom, {'attr': {'class': 'form-control p-4'}}) }}
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.date_naissance, {'attr': {'class': 'form-control p-4'}}) }}
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.lieu_naissance, {'attr': {'class': 'form-control p-4'}}) }}
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.date_naissance, {'attr': {'class': 'form-control p-4'}}) }}
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.adresse, {'attr': {'class': 'form-control p-4'}}) }}
+							</div>
 						</div>
 					</div>
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.lieu_naissance, {'attr': {'class': 'form-control p-4'}}) }}
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.cp, {'attr': {'class': 'form-control p-4'}}) }}
+							</div>
 						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.adresse, {'attr': {'class': 'form-control p-4'}}) }}
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.cp, {'attr': {'class': 'form-control p-4'}}) }}
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.ville, {'attr': {'class': 'form-control p-4'}}) }}
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="container second-part d-none">
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.telephone, {'attr': {'class': 'form-control p-4'}}) }}
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.email, {'attr': {'class': 'form-control p-4'}}) }}
-							<p class="email-obligatoire d-none text-danger">Adresse email obligatoire pour l'inscription à la bibliothèque</p>
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.ville, {'attr': {'class': 'form-control p-4'}}) }}
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.montant_cotisation, {'attr': {'class': 'form-control p-4'}}) }}
+				<div class="container" data-arrows-target="secondPart">
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.telephone, {'attr': {'class': 'form-control p-4'}}) }}
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.email, {'attr': {'class': 'form-control p-4'}}) }}
+								<p class="email-obligatoire d-none text-danger">Adresse email obligatoire pour l'inscription à la bibliothèque</p>
+							</div>
 						</div>
 					</div>
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.moyen_paiement, {'attr': {'class': 'form-control select-height'}}) }}
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.montant_cotisation, {'attr': {'class': 'form-control p-4'}}) }}
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.moyen_paiement, {'attr': {'class': 'form-control select-height'}}) }}
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							{{ form_widget(form.etat_cotisation, {'attr': {'class': 'form-control select-height'}}) }}
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+								{{ form_widget(form.etat_cotisation, {'attr': {'class': 'form-control select-height'}}) }}
+							</div>
 						</div>
-					</div>
-					<div class="col">
-						<div class="form-group biblio-select">
-							<select type="radio" name="biblio" class="biblio form-control select-height" required>
-								<option value="">Inscription à la bibliothèque</option>
-								<option value="oui">Oui</option>
-								<option value="non">Non</option>
-							</select>
+						<div class="col">
+							<div class="form-group biblio-select">
+								<select type="radio" name="biblio" class="biblio form-control select-height" required>
+									<option value="">Inscription à la bibliothèque</option>
+									<option value="oui">Oui</option>
+									<option value="non">Non</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		{{macros.footer_color(section, return_path, arrow, envoi, continue, arrowClass, footerPadding )}}
+		{{macros.footer_color(section, return_path, arrow, envoi, continue, footerPadding )}}
 		{{ form_end(form)}}
 	</body>
 {% endblock %}

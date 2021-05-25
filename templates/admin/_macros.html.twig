@@ -30,8 +30,8 @@
 
 {# Macro pour l'affichage du footer avec couleur différente selon la section #}
 
-{% macro footer_color(section, return_path, arrow, envoi, continue, arrowClass, footerPadding) %}
-	<nav class="{{section}} admin-footer d-flex fixed-bottom align-items-center" data-controller="admin">
+{% macro footer_color(section, return_path, arrow, envoi, continue, footerPadding) %}
+	<nav class="{{section}} admin-footer d-flex fixed-bottom align-items-center">
 		{% if arrow %}
 			<a href="" class="prev invisible {{footerPadding}}">
 				<i class="fas fa-arrow-left fa-3x"></i>
@@ -43,7 +43,7 @@
 			</button>
 		</a>
 		{% if arrow %}
-			<a href="" class="{{arrowClass}} next {{footerPadding}}">
+			<a href="" class="next {{footerPadding}}">
 				<i class="fas fa-arrow-right fa-3x"></i>
 			</a>
 		{% endif %}
