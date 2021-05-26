@@ -11,7 +11,7 @@ export default class extends Controller {
 	connect() {
 		this.secondPartTarget.classList.add("d-none");
 		this.secondTitleTarget.classList.add("d-none");
-		this.envoiTarget.classList.add("d-none");
+		this.envoiTarget.style.display = "none";
 	}
 
 	continue(event) {
@@ -20,13 +20,18 @@ export default class extends Controller {
 		this.firstTitleTarget.classList.add("d-none");
 		this.secondPartTarget.classList.add("d-block");
 		this.secondTitleTarget.classList.add("d-block");
-		this.envoiTarget.classList.add("d-block");
-
-		console.log(event.currentTarget);
 	}
 	envoi(event) {
 		event.preventDefault();
 		console.log("envoyé");
+	}
+
+	toggleEnvoi(event) {
+		if (event.currentTarget.value === "oui") {
+			this.envoiTarget.style.display = "block";
+		} else {
+			this.envoiTarget.style.display = "none";
+		}
 	}
 }
 
