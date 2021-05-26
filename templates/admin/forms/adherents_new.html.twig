@@ -3,8 +3,10 @@
 
 
 {% set envoi = "<div class='envoi' data-action='click->arrows#envoi' data-arrows-target='envoi'>" ~ form_widget(form.save) ~ "</div>" %}
-{% set continue = "<div class='s-padding continue' data-action='click->arrows#continue'>" ~ form_widget(form.saveAndContinue) ~ "</div>" %}
-{% set footerPadding = 's-padding' %}
+{% set continue = "<div class='s-padding continue'  data-arrows-target='continue'>" ~ form_widget(form.saveAndContinue, {'attr' : {
+'data-action':'arrows#continue'
+}}) ~ "</div>" %}
+{# {% set footerPadding = 's-padding' %} #}
 
 {% block title %}Adhérents
 {% endblock %}
@@ -74,8 +76,8 @@
 						</div>
 						<div class="col">
 							<div class="form-group">
-								{{ form_widget(form.email, {'attr': {'class': 'form-control p-4'}}) }}
-								<p class="email-obligatoire d-none text-danger">Adresse email obligatoire pour l'inscription à la bibliothèque</p>
+								{{ form_widget(form.email, {'attr': {'class': 'form-control p-4',  'data-arrows-target':'email', 'data-action':'arrows#emailChange'}}) }}
+								<p class="email-obligatoire text-danger" data-arrows-target="emailObligatoire">Adresse email obligatoire pour l'inscription à la bibliothèque</p>
 							</div>
 						</div>
 					</div>
@@ -99,7 +101,7 @@
 						</div>
 						<div class="col">
 							<div class="form-group biblio-select">
-								<select type="radio" name="biblio" class="biblio form-control select-height" data-action="change->arrows#toggleEnvoi" required>
+								<select type="radio" name="biblio" class="biblio form-control select-height" data-action="change->arrows#toggleBiblio" data-arrows-target='select' required>
 									<option value="">Inscription à la bibliothèque</option>
 									<option value="oui">Oui</option>
 									<option value="non">Non</option>
@@ -110,7 +112,7 @@
 				</div>
 			</div>
 		</div>
-		{{macros.footer_color(section, return_path, arrow, envoi, continue, footerPadding )}}
+		{{macros.footer_color(section, return_path, arrow, envoi, continue )}}
 		{{ form_end(form)}}
 	</body>
 {% endblock %}

@@ -4,8 +4,8 @@
 
 {% set envoi = "<div>" ~ form_widget(form.save) ~ "</div>" %}
 {% set continue = "" %}
-{% set arrowClass = 'd-none' %}
-{% set footerPadding = 'm-padding' %}
+{# {% set arrowClass = 'd-none' %}
+{% set footerPadding = 'm-padding' %} #}
 {% set param = 'objets' %}
 
 
@@ -115,7 +115,7 @@
 					</div>
 				</div>
 			</div>
-			{{macros.footer_color(section, return_path, arrow, envoi, continue, arrowClass, footerPadding)}}
+			{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
 		</div>
 		{{ form_end(form)}}
 	</body>

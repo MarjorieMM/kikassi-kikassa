@@ -4,8 +4,8 @@
 
 {% set envoi = "<div class='d-block envoi'>" ~ form_widget(form.save, {'label' : '<div class="btn-text p-1 px-2">Valider les <br> informations<div>'}) ~ "</div>" %}
 {% set continue = "" %}
-{% set arrowClass = 'd-none' %}
-{% set footerPadding = 's-padding' %}
+{# {% set arrowClass = 'd-none' %}
+{% set footerPadding = 's-padding' %} #}
 
 {% block title %}Adhérents
 {% endblock %}
@@ -143,23 +143,23 @@
 </div>
 {{macros.footer_color(section, return_path, arrow, envoi, continue, arrowClass, footerPadding )}}
 {{ form_end(form)}}</body>{% endblock %}{% block footer %}{% endblock %}{# {% if adherent.adhesionBibliotheque is not null %}
-											<div class="col">
-												<div class="form-group biblio-select-edit">
-													<label for="biblio">Inscription à la bibliothèque</label>
-													<select type="radio" name="biblio" class="biblio form-control select-height" required disabled>
-														<option value="">Inscription à la bibliothèque</option>
-														<option value="oui" selected>Oui</option>
-														<option value="non">Non</option>
-													</select>
-												</div>
-											</div> #}{# {% else %}
-																	<div class="col">
-																		<div class="form-group biblio-select-edit">
-																			<label for="biblio">Inscription à la bibliothèque</label>
-																			<select type="radio" name="biblio" class="biblio form-control select-height" required>
-																				<option value="">Inscription à la bibliothèque</option>
-																				<option value="oui">Oui</option>
-																				<option value="non">Non</option>
-																			</select>
-																		</div>
-																	</div> #}{# {% endif %} #}
+												<div class="col">
+													<div class="form-group biblio-select-edit">
+														<label for="biblio">Inscription à la bibliothèque</label>
+														<select type="radio" name="biblio" class="biblio form-control select-height" required disabled>
+															<option value="">Inscription à la bibliothèque</option>
+															<option value="oui" selected>Oui</option>
+															<option value="non">Non</option>
+														</select>
+													</div>
+												</div> #}{# {% else %}
+																		<div class="col">
+																			<div class="form-group biblio-select-edit">
+																				<label for="biblio">Inscription à la bibliothèque</label>
+																				<select type="radio" name="biblio" class="biblio form-control select-height" required>
+																					<option value="">Inscription à la bibliothèque</option>
+																					<option value="oui">Oui</option>
+																					<option value="non">Non</option>
+																				</select>
+																			</div>
+																		</div> #}{# {% endif %} #}

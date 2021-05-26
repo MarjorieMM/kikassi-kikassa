@@ -3,9 +3,9 @@
 
 {% set envoi = "<div class='btn-text px-2 fourmi-form d-none'>" ~ form_widget(form.save, {'label' : 'Modifier <br> le Statut Fourmi'}) ~ "</div>" %}
 {% set continue = "" %}
-{% set arrowClass = 'invisible' %}
+{# {% set arrowClass = 'invisible' %} #}
 {% set arrow = true %}
-{% set footerPadding = 's-padding' %}
+{# {% set footerPadding = 's-padding' %} #}
 
 {% block fourmi %}
 
@@ -22,6 +22,6 @@
 			</div>
 		</div>
 	</div>
-	{{macros.footer_color(section, return_path, arrow, envoi, continue, arrowClass, footerPadding)}}
+	{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
 	{{ form_end(form)}}
 {% endblock %}

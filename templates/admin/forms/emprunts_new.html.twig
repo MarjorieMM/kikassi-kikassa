@@ -4,8 +4,8 @@
 
 {% set envoi = "<div>" ~ form_widget(form.save) ~ "</div>" %}
 {% set continue = "" %}
-{% set arrowClass = 'd-none' %}
-{% set footerPadding = 'm-padding' %}
+{# {% set arrowClass = 'd-none' %}
+{% set footerPadding = 'm-padding' %} #}
 {% set param = 'emprunts' %}
 
 {% block title %}Objets
@@ -22,8 +22,8 @@
 			<div class="col">
 				{% include '/admin/forms/adherent_search.html.twig' %}
 			</div>
-			<div class="col">
-				{% include '/admin/forms/objet_search.html.twig' %}
+			<div class="col">{% include '/admin/forms/objet_search.html.twig' %}
+
 			</div>
 			{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" }})}}
 			<input id='hidden-adh' hidden type="text" name='adherent'/>
@@ -48,7 +48,7 @@
 						</div>
 					</div>
 				</div>
-				{{macros.footer_color(section, return_path, arrow, envoi, continue, arrowClass, footerPadding)}}
+				{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
 			</div>
 		</div>
 		{{ form_end(form)}}

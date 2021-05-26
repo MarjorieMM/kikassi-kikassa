@@ -49,11 +49,30 @@ class EmpruntsListController extends AbstractController
         $objet = new Objet();
         $now = new \DateTime();
 
+        
+
         $formObjSearch = $this->createForm(SearchFormType::class);
         $formSearch = $this->createForm(SearchFormType::class);
         $form = $this->createForm(EmpruntFormType::class, $emprunt);
 
         $form->handleRequest($request);
+        
+
+        ///////////////////
+        $searchTerm = $request->query->get('q');
+        $objets = $objetRepository->findByText(
+            $searchTerm
+        );
+
+        if($request->query->get('preview')){
+            return $this->render('admin/forms/_searchObjet.html.twig', [
+                'objets' => $objets
+
+            ]);
+        }
+      
+
+        /////////////////////
 
         // Je récupère l'adhérent est je vérifie si c'est un adhérent ou super-admin
 
@@ -183,6 +202,8 @@ class EmpruntsListController extends AbstractController
             'formObjSearch' => $formObjSearch->createView(),
             'formSearch' => $formSearch->createView(),
             'submitted' => $submitted,
+            'searchTerm' => $searchTerm
+
         ]);
     }
 

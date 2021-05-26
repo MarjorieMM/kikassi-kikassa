@@ -8,6 +8,7 @@
 {% elseif param == 'adherent-passage-admin' %}
 	{% set modifTitle = 'Modifier le statut Admin d\'un Adhérent' %}
 {% endif %}
+
 {% block title %}Adhérents
 {% endblock %}
 
@@ -36,11 +37,11 @@
 			{% endif %}
 		</div>
 		{% if param == 'adherent-reinscription' %}
-			{% set arrowClass = 'invisible' %}
+			{# {% set arrowClass = 'invisible' %} #}
 			{% set arrow = true %}
-			{% set footerPadding = 's-padding' %}
+			{# {% set footerPadding = 's-padding' %} #}
 			{% set envoi = "" %}
-			{{macros.footer_color(section, return_path, arrow, envoi, continue, arrowClass, footerPadding)}}
+			{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
 		{% endif %}
 	</body>
 {% endblock %}
