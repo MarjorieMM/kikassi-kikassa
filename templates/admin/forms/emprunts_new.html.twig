@@ -7,12 +7,13 @@
 {# {% set arrowClass = 'd-none' %}
 {% set footerPadding = 'm-padding' %} #}
 {% set param = 'emprunts' %}
+{% set pageUrl = 'admin_emprunts_new' %}
 
 {% block title %}Objets
 {% endblock %}
 
 {% block body %}
-	<body class={{color}}>
+	<body class={{color}} {{stimulus_controller('search', {url: path( pageUrl )} )}}>
 		<div class="main-title font-raleway container">
 			<h1 class="text-center font-raleway mb-5">Enregistrement d'un emprunt d'objet</h1>
 			{{ macros.flash_message() }}
@@ -23,11 +24,10 @@
 				{% include '/admin/forms/adherent_search.html.twig' %}
 			</div>
 			<div class="col">{% include '/admin/forms/objet_search.html.twig' %}
-
 			</div>
 			{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" }})}}
-			<input id='hidden-adh' hidden type="text" name='adherent'/>
-			<input id='hidden-obj' hidden type="text" name='objet'/>
+			<input id='hidden-adh' hidden type="text" name='adherent' data-search-target='adherent'/>
+			<input id='hidden-obj' hidden type="text" name='objet' data-search-target='objet'/>
 			<div class="container">
 				<div class="row">
 					<div class="col">

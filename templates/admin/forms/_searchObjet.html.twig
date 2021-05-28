@@ -1,9 +1,23 @@
 {% if objets is defined %}
 	{% for objet in objets %}
 		<tr>
-			<td>{{objet.denomination}}</td>
-			<td>{{objet.marque}}</td>
-			<td>{{objet.statut}}</td>
+			<td class="text-center align-middle">{{objet.denomination}}</td>
+			<td class="text-center align-middle">{{objet.marque}}</td>
+			<td class="text-center align-middle ">{{objet.statut}}</td>
+			<td class="text-center align-middle">{{objet.valeurachat}}</td>
+			<td class="text-center align-middle">
+				{% for emprunt in objet.emprunts %}
+					du
+					{{emprunt.datedebut|date("d/m/Y")}}
+					au
+					{{emprunt.datefin|date("d/m/Y")}}
+					<br>
+				{% endfor %}
+			</td>
+			<td class="text-center align-middle">
+				<input type="radio" name="selected" data-search-target="selected" data-objet-id={{objet.id}} data-action='click->search#select'></td>
 		</tr>
 	{% endfor %}
+
+
 {% endif %}
