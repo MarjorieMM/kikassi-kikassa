@@ -8,20 +8,27 @@ export default class extends Controller {
 		adherentId: Number,
 		adherentNom: String,
 		adherentPrenom: String,
+		adherentAdmin: String,
 	};
 	static targets = [
 		"selectedAdh",
 		"selectedObj",
 		"objet",
 		"adherent",
+		"adherentAdmin",
 		"adhResult",
 		"objResult",
 		"btn",
+		"adminSelect",
+		"adminStatus",
+		"biblioMessage",
 	];
 	static debounces = ["search"];
 
 	connect() {
-		this.btnTarget.classList.add("d-none");
+		if (this.hasBtnTarget) {
+			this.btnTarget.classList.add("d-none");
+		}
 		useDebounce(this);
 	}
 
@@ -44,7 +51,6 @@ export default class extends Controller {
 			});
 			const response = await fetch(`${this.urlValue}?${params.toString()}`);
 			this.adhResultTarget.innerHTML = await response.text();
-			console.log("target => ", this.adhResultTarget.innerHTML);
 		}
 	}
 
@@ -63,11 +69,28 @@ export default class extends Controller {
 		const adherent = event.currentTarget;
 		const adherents = this.selectedAdhTargets;
 		const selAdherentId = event.currentTarget.dataset.adherentId;
-		this.adherentTarget.value = selAdherentId;
+		if (this.hasAdherentTarget) {
+			this.adherentTarget.value = selAdherentId;
+		}
+		if (this.hasAdherentAdminTarget) {
+			this.adherentAdminTarget.value = selAdherentId;
+		}
 		this.highlight(adherent, adherents);
-		if (this.btnTarget) {
+		if (this.hasBtnTarget) {
 			this.btnTarget.classList.remove("d-none");
 			this.btnTarget.textContent = `Modifier les infos de ${adherent.dataset.adherentPrenom} ${adherent.dataset.adherentNom}`;
+		}
+		if (this.hasAdminSelectTarget) {
+			if (adherent.dataset.adherentAdmin === "biblio") {
+				this.adminSelectTarget.classList.add("d-none");
+				this.biblioMessageTarget.classList.remove("d-none");
+				this.biblioMessageTarget.innerHTML =
+					"Adhérent non inscrit à la Bibliothèque des Objets";
+			} else {
+				this.adminStatusTarget.value = adherent.dataset.adherentAdmin;
+				this.biblioMessageTarget.classList.add("d-none");
+				this.adminSelectTarget.classList.remove("d-none");
+			}
 		}
 	}
 

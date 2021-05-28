@@ -8,20 +8,30 @@
 
 {% block admin %}
 
-	<form method='post' novalidate:'novalidate'>
-		<input id='hidden-adh' hidden type="text" name='adherent' class='input'/>
+	<form
+		method='post' novalidate:'novalidate'>
+		{# <input id='hidden-adh' hidden type="text" name='adherent' class='input' data-search-target="adherentAdmin"/> #}
 		<div class="container">
 			<div class="row modif-message text-center"></div>
 			<div class="row">
-				<div class="col">
+				<div class="col-12">
 					<div class='admin-warning'></div>
-					<div class="form-group admin-select d-none">
+				</div>
+				<div class="col-12">
+					<div class="form-group admin-select d-none" data-search-target='adminSelect'>
 						<label for="admin">Enlever / ajouter des droits Admin</label>
-						<select type="radio" name="admin" id="admin-form" class="form-control select-height" required></select>
+						<select type="radio" name="admin" id="admin-form" class="form-control select-height" data-search-target='adminStatus' required>
+							<option value="">Choisir...</option>
+							<option value="oui">Oui</option>
+							<option value="non">Non</option>
+						</select>
 					</div>
+				</div>
+				<div class="col-12">
+					<div class="alert alert-warning text-center d-none" role="alert" data-search-target="biblioMessage"></div>
 				</div>
 			</div>
 		</div>
-		{{macros.footer_color(section, return_path, arrow, envoi, continue, arrowClass, footerPadding)}}
+		{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
 	</form>
 {% endblock %}

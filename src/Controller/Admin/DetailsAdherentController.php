@@ -215,10 +215,12 @@ class DetailsAdherentController extends AbstractController
        
         if($request->query->get('previewadh')){
             return $this->render('admin/forms/_searchAdherent.html.twig', [
-                'adherents' => $adherents
+                'adherents' => $adherents,
+                'param' =>$param
             ]);
         }
 
+      
         $adherent = $adherentRepository->findOneById(
             $request->request->get('adherent')
         );
@@ -258,12 +260,13 @@ class DetailsAdherentController extends AbstractController
             }
         }
         // Pour le passage d'un adhérent en Admin :
-
+        dump($adherent);
         if ($adherent && $param == 'adherent-passage-admin') {
             $biblio = new AdhesionBibliotheque();
             $biblio = $adherent->getAdhesionBibliotheque();
             $admin = $request->request->get('admin');
-            $admin == 'ROLE_ADMIN'
+            dump($admin);
+            $admin == 'oui'
                 ? $biblio->setRoles(['ROLE_ADMIN'])
                 : $biblio->setRoles(['ROLE_USER']);
             $manager->persist($biblio);
