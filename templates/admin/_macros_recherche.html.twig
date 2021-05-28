@@ -1,13 +1,17 @@
 {# Macro pour l'affichage des modules de recherche #}
 
-{% macro search_module(label, item, param, select, theads, searchTerm ) %}
+{% macro search_module(label, item, param, select, theads, searchTerm, searchAdh ) %}
 	<div class="container my-2 mb-4 search-{{item}} d-block">
 		<div class="row mx-4 justify-content-center">
 			<div class="form-inline font-raleway flex-nowrap">
 				<label class="mr-4" for="nom">{{label|raw}}
 				</label>
 				<div class="input-group">
-					<input name="q" value="{{ searchTerm }}" placeholder="Recherchez un {{item}}" type="search" class="form-control select-height mr-4" data-action='search#onSearchInput'>
+					{% if item == 'objet' %}
+						<input name="obj" value="{{ searchTerm }}" placeholder="Recherchez un {{item}}" type="search" class="form-control select-height mr-4" data-action='search#onSearchInput'>
+					{% else %}
+						<input name="adh" value="{{ searchAdh }}" placeholder="Recherchez un {{item}}" type="search" class="form-control select-height mr-4" data-action='search#onSearchInput'>
+					{% endif %}
 				</div>
 			</div>
 		</div>
@@ -26,7 +30,12 @@
 								{% endfor %}
 							</tr>
 						</thead>
-						<tbody id="search-results-{{item}}" data-search-target="result"></tbody>
+						{% if item == 'objet' %}
+							<tbody id="search-results-{{item}}" data-search-target="objResult"></tbody>
+						{% else %}
+							<tbody id="search-results-{{item}}" data-search-target="adhResult"></tbody>
+						{% endif %}
+
 					</table>
 					<div class="d-flex justify-content-between align-items-center mb-3">
 						<div id="selected-{{item}}"></div>

@@ -8,12 +8,14 @@
 {% elseif param == 'adherent-passage-admin' %}
 	{% set modifTitle = 'Modifier le statut Admin d\'un Adhérent' %}
 {% endif %}
+{% set pageUrl = 'admin_adherents_modif' %}
+{% set colorSection = 'adherents'%}
 
 {% block title %}Adhérents
 {% endblock %}
 
 {% block body %}
-	<body class={{color}}>
+	<body class={{color}} {{stimulus_controller('search', {url: path( pageUrl, {param: param} )} )}}>
 		<div class="main-title font-raleway container">
 			{% if param == 'adherent-reinscription' %}
 				<h1 class="text-center font-raleway mb-5">Rechercher un adhérent à modifier / réinscrire</h1>
@@ -26,8 +28,10 @@
 			{% include '/admin/forms/adherent_search.html.twig' %}
 			{% if param == 'adherent-reinscription' %}
 				<form method="post" class='d-flex justify-content-center'>
-					<input id='hidden-adh' hidden type="text" name='adherent' class='input'/>
-					<div id="hidden-btn"></div>
+					<input id='hidden-adh' hidden type="text" name='adherent' data-search-target='adherent'/>
+
+					<button id="hidden-btn" data-search-target='btn' type="submit" class='btn btn-danger p-3'></button>
+
 				</form>
 			{% endif %}
 			{% if param == 'adherent-changement-fourmi' %}

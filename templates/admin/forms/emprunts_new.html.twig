@@ -6,7 +6,7 @@
 {% set continue = "" %}
 {# {% set arrowClass = 'd-none' %}
 {% set footerPadding = 'm-padding' %} #}
-{% set param = 'emprunts' %}
+{% set colorSection = 'emprunts' %}
 {% set pageUrl = 'admin_emprunts_new' %}
 
 {% block title %}Objets
@@ -23,7 +23,8 @@
 			<div class="col">
 				{% include '/admin/forms/adherent_search.html.twig' %}
 			</div>
-			<div class="col">{% include '/admin/forms/objet_search.html.twig' %}
+			<div class="col">
+				{% include '/admin/forms/objet_search.html.twig' %}
 			</div>
 			{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" }})}}
 			<input id='hidden-adh' hidden type="text" name='adherent' data-search-target='adherent'/>

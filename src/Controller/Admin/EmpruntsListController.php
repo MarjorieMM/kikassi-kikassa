@@ -50,28 +50,44 @@ class EmpruntsListController extends AbstractController
         $now = new \DateTime();
 
         
-
-        $formObjSearch = $this->createForm(SearchFormType::class);
-        $formSearch = $this->createForm(SearchFormType::class);
         $form = $this->createForm(EmpruntFormType::class, $emprunt);
 
         $form->handleRequest($request);
         
 
         ///////////////////
-        $searchTerm = $request->query->get('q');
+        //Partie recherche de l'emprunteur
+
+        $searchAdh = $request->query->get('adh');
+        $isAdh = $adherentRepository->findByNomPrenom(
+          $searchAdh
+        );
+        $isAdmin = $superAdminRepository->findByNomPrenom(
+          $searchAdh
+        );
+            $adherents = ['adh' => $isAdh, 'sadmin' => $isAdmin];
+
+        if($request->query->get('previewadh')){
+            return $this->render('admin/forms/_searchAdherent.html.twig', [
+                'adherents' => $adherents
+            ]);
+        }
+
+    ///////////////////
+    
+        //Partie recherche de l'objet
+    
+     $searchTerm = $request->query->get('obj');
         $objets = $objetRepository->findByText(
             $searchTerm
         );
-
-        if($request->query->get('preview')){
+        
+        if($request->query->get('previewobj')){
             return $this->render('admin/forms/_searchObjet.html.twig', [
                 'objets' => $objets
-
             ]);
         }
       
-
         /////////////////////
 
         // Je récupère l'adhérent est je vérifie si c'est un adhérent ou super-admin
@@ -86,6 +102,7 @@ class EmpruntsListController extends AbstractController
         $adherent
             ? $emprunt->setAdherent($adherent)
             : $emprunt->setSuperAdmin($admin);
+
 
         // Je récupère l'objet
 
@@ -151,7 +168,7 @@ class EmpruntsListController extends AbstractController
                             );
                         } else {
                             $emprunt->setObjet($objet);
-                            //je set le statut de l'emprunt et je le met à "en cours" si l'emprunt débute aujourd'hui ou à "accepté par l'admin" si non
+                            //je set le statut de l'emprunt et je le met à "en cours" si l'emprunt débute aujourd'hui ou à "accepté par l'admin" sinon
 
                             $emprunt->setStatut(
                                 $emprunt->getDateDebut() == $now
@@ -199,10 +216,9 @@ class EmpruntsListController extends AbstractController
             'return_path' => 'menu-emprunt',
             'color' => 'emprunts-color',
             'form' => $form->createView(),
-            'formObjSearch' => $formObjSearch->createView(),
-            'formSearch' => $formSearch->createView(),
             'submitted' => $submitted,
-            'searchTerm' => $searchTerm
+            'searchTerm' => $searchTerm,
+            'searchAdh' =>$searchAdh
 
         ]);
     }

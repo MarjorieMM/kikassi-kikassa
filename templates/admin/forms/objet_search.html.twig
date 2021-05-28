@@ -1,11 +1,11 @@
-{% import './admin/_macros_recherche.html.twig' as macros %}
+{% import './admin/_macros.html.twig' as macros %}
 
 {% set label = 'Rechercher un objet avec un nom' %}
 {% set item = 'objet' %}
 {% set select = 'objet' %}
-{% set param = 'emprunts' %}
-{# {% set pageUrl = 'admin_emprunts_new' %} #}
+{# {% set colorSection = 'emprunts' %} #}
 {% set theads = ['Dénomination', 'Marque', 'Statut', 'Montant <br> de dépôt de garantie', 'dates emprunts', 'Séléction' ] %}
+{% set searchAdh = '' %}
 
 
-{{macros.search_module(label, item, param, select, theads, searchTerm) }}
+{{macros.search_module(label, item, colorSection, select, theads, searchTerm, searchAdh) }}

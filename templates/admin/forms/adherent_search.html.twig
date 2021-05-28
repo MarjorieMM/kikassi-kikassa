@@ -4,8 +4,12 @@
 {% set label = 'Rechercher un adhérent / super-admin <br> avec un nom ou un prénom' %}
 {% set item = 'adherent' %}
 {% set select = 'adhérent' %}
-{% set form = formSearch %}
-{% set theads = ['Nom', 'Prénom', 'Email', 'Séléction'] %}
+{# {% set param = 'emprunts' %} #}
+{# {% set colorSection = 'adherents' %} #}
+{% set searchTerm = '' %}
 
 
-{{macros.search_module(form, label, item, param, select, theads) }}
+{% set theads = ['Nom', 'Prénom', 'Email','Statut', 'Séléction'] %}
+
+
+{{macros.search_module(label, item, colorSection, select, theads, searchTerm) }}

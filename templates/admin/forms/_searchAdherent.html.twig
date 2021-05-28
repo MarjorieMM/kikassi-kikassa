@@ -1,0 +1,31 @@
+{% if adherents is defined %}
+	{% for key, adherent in adherents %}
+		{% if key == 0 %}
+			{% for adherent in adherents %}
+				<tr>
+					<td class="text-center align-middle">{{adherent.nom}}</td>
+					<td class="text-center align-middle">{{adherent.prenom}}</td>
+					<td class="text-center align-middle ">{{adherent.email}}</td>
+					<td class="text-center align-middle ">
+						-
+					</td>
+					<td class="text-center align-middle">
+						<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-id={{adherent.id}} data-adherent-nom={{adherent.nom}} data-adherent-prenom={{adherent.prenom}} data-action='click->search#selectAdh'>
+					</td>
+				</tr>
+			{% endfor %}
+		{% else %}
+			{% for adh in adherent %}
+				<tr>
+					<td class="text-center align-middle">{{adh.nom}}</td>
+					<td class="text-center align-middle">{{adh.prenom}}</td>
+					<td class="text-center align-middle ">{{adh.email}}</td>
+					<td class="text-center align-middle ">{{key == 'sadmin' ? "Super Admin" : "Adhérent"}}</td>
+					<td class="text-center align-middle">
+						<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-id={{adh.id}} data-action='click->search#selectAdh'>
+					</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+{% endif %}

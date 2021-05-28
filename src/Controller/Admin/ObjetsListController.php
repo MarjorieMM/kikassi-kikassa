@@ -83,9 +83,20 @@ class ObjetsListController extends AbstractController
         SousCategorieRepository $ssCatRepository
     ): Response {
         $objet = new Objet();
-        $formSearch = $this->createForm(SearchFormType::class);
+        // $formSearch = $this->createForm(SearchFormType::class);
         $formCat = $this->createForm(CategorieFormType::class);
         $form = $this->createForm(ObjetFormType::class, $objet);
+
+        $searchAdh = $request->query->get('adh');
+        $adherents = $adherentRepository->findByNomPrenom(
+          $searchAdh
+        );
+       
+        if($request->query->get('previewadh')){
+            return $this->render('admin/forms/_searchAdherent.html.twig', [
+                'adherents' => $adherents
+            ]);
+        }
 
         $adherent = $adherentRepository->findOneById(
             $request->request->get('adherent')
@@ -144,7 +155,7 @@ class ObjetsListController extends AbstractController
             'return_path' => 'menu-objet',
             'color' => 'objets-color',
             'form' => $form->createView(),
-            'formSearch' => $formSearch->createView(),
+            // 'formSearch' => $formSearch->createView(),
             'submitted' => $submitted,
             'formCat' => $formCat->createView(),
         ]);

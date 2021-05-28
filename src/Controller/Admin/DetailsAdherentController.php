@@ -207,9 +207,17 @@ class DetailsAdherentController extends AbstractController
         Request $request,
         EntityManagerInterface $manager
     ): Response {
-        $formSearch = $this->createForm(SearchFormType::class);
 
-        $formSearch->handleRequest($request);
+        $searchAdh = $request->query->get('adh');
+        $adherents = $adherentRepository->findByNomPrenom(
+          $searchAdh
+        );
+       
+        if($request->query->get('previewadh')){
+            return $this->render('admin/forms/_searchAdherent.html.twig', [
+                'adherents' => $adherents
+            ]);
+        }
 
         $adherent = $adherentRepository->findOneById(
             $request->request->get('adherent')
@@ -275,10 +283,11 @@ class DetailsAdherentController extends AbstractController
             'return_path' => 'menu-adherent',
             'section' => 'section-adherents',
             'color' => 'adherents-color',
-            'formSearch' => $formSearch->createView(),
+            // 'formSearch' => $formSearch->createView(),
             'form' => $form->createView(),
             'param' => $param,
             'submitted' => $submitted,
+            'searchAdh' =>$searchAdh
         ]);
     }
     #[Route('/admin/details/adherent/bon_adhesion/{slug}', name: 'admin_adherents_adh_pdf')]
