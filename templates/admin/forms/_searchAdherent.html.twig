@@ -1,10 +1,9 @@
-{# {{param is defined ? dump(param) : dump('pas param')}} #}
+{{param is defined ? dump(param) : dump('pas param')}}
 {% set role = "" %}
 
 {% if adherents is defined %}
 	{% for key, adherent in adherents %}
 		{% if key == 0 %}
-			{# {{dump('key = 0')}} #}
 			{% for adherent in adherents %}
 				{% if param == "adherent-reinscription" %}
 					{% set actif = adherent.dateadhesion|date_modify("+1 year")|date('Y-m-d') > "now"|date('Y-m-d') ? "Inscription valide" : "Inscription périmée" %}

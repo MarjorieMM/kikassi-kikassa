@@ -4,8 +4,6 @@
 
 {% set envoi = "<div>" ~ form_widget(form.save) ~ "</div>" %}
 {% set continue = "" %}
-{# {% set arrowClass = 'd-none' %}
-{% set footerPadding = 'm-padding' %} #}
 {% set colorSection = 'emprunts' %}
 {% set pageUrl = 'admin_emprunts_new' %}
 
@@ -14,7 +12,7 @@
 
 {% block body %}
 	<body class={{color}} {{stimulus_controller('search', {url: path( pageUrl )} )}}>
-		<div class="main-title font-raleway container">
+		<div class="main-title font-raleway container" data-controller="hide-arrows">
 			<h1 class="text-center font-raleway mb-5">Enregistrement d'un emprunt d'objet</h1>
 			{{ macros.flash_message() }}
 			<div class="container">
@@ -27,7 +25,6 @@
 				{% include '/admin/forms/objet_search.html.twig' %}
 			</div>
 			{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" }})}}
-			{# <input type="hidden" data-search-target="adhz"> #}
 			<input type="hidden" name='adherent' data-search-target='adherent'/>
 			<input type="hidden" name='objet' data-search-target='objet'/>
 			<div class="container">
@@ -50,7 +47,7 @@
 						</div>
 					</div>
 				</div>
-				{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
+				{{macros.footer_color(section, return_path, envoi, continue)}}
 			</div>
 		</div>
 		{{ form_end(form)}}

@@ -6,7 +6,6 @@
 {% set continue = "<div class='s-padding continue'  data-arrows-target='continue'>" ~ form_widget(form.saveAndContinue, {'attr' : {
 'data-action':'arrows#continue'
 }}) ~ "</div>" %}
-{# {% set footerPadding = 's-padding' %} #}
 
 {% block title %}Adhérents
 {% endblock %}
@@ -112,7 +111,7 @@
 				</div>
 			</div>
 		</div>
-		{{macros.footer_color(section, return_path, arrow, envoi, continue )}}
+		{{macros.footer_color(section, return_path, envoi, continue )}}
 		{{ form_end(form)}}
 	</body>
 {% endblock %}

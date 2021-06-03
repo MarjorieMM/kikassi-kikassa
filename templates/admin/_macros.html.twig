@@ -30,29 +30,34 @@
 
 {# Macro pour l'affichage du footer avec couleur différente selon la section #}
 
-{% macro footer_color(section, return_path, arrow, envoi, continue) %}
-	<nav class="{{section}} admin-footer d-flex fixed-bottom align-items-center">
-		{% if arrow %}
-			<a href="" class="prev" data-hide-arrows-target='prev' data-arrows-target='prev'>
-				<i class="fas fa-arrow-left fa-3x"></i>
-			</a>
-		{% endif %}
-		<a href="{{ path(return_path) }}">
-			<button type='button' class='btn bar-btn'>
-				<div class="font-raleway btn-text">Retour au menu</div>
-			</button>
-		</a>
-		{% if arrow %}
-			<a href="" class="next" data-action='arrows#nextPage' data-arrows-target='next' data-hide-arrows-target='next'>
-				<i class="fas fa-arrow-right fa-3x"></i>
-			</a>
-		{% endif %}
-		{% if envoi %}
-			{{envoi|raw}}
-		{% endif %}
-		{% if continue %}
-			{{continue|raw}}
-		{% endif %}
+{% macro footer_color(section, return_path, envoi, continue) %}
+	<nav class="{{section}} admin-footer fixed-bottom align-items-center">
+		<div class="row h-100 mx-3">
+			<div class="col-4 text-center m-auto">
+				<a href="" class="prev" data-hide-arrows-target='prev' data-arrows-target='prev'>
+					<i class="fas fa-arrow-left fa-3x"></i>
+				</a>
+			</div>
+			<div class="col-4 text-center m-auto">
+				<a href="{{ path(return_path) }}">
+					<button type='button' class='btn bar-btn'>
+						<div class="font-raleway btn-text">Retour au menu</div>
+					</button>
+				</a>
+			</div>
+			<div class="col-4 text-center m-auto">
+				<a href="" class="next" data-action='arrows#nextPage' data-arrows-target='next' data-hide-arrows-target='next'>
+					<i class="fas fa-arrow-right fa-3x"></i>
+				</a>
+				{% if envoi %}
+					{{envoi|raw}}
+				{% endif %}
+				{% if continue %}
+					{{continue|raw}}
+				{% endif %}
+			</div>
+		</div>
+
 	</nav>
 {% endmacro %}
 
@@ -86,7 +91,7 @@
 
 {# Macro pour l'affichage des modules de recherche #}
 
-{% macro search_module(label, item, colorSection,  select, theads, searchTerm, searchAdh ) %}
+{% macro search_module(label, item, colorSection, select, theads, searchTerm, searchAdh ) %}
 	<div class="container my-2 mb-4 search-{{item}} d-block">
 		<div class="row mx-4 justify-content-center">
 			<div class="form-inline font-raleway flex-nowrap">

@@ -5,7 +5,7 @@
 {% set vitrine = objet.vitrine ? "Oui" : "Non" %}
 
 {% block body %}
-	<body class={{color}}>
+	<body class={{color}} data-controller="hide-arrows">
 		<div class="container d-flex align-items-center">
 			<div class=" bg-bons vw-100">
 				<h3 class="text-center font-raleway my-4">Informations de l'objet n°
@@ -23,7 +23,7 @@
 				<div class="row font-raleway-small px-sm-1 px-md-5">
 					<div class="col-6">
 						<p>
-													<strong>Dénomination :
+							<strong>Dénomination :
 							</strong>
 							{{objet.denomination|capitalize}}</p>
 						<p>

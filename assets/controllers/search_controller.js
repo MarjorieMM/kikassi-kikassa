@@ -28,6 +28,7 @@ export default class extends Controller {
 		"btnFourmi",
 		"adminStatus",
 		"envoi",
+		"proprio",
 	];
 	static debounces = ["search"];
 
@@ -70,6 +71,13 @@ export default class extends Controller {
 		});
 		row.classList.add("text-success");
 	}
+	toggleProprio(event) {
+		if (event.currentTarget.value === "adherent") {
+			this.proprioTarget.classList.remove("d-none");
+		} else {
+			this.proprioTarget.classList.add("d-none");
+		}
+	}
 
 	selectAdh(event) {
 		const adherent = event.currentTarget;
@@ -84,10 +92,6 @@ export default class extends Controller {
 			this.fourmiStatusTarget.value = adherent.dataset.adherentFourmi;
 			this.btnFourmiTarget.classList.remove("d-none");
 		}
-		// if (this.hasAdherentAdminTarget) {
-		// 	console.log("admin");
-		// 	this.adherentAdminTarget.value = selAdherentId;
-		// }
 		this.highlight(adherent, adherents);
 		if (this.hasBtnTarget) {
 			this.btnTarget.classList.remove("d-none");

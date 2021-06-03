@@ -32,7 +32,7 @@
 
 
 {% block body %}
-	<body class={{color}}>
+	<body class={{color}} data-controller="hide-arrows">
 		<div class="main-title font-raleway container">
 			{% if biblio is null %}
 				<h1 class="text-center font-raleway mb-5">Inscription de :
@@ -114,9 +114,7 @@
 				</div>
 			</div>
 		</div>
-		<div data-controller='hide-arrows'>
-			{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
-		</div>
+		{{macros.footer_color(section, return_path, envoi, continue)}}
 		{{ form_end(form)}}
 	</body>
 {% endblock %}

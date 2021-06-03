@@ -1,15 +1,11 @@
-{# {% extends './admin/base-admin.html.twig' %} #}
 {% import './admin/_macros.html.twig' as macros %}
 
 {% set envoi = "<div class='btn-text px-2 d-none' data-search-target='btnFourmi'>" ~ form_widget(form.save, {'label' : 'Modifier <br> le Statut Fourmi'}) ~ "</div>" %}
 {% set continue = "" %}
-{# {% set arrowClass = 'invisible' %} #}
-{% set arrow = true %}
-{# {% set footerPadding = 's-padding' %} #}
 
 {% block fourmi %}
 
-	<div class="container">
+	<div class="container" data-controller="hide-arrows">
 		{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" }})}}
 		<input type="hidden" name='adherent' data-search-target='adherent'/>
 		<h4 class="text-center m-4" data-search-target='modifMessage'></h4>
@@ -20,7 +16,7 @@
 				</div>
 			</div>
 		</div>
-		{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
+		{{macros.footer_color(section, return_path, envoi, continue)}}
 		{{ form_end(form)}}
 	</div>
 {% endblock %}

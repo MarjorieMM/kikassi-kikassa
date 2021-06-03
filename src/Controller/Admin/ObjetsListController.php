@@ -14,6 +14,7 @@ use App\Repository\AdherentRepository;
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\SousCategorieRepository;
+use App\Repository\SuperAdminRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -80,19 +81,35 @@ class ObjetsListController extends AbstractController
         Request $request,
         EntityManagerInterface $manager,
         AdherentRepository $adherentRepository,
-        SousCategorieRepository $ssCatRepository
+        SousCategorieRepository $ssCatRepository,
+        SuperAdminRepository $superAdminRepository
     ): Response {
         $objet = new Objet();
-        // $formSearch = $this->createForm(SearchFormType::class);
+
         $formCat = $this->createForm(CategorieFormType::class);
         $form = $this->createForm(ObjetFormType::class, $objet);
 
+        ///////////////////
+        //Partie recherche de l'emprunteur
+
         $searchAdh = $request->query->get('adh');
-        $adherents = $adherentRepository->findByNomPrenom(
-          $searchAdh
+        $isAdh = $adherentRepository->findByNomPrenom(
+            $searchAdh
         );
-       
-        if($request->query->get('previewadh')){
+        $isAdmin = $superAdminRepository->findByNomPrenom(
+            $searchAdh
+        );
+        $adherents = ['adh' => $isAdh, 'sadmin' => $isAdmin];
+
+        if ($request->query->get('previewadh')) {
+            return $this->render('admin/forms/_searchAdherent.html.twig', [
+                'adherents' => $adherents
+            ]);
+        }
+
+        ///////////////////
+
+        if ($request->query->get('previewadh')) {
             return $this->render('admin/forms/_searchAdherent.html.twig', [
                 'adherents' => $adherents
             ]);

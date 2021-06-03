@@ -4,16 +4,15 @@
 
 {% set envoi = "<div>" ~ form_widget(form.save) ~ "</div>" %}
 {% set continue = "" %}
-{# {% set arrowClass = 'd-none' %}
-{% set footerPadding = 'm-padding' %} #}
 {% set colorSection = 'objets' %}
+{% set pageUrl = 'admin_objets_new' %}
 
 
 {% block title %}Objets
 {% endblock %}
 
 {% block body %}
-	<body class={{color}}>
+	<body class={{color}} {{stimulus_controller('search', {url: path( pageUrl )} )}}>
 		<div class="main-title font-raleway container">
 			<h1 class="text-center font-raleway mb-5">Ajout d'un Nouvel Objet à la Bibliothèque</h1>
 			<div class="container">
@@ -21,7 +20,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="form-group proprio-select">
-						<select name="proprio" class="proprio form-control select-height" required>
+						<select name="proprio" class="proprio form-control select-height" required data-action="change->search#toggleProprio">
 							<option value="">L'objet appartient à</option>
 							<option value="association">L'Association</option>
 							<option value="adherent">Un adhérent</option>
@@ -29,10 +28,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="search-module d-none">
+			<div class="search-module d-none" data-search-target="proprio">
 				{% include '/admin/forms/adherent_search.html.twig' %}</div>
 			{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" ,  'enctype':'multipart/form-data' }})}}
-			<input id='hidden-adh' hidden type="text" name='adherent'/>
+			<input type="hidden" name='adherent' data-search-target='adherent'/>
 			<div class="row">
 				<div class="col">
 					<div class="form-group">
@@ -115,7 +114,9 @@
 					</div>
 				</div>
 			</div>
-			{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
+			<div data-controller="hide-arrows">
+				{{macros.footer_color(section, return_path, envoi, continue)}}
+			</div>
 		</div>
 		{{ form_end(form)}}
 	</body>

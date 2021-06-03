@@ -80,11 +80,14 @@ class DetailsAdherentController extends AbstractController
                 $adherent->setCompteActif(true);
                 $adherent->setDateAdhesion($now);
             }
+
             $biblio = $adherent->getAdhesionBibliotheque();
-            $biblio->setEmail($adherent->getEmail());
+            if ($biblio) {
+                $biblio->setEmail($adherent->getEmail());
+                $manager->persist($biblio);
+            }
 
             $manager->persist($adherent);
-            $manager->persist($biblio);
             $manager->flush();
 
             /** @var ClickableInterface $button  */
@@ -141,7 +144,7 @@ class DetailsAdherentController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/adherents/edit/biblio/{id}', name:'admin_adherents_edit_bilio')]
+    #[Route('/admin/adherents/edit/biblio/{id}', name: 'admin_adherents_edit_bilio')]
 
     public function editBiblioAdherent(
         $id,
@@ -210,17 +213,17 @@ class DetailsAdherentController extends AbstractController
 
         $searchAdh = $request->query->get('adh');
         $adherents = $adherentRepository->findByNomPrenom(
-          $searchAdh
+            $searchAdh
         );
-       
-        if($request->query->get('previewadh')){
+
+        if ($request->query->get('previewadh')) {
             return $this->render('admin/forms/_searchAdherent.html.twig', [
                 'adherents' => $adherents,
-                'param' =>$param
+                'param' => $param
             ]);
         }
 
-      
+
         $adherent = $adherentRepository->findOneById(
             $request->request->get('adherent')
         );
@@ -290,7 +293,7 @@ class DetailsAdherentController extends AbstractController
             'form' => $form->createView(),
             'param' => $param,
             'submitted' => $submitted,
-            'searchAdh' =>$searchAdh
+            'searchAdh' => $searchAdh
         ]);
     }
     #[Route('/admin/details/adherent/bon_adhesion/{slug}', name: 'admin_adherents_adh_pdf')]

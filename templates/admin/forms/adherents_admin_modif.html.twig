@@ -2,9 +2,6 @@
 
 {% set envoi = "<div class='btn-text px-2 admin-form d-none' data-search-target='envoi'><button type='submit' class='envoi-btn font-raleway p-2'>Modifier <br> status admin</button></div>" %}
 {% set continue = "" %}
-{# {% set arrowClass = 'd-none' %} #}
-{% set arrow = true %}
-{# {% set footerPadding = 's-padding' %} #}
 
 {% block admin %}
 	<div class="container" data-controller="hide-arrows">
@@ -24,7 +21,7 @@
 				</div>
 			</div>
 
-			{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
+			{{macros.footer_color(section, return_path, envoi, continue)}}
 		</form>
 	</div>
 {% endblock %}
