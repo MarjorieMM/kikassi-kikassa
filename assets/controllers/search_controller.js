@@ -9,6 +9,7 @@ export default class extends Controller {
 		adherentNom: String,
 		adherentPrenom: String,
 		adherentAdmin: String,
+		adherentFourmi: String,
 	};
 	static targets = [
 		"selectedAdh",
@@ -19,9 +20,14 @@ export default class extends Controller {
 		"adhResult",
 		"objResult",
 		"btn",
-		"adminSelect",
+		"adminForm",
 		"adminStatus",
-		"biblioMessage",
+		"fourmiForm",
+		"modifMessage",
+		"fourmiStatus",
+		"btnFourmi",
+		"adminStatus",
+		"envoi",
 	];
 	static debounces = ["search"];
 
@@ -72,25 +78,26 @@ export default class extends Controller {
 		if (this.hasAdherentTarget) {
 			this.adherentTarget.value = selAdherentId;
 		}
-		if (this.hasAdherentAdminTarget) {
-			this.adherentAdminTarget.value = selAdherentId;
+		if (this.hasFourmiFormTarget) {
+			this.fourmiFormTarget.classList.remove("d-none");
+			this.modifMessageTarget.innerHTML = `Modifier le statut fourmi de ${adherent.dataset.adherentPrenom} ${adherent.dataset.adherentNom}`;
+			this.fourmiStatusTarget.value = adherent.dataset.adherentFourmi;
+			this.btnFourmiTarget.classList.remove("d-none");
 		}
+		// if (this.hasAdherentAdminTarget) {
+		// 	console.log("admin");
+		// 	this.adherentAdminTarget.value = selAdherentId;
+		// }
 		this.highlight(adherent, adherents);
 		if (this.hasBtnTarget) {
 			this.btnTarget.classList.remove("d-none");
 			this.btnTarget.textContent = `Modifier les infos de ${adherent.dataset.adherentPrenom} ${adherent.dataset.adherentNom}`;
 		}
-		if (this.hasAdminSelectTarget) {
-			if (adherent.dataset.adherentAdmin === "biblio") {
-				this.adminSelectTarget.classList.add("d-none");
-				this.biblioMessageTarget.classList.remove("d-none");
-				this.biblioMessageTarget.innerHTML =
-					"Adhérent non inscrit à la Bibliothèque des Objets";
-			} else {
-				this.adminStatusTarget.value = adherent.dataset.adherentAdmin;
-				this.biblioMessageTarget.classList.add("d-none");
-				this.adminSelectTarget.classList.remove("d-none");
-			}
+		if (this.hasAdminFormTarget) {
+			this.adminStatusTarget.value = adherent.dataset.adherentAdmin;
+			this.modifMessageTarget.innerHTML = `Modifier le statut Administrateur de ${adherent.dataset.adherentPrenom} ${adherent.dataset.adherentNom}`;
+			this.adminFormTarget.classList.remove("d-none");
+			this.envoiTarget.classList.remove("d-none");
 		}
 	}
 

@@ -49,45 +49,45 @@ class EmpruntsListController extends AbstractController
         $objet = new Objet();
         $now = new \DateTime();
 
-        
+
         $form = $this->createForm(EmpruntFormType::class, $emprunt);
 
         $form->handleRequest($request);
-        
+
 
         ///////////////////
         //Partie recherche de l'emprunteur
 
         $searchAdh = $request->query->get('adh');
         $isAdh = $adherentRepository->findByNomPrenom(
-          $searchAdh
+            $searchAdh
         );
         $isAdmin = $superAdminRepository->findByNomPrenom(
-          $searchAdh
+            $searchAdh
         );
-            $adherents = ['adh' => $isAdh, 'sadmin' => $isAdmin];
+        $adherents = ['adh' => $isAdh, 'sadmin' => $isAdmin];
 
-        if($request->query->get('previewadh')){
+        if ($request->query->get('previewadh')) {
             return $this->render('admin/forms/_searchAdherent.html.twig', [
                 'adherents' => $adherents
             ]);
         }
 
-    ///////////////////
-    
+        ///////////////////
+
         //Partie recherche de l'objet
-    
-     $searchTerm = $request->query->get('obj');
+
+        $searchTerm = $request->query->get('obj');
         $objets = $objetRepository->findByText(
             $searchTerm
         );
-        
-        if($request->query->get('previewobj')){
+
+        if ($request->query->get('previewobj')) {
             return $this->render('admin/forms/_searchObjet.html.twig', [
                 'objets' => $objets
             ]);
         }
-      
+
         /////////////////////
 
         // Je récupère l'adhérent est je vérifie si c'est un adhérent ou super-admin
@@ -99,6 +99,7 @@ class EmpruntsListController extends AbstractController
             $request->request->get('adherent')
         );
 
+
         $adherent
             ? $emprunt->setAdherent($adherent)
             : $emprunt->setSuperAdmin($admin);
@@ -108,9 +109,12 @@ class EmpruntsListController extends AbstractController
 
         $objet = $objetRepository->findOneById($request->request->get('objet'));
 
+        dump($request->request->get('objet'));
+
         $submitted = $form->isSubmitted() ? 'was-validated' : '';
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $dateFin = $form
                 ->get('date_fin')
                 ->getData()
@@ -218,7 +222,7 @@ class EmpruntsListController extends AbstractController
             'form' => $form->createView(),
             'submitted' => $submitted,
             'searchTerm' => $searchTerm,
-            'searchAdh' =>$searchAdh
+            'searchAdh' => $searchAdh
 
         ]);
     }

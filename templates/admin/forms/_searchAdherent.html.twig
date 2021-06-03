@@ -4,37 +4,51 @@
 {% if adherents is defined %}
 	{% for key, adherent in adherents %}
 		{% if key == 0 %}
+			{# {{dump('key = 0')}} #}
 			{% for adherent in adherents %}
-				<tr>
-					<td class="text-center align-middle">{{adherent.nom}}</td>
-					<td class="text-center align-middle">{{adherent.prenom}}</td>
-					<td class="text-center align-middle ">{{adherent.email}}</td>
-					<td class="text-center align-middle ">
-						{% if param == "adherent-passage-admin" %}
-							{% if adherent.adhesionBibliotheque %}
-								{% if adherent.adhesionBibliotheque.roles|length < 2 %}
-									N'est pas administrateur
-									{% set role = "non" %}
-								{% else %}
-									Est administrateur
-									{% set role = "oui" %}
-								{% endif %}
-							{% else %}
-								Non inscrit à la Biliothèque des Objets
-							{% endif %}
-						{% elseif param == "adherent-changement-fourmi" %}
-							{% if adherent.adhesionBibliotheque %}
-								{{adherent.adhesionBibliotheque.categoriefourmi}}
-							{% else %}
-								Non inscrit à la Biliothèque des Objets
-							{% endif %}
-						{% endif %}
+				{% if param == "adherent-reinscription" %}
+					{% set actif = adherent.dateadhesion|date_modify("+1 year")|date('Y-m-d') > "now"|date('Y-m-d') ? "Inscription valide" : "Inscription périmée" %}
+					{% set invalidClass = actif == "Inscription périmée" ? "text-danger": ""%}
+					<tr class="{{invalidClass}}">
+						<td class="text-center align-middle">{{adherent.nom}}</td>
+						<td class="text-center align-middle">{{adherent.prenom}}</td>
+						<td class="text-center align-middle ">{{adherent.email}}</td>
+						<td class="text-center align-middle ">{{actif}}</td>
+						<td class="text-center align-middle">
+							<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-id={{adherent.id}} data-adherent-nom={{adherent.nom}} data-adherent-prenom={{adherent.prenom}} data-action="click->search#selectAdh">
+						</td>
+					</tr>
+				{% else %}
+					{% if adherent.adhesionBibliotheque %}
+						<tr>
+							<td class="text-center align-middle">{{adherent.nom}}</td>
+							<td class="text-center align-middle">{{adherent.prenom}}</td>
+							<td class="text-center align-middle ">{{adherent.email}}</td>
+							<td class="text-center align-middle ">
+								{% if param == "adherent-passage-admin" %}
+									{% if adherent.adhesionBibliotheque.roles|length < 2 %}
+										N'est pas administrateur
+										{% set role = "non" %}
+									{% else %}
+										Est administrateur
+										{% set role = "oui" %}
+									{% endif %}
 
-					</td>
-					<td class="text-center align-middle">
-						<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-admin={{ adherent.adhesionBibliotheque ? role : "biblio" }} data-adherent-id={{adherent.id}} data-adherent-nom={{adherent.nom}} data-adherent-prenom={{adherent.prenom}} data-action="click->search#selectAdh">
-					</td>
-				</tr>
+								{% elseif param == "adherent-changement-fourmi" %}
+									{% if adherent.adhesionBibliotheque %}
+										{{adherent.adhesionBibliotheque.categoriefourmi}}
+									{% else %}
+										Non inscrit à la Biliothèque des Objets
+									{% endif %}
+								{% endif %}
+
+							</td>
+							<td class="text-center align-middle">
+								<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-admin={{ role }} data-adherent-id={{adherent.id}} data-adherent-nom={{adherent.nom}} data-adherent-prenom={{adherent.prenom}} data-adherent-fourmi={{ adherent.adhesionBibliotheque ? adherent.adhesionBibliotheque.categoriefourmi : 'non-biblio'}} data-action="click->search#selectAdh">
+							</td>
+						</tr>
+					{% endif %}
+				{% endif %}
 			{% endfor %}
 		{% else %}
 			{% for adh in adherent %}

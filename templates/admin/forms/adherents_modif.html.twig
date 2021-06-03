@@ -16,37 +16,38 @@
 
 {% block body %}
 	<body class={{color}} {{stimulus_controller('search', {url: path( pageUrl, {param: param} )} )}}>
-		<div class="main-title font-raleway container">
-			{% if param == 'adherent-reinscription' %}
-				<h1 class="text-center font-raleway mb-5">Rechercher un adhérent à modifier / réinscrire</h1>
-			{% else %}
-				<h1 class="text-center font-raleway mb-5">{{ modifTitle }}</h1>
-			{% endif %}
-			<div class="container">
-				{% include './admin/error_mess.html.twig' %}
+		<div data-controller="hide-arrows">
+			<div class="main-title font-raleway container">
+				{% if param == 'adherent-reinscription' %}
+					<h1 class="text-center font-raleway mb-5">Rechercher un adhérent à modifier / réinscrire</h1>
+				{% else %}
+					<h1 class="text-center font-raleway mb-5">{{ modifTitle }}</h1>
+				{% endif %}
+				<div class="container">
+					{% include './admin/error_mess.html.twig' %}
+				</div>
+				{% include '/admin/forms/adherent_search.html.twig' %}
+				{% if param == 'adherent-reinscription' %}
+					<form method="post" class='d-flex justify-content-center'>
+						<input type="hidden" name='adherent' data-search-target='adherent'/>
+						<button id="hidden-btn" data-search-target='btn' type="submit" class='btn btn-danger p-3'></button>
+
+					</form>
+				{% endif %}
+				{% if param == 'adherent-changement-fourmi' %}
+					{% include '/admin/forms/adherents_fourmi_modif.html.twig' %}
+				{% elseif param == 'adherent-passage-admin' %}
+					{% include '/admin/forms/adherents_admin_modif.html.twig' %}
+				{% endif %}
 			</div>
-			{% include '/admin/forms/adherent_search.html.twig' %}
 			{% if param == 'adherent-reinscription' %}
-				<form method="post" class='d-flex justify-content-center'>
-					<input id='hidden-adh' hidden type="text" name='adherent' data-search-target='adherent'/>
-
-					<button id="hidden-btn" data-search-target='btn' type="submit" class='btn btn-danger p-3'></button>
-
-				</form>
-			{% endif %}
-			{% if param == 'adherent-changement-fourmi' %}
-				{% include '/admin/forms/adherents_fourmi_modif.html.twig' %}
-			{% elseif param == 'adherent-passage-admin' %}
-				{% include '/admin/forms/adherents_admin_modif.html.twig' %}
+				{# {% set arrowClass = 'invisible' %} #}
+				{% set arrow = true %}
+				{# {% set footerPadding = 's-padding' %} #}
+				{% set envoi = "" %}
+				{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
 			{% endif %}
 		</div>
-		{% if param == 'adherent-reinscription' %}
-			{# {% set arrowClass = 'invisible' %} #}
-			{% set arrow = true %}
-			{# {% set footerPadding = 's-padding' %} #}
-			{% set envoi = "" %}
-			{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
-		{% endif %}
 	</body>
 {% endblock %}
 {% block footer %}{% endblock %}

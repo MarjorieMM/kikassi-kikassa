@@ -213,7 +213,7 @@ export default class extends Controller {
 				} else if (json.param === "adherent-passage-admin") {
 					if (json.adherent == null) {
 						$(".admin-warning").append(
-							"<div class='alert-danger text-center p-2'>Ne fonctionne pas avec les utilisateurs ayant des droits de'Super Admin'</div>"
+							"<div class='alert-danger text-center p-2'>Ne fonctionne pas avec les utilisateurs ayant des droits de 'Super Admin'</div>"
 						);
 					} else {
 						$(".admin-warning").empty();

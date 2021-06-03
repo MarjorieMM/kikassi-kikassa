@@ -1,25 +1,20 @@
 {% import './admin/_macros.html.twig' as macros %}
 
-{% set envoi = "<div class='btn-text px-2 admin-form d-block'><button type='submit' class='envoi-btn font-raleway'>Modifier <br> status admin</button></div>" %}
+{% set envoi = "<div class='btn-text px-2 admin-form d-none' data-search-target='envoi'><button type='submit' class='envoi-btn font-raleway p-2'>Modifier <br> status admin</button></div>" %}
 {% set continue = "" %}
 {# {% set arrowClass = 'd-none' %} #}
 {% set arrow = true %}
 {# {% set footerPadding = 's-padding' %} #}
 
 {% block admin %}
-
-	<form
-		method='post' novalidate:'novalidate'>
-		{# <input id='hidden-adh' hidden type="text" name='adherent' class='input' data-search-target="adherentAdmin"/> #}
-		<div class="container">
-			<div class="row modif-message text-center"></div>
+	<div class="container" data-controller="hide-arrows">
+		<form method='post' novalidate='novalidate'>
+			<input type="hidden" name='adherent' data-search-target='adherent'/>
+			<h4 class="text-center m-4" data-search-target='modifMessage'></h4>
 			<div class="row">
 				<div class="col-12">
-					<div class='admin-warning'></div>
-				</div>
-				<div class="col-12">
-					<div class="form-group admin-select d-none" data-search-target='adminSelect'>
-						<label for="admin">Enlever / ajouter des droits Admin</label>
+					<div class="form-group admin-select d-none" data-search-target='adminForm'>
+						<label for="admin">Ajouter des droits admin :</label>
 						<select type="radio" name="admin" id="admin-form" class="form-control select-height" data-search-target='adminStatus' required>
 							<option value="">Choisir...</option>
 							<option value="oui">Oui</option>
@@ -27,11 +22,9 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-12">
-					<div class="alert alert-warning text-center d-none" role="alert" data-search-target="biblioMessage"></div>
-				</div>
 			</div>
-		</div>
-		{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
-	</form>
+
+			{{macros.footer_color(section, return_path, arrow, envoi, continue)}}
+		</form>
+	</div>
 {% endblock %}

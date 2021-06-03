@@ -19,9 +19,9 @@ class BiblioFormType extends AbstractType
                 'label' => 'Catégorie fourmi',
                 'placeholder' => 'Choisir une Catégorie Fourmi',
                 'choices' => [
-                    'Verte' => 'verte',
-                    'Bleue' => 'bleue',
-                    'Dorée' => 'dorée',
+                    'Verte' => 'Verte',
+                    'Bleue' => 'Bleue',
+                    'Dorée' => 'Dorée',
                 ],
             ])
             ->add('depot_permanent', ChoiceType::class, [
@@ -43,7 +43,7 @@ class BiblioFormType extends AbstractType
                 'widget' => 'single_text',
                 'attr' => [
                     'placeholder' =>
-                        'Date de fin de la responsabilité civile (si donnée), format : 10/05/1950',
+                    'Date de fin de la responsabilité civile (si donnée), format : 10/05/1950',
                 ],
                 'input' => 'datetime',
                 'html5' => false,
@@ -68,7 +68,7 @@ class BiblioFormType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'label' =>
-                    '<div class="btn-text px-2">Valider l\'inscription <br> à la Bibliothèque</div>',
+                '<div class="btn-text px-2">Valider l\'inscription <br> à la Bibliothèque</div>',
                 'label_html' => true,
                 'attr' => ['class' => 'envoi-btn font-raleway'],
             ]);

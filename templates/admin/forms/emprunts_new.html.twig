@@ -27,8 +27,9 @@
 				{% include '/admin/forms/objet_search.html.twig' %}
 			</div>
 			{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" }})}}
-			<input id='hidden-adh' hidden type="text" name='adherent' data-search-target='adherent'/>
-			<input id='hidden-obj' hidden type="text" name='objet' data-search-target='objet'/>
+			{# <input type="hidden" data-search-target="adhz"> #}
+			<input type="hidden" name='adherent' data-search-target='adherent'/>
+			<input type="hidden" name='objet' data-search-target='objet'/>
 			<div class="container">
 				<div class="row">
 					<div class="col">

@@ -18,14 +18,14 @@ class FourmiFormType extends AbstractType
                 'label' => 'Catégorie fourmi',
                 'placeholder' => 'Choisir une Catégorie Fourmi',
                 'choices' => [
-                    'Verte' => 'verte',
-                    'Bleue' => 'bleue',
-                    'Dorée' => 'dorée',
+                    'Verte' => 'Verte',
+                    'Bleue' => 'Bleue',
+                    'Dorée' => 'Dorée',
                 ],
             ])
             ->add('save', SubmitType::class, [
                 'label' =>
-                    '<div class="btn-text px-2">Valider l\'inscription <br> à la Bibliothèque</div>',
+                '<div class="btn-text px-2">Valider l\'inscription <br> à la Bibliothèque</div>',
                 'label_html' => true,
                 'attr' => ['class' => 'envoi-btn font-raleway'],
             ]);
