@@ -82,15 +82,19 @@ class ObjetsListController extends AbstractController
         EntityManagerInterface $manager,
         AdherentRepository $adherentRepository,
         SousCategorieRepository $ssCatRepository,
+        CategorieRepository $catRepository,
         SuperAdminRepository $superAdminRepository
     ): Response {
         $objet = new Objet();
+        $categories = $catRepository->findAll();
+        $sousCategories = $ssCatRepository->findAll();
 
-        $formCat = $this->createForm(CategorieFormType::class);
+        $formCat = $this->createForm(CategorieFormType::class, null, ['categories' => $categories, 'sousCategories' => $sousCategories]);
+
         $form = $this->createForm(ObjetFormType::class, $objet);
 
         ///////////////////
-        //Partie recherche de l'emprunteur
+        // Partie recherche de l'emprunteur
 
         $searchAdh = $request->query->get('adh');
         $isAdh = $adherentRepository->findByNomPrenom(
@@ -109,18 +113,16 @@ class ObjetsListController extends AbstractController
 
         ///////////////////
 
-        if ($request->query->get('previewadh')) {
-            return $this->render('admin/forms/_searchAdherent.html.twig', [
-                'adherents' => $adherents
-            ]);
-        }
-
         $adherent = $adherentRepository->findOneById(
             $request->request->get('adherent')
         );
         $ssCat = $ssCatRepository->findOneById(
             $request->request->get('ss_cat')
         );
+        $cat = $catRepository->findOneByName(
+            $request->request->get('cat')
+        );
+        dump($cat); // null si non existant
 
         $objet->setAdherent($adherent);
         $objet->setSousCategorie($ssCat);
@@ -175,6 +177,8 @@ class ObjetsListController extends AbstractController
             // 'formSearch' => $formSearch->createView(),
             'submitted' => $submitted,
             'formCat' => $formCat->createView(),
+            'sousCategories' => $sousCategories,
+            'categories' => $categories
         ]);
     }
 
@@ -185,7 +189,7 @@ class ObjetsListController extends AbstractController
         SousCategorieRepository $ssCatRepo
     ): Response {
         $ssCats = new SousCategorie();
-        $data = $request->request->get('data');
+        $data = $request->request->get('cat');
         $ssCats = $ssCatRepo->findBy(['categorie' => $data]);
         return $this->json($ssCats, 200, [], ['groups' => 'categorie']);
     }

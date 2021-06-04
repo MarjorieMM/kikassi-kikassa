@@ -58,24 +58,25 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" data-controller="categories">
 				<div class="col">
 					<div class="form-group">
 						{{ form_widget(form.lieu, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
 				</div>
 				<div class="col">
-					<div class="form-group categorie-select">
-						{{ form_widget(formCat.categorie, {'attr': {'class': 'form-control select-height'}}) }}
-					</div>
-					{# {{ form_widget(form.sous_categorie, {'attr': {'class': 'form-control select-height'}}) }} #}
-
+					<input class="form-control select-height" list="datalistOptions" name='cat' data-action='change->categories#selCategorie' data-categories-target='selCat' placeholder="Choisir ou entrer une nouvelle Catégorie">
+					<datalist id="datalistOptions">
+						{% for categorie in categories %}
+							<option value={{categorie.nomcategorie}}></option>
+						{% endfor %}
+					</datalist>
 				</div>
 				<div class="col ss-cat">
-					<div class="form-group">
-						<select class="form-control select-height" id="ss-cat-select" name="ss-cat-sel"></select>
+					<div class="form-group categorie-select">
+						{{ form_widget(formCat.souscategories, {'attr': {'class': 'form-control select-height', 'data-categories-target':'selSousCat' }}) }}
 					</div>
-					<input id='hidden-cat' hidden type="text" name='ss_cat'/>
+					<input type="hidden" name='sscat' data-categories-target="hiddenSousCat"/>
 				</div>
 			</div>
 			<div class="row">
@@ -112,6 +113,7 @@
 					<div class="form-group">
 						{{ form_widget(form.vitrine, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
+
 				</div>
 			</div>
 			<div data-controller="hide-arrows">
