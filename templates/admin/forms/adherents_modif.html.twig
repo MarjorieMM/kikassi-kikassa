@@ -41,11 +41,10 @@
 				{% endif %}
 			</div>
 			{% if param == 'adherent-reinscription' %}
-				{# {% set arrowClass = 'invisible' %} #}
-				{# {% set footerPadding = 's-padding' %} #}
 				{% set envoi = "" %}
-			{{macros.footer_color(section, return_path,  envoi, continue)}}
-		{% endif %}
-	</div>
-</body>
-{% endblock %}{% block footer %}{% endblock %}
+				{{macros.footer_color(section, return_path,  envoi, continue)}}
+			{% endif %}
+		</div>
+	</body>
+{% endblock %}
+{% block footer %}{% endblock %}

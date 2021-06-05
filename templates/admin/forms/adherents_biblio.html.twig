@@ -57,13 +57,13 @@
 		{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" }})}}
 		<div class="container">
 			<div class="row">
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{biblio is not null ? form_label(form.categorie_fourmi) : "" }}
 						{{ form_widget(form.categorie_fourmi ,  {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
 				</div>
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{biblio is not null ?  form_label(form.depot_permanent) : ""  }}
 						{{ form_widget(form.depot_permanent, {'attr': {'class': 'form-control select-height'}}) }}
@@ -71,14 +71,14 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{biblio is not null ? form_label(form.fin_rc) : "" }}
 						{{ form_widget(form.fin_rc, {'attr': {'class': 'form-control p-4'}}) }}
 					</div>
 				</div>
 				{% if biblio is not null %}
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group admin-select">
 							<label for="admin">Possède des droits admin</label>
 							<select type="radio" name="admin" class="admin form-control select-height" required>
@@ -88,7 +88,7 @@
 						</div>
 					</div>
 				{% else %}
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group admin-select">
 							<select type="radio" name="admin" class="admin form-control select-height" required>
 								<option value="">Donner des droits admin</option>
@@ -100,13 +100,13 @@
 				{% endif %}
 			</div>
 			<div class="row">
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{biblio is not null ?  form_label(form.justif_identite) : "" }}
 						{{ form_widget(form.justif_identite, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
 				</div>
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{biblio is not null ?  form_label(form.justif_domicile) : ""  }}
 						{{ form_widget(form.justif_domicile, {'attr': {'class': 'form-control select-height'}}) }}

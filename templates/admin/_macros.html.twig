@@ -33,19 +33,19 @@
 {% macro footer_color(section, return_path, envoi, continue) %}
 	<nav class="{{section}} admin-footer fixed-bottom align-items-center">
 		<div class="row h-100 mx-3">
-			<div class="col-4 text-center m-auto">
+			<div class="col col-sm-4 text-center my-auto">
 				<a href="" class="prev" data-hide-arrows-target='prev' data-arrows-target='prev'>
 					<i class="fas fa-arrow-left fa-3x"></i>
 				</a>
 			</div>
-			<div class="col-4 text-center m-auto">
+			<div class="col col-sm-4 text-center my-auto">
 				<a href="{{ path(return_path) }}">
-					<button type='button' class='btn bar-btn'>
-						<div class="font-raleway btn-text">Retour au menu</div>
+					<button type='button' class='btn bar-btn font-raleway btn-text'>
+						Retour au menu
 					</button>
 				</a>
 			</div>
-			<div class="col-4 text-center m-auto">
+			<div class="col col-sm-4 text-center my-auto">
 				<a href="" class="next" data-action='arrows#nextPage' data-arrows-target='next' data-hide-arrows-target='next'>
 					<i class="fas fa-arrow-right fa-3x"></i>
 				</a>

@@ -5,62 +5,88 @@
 	{% for key, adherent in adherents %}
 		{% if key == 0 %}
 			{% for adherent in adherents %}
-				{% if param == "adherent-reinscription" %}
-					{% set actif = adherent.dateadhesion|date_modify("+1 year")|date('Y-m-d') > "now"|date('Y-m-d') ? "Inscription valide" : "Inscription périmée" %}
-					{% set invalidClass = actif == "Inscription périmée" ? "text-danger": ""%}
-					<tr class="{{invalidClass}}">
-						<td class="text-center align-middle">{{adherent.nom}}</td>
-						<td class="text-center align-middle">{{adherent.prenom}}</td>
-						<td class="text-center align-middle ">{{adherent.email}}</td>
-						<td class="text-center align-middle ">{{actif}}</td>
-						<td class="text-center align-middle">
-							<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-id={{adherent.id}} data-adherent-nom={{adherent.nom}} data-adherent-prenom={{adherent.prenom}} data-action="click->search#selectAdh">
-						</td>
-					</tr>
-				{% else %}
-					{% if adherent.adhesionBibliotheque %}
-						<tr>
+				{% set actif = adherent.dateadhesion|date_modify("+1 year")|date('Y-m-d') > "now"|date('Y-m-d') %}
+				{% set biblio = adherent.adhesionBibliotheque %}
+				{% set invalidClass = actif ? "": "text-danger" %}
+				{% set nonBiblioClass = biblio ? "": "text-danger" %}
+				{% set actifText = actif ? "Inscription valide" : "Inscription périmée" %}
+				{% if param is defined %}
+					{% if param == "adherent-reinscription" %}
+						<tr class="{{invalidClass}}">
 							<td class="text-center align-middle">{{adherent.nom}}</td>
 							<td class="text-center align-middle">{{adherent.prenom}}</td>
 							<td class="text-center align-middle ">{{adherent.email}}</td>
-							<td class="text-center align-middle ">
-								{% if param == "adherent-passage-admin" %}
-									{% if adherent.adhesionBibliotheque.roles|length < 2 %}
-										N'est pas administrateur
-										{% set role = "non" %}
-									{% else %}
-										Est administrateur
-										{% set role = "oui" %}
-									{% endif %}
-
-								{% elseif param == "adherent-changement-fourmi" %}
-									{% if adherent.adhesionBibliotheque %}
-										{{adherent.adhesionBibliotheque.categoriefourmi}}
-									{% else %}
-										Non inscrit à la Biliothèque des Objets
-									{% endif %}
-								{% endif %}
-
-							</td>
+							<td class="text-center align-middle ">{{actifText}}</td>
 							<td class="text-center align-middle">
-								<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-admin={{ role }} data-adherent-id={{adherent.id}} data-adherent-nom={{adherent.nom}} data-adherent-prenom={{adherent.prenom}} data-adherent-fourmi={{ adherent.adhesionBibliotheque ? adherent.adhesionBibliotheque.categoriefourmi : 'non-biblio'}} data-action="click->search#selectAdh">
+								<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-id={{adherent.id}} data-adherent-nom={{adherent.nom}} data-adherent-prenom={{adherent.prenom}} data-action="click->search#selectAdh">
 							</td>
 						</tr>
+					{% else %}
+						{% if biblio %}
+							<tr>
+								<td class="text-center align-middle">{{adherent.nom}}</td>
+								<td class="text-center align-middle">{{adherent.prenom}}</td>
+								<td class="text-center align-middle ">{{adherent.email}}</td>
+								<td class="text-center align-middle ">
+									{% if param == "adherent-passage-admin" %}
+										{% if adherent.adhesionBibliotheque.roles|length < 2 %}
+											N'est pas administrateur
+											{% set role = "non" %}
+										{% else %}
+											Est administrateur
+											{% set role = "oui" %}
+										{% endif %}
+									{% elseif param == "adherent-changement-fourmi" %}
+										{% if adherent.adhesionBibliotheque %}
+											{{adherent.adhesionBibliotheque.categoriefourmi}}
+										{% else %}
+											Non inscrit à la Biliothèque des Objets
+										{% endif %}
+									{% endif %}
+								</td>
+								<td class="text-center align-middle">
+									<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-admin={{ role }} data-adherent-id={{adherent.id}} data-adherent-nom={{adherent.nom}} data-adherent-prenom={{adherent.prenom}} data-adherent-fourmi={{ adherent.adhesionBibliotheque ? adherent.adhesionBibliotheque.categoriefourmi : 'non-biblio'}} data-action="click->search#selectAdh">
+								</td>
+							</tr>
+						{% endif %}
 					{% endif %}
-				{% endif %}
-			{% endfor %}
-		{% else %}
-			{% for adh in adherent %}
-				<tr>
-					<td class="text-center align-middle">{{adh.nom}}</td>
-					<td class="text-center align-middle">{{adh.prenom}}</td>
-					<td class="text-center align-middle ">{{adh.email}}</td>
-					<td class="text-center align-middle ">{{key == 'sadmin' ? "Super Admin" : "Adhérent"}}</td>
-					<td class="text-center align-middle">
-						<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-id={{adh.id}} data-action='click->search#selectAdh'>
-					</td>
+				{% else %}
+					<tr class="{{invalidClass}} {{nonBiblioClass}}">
+						<td class="text-center align-middle">{{adherent.nom}}</td>
+						<td class="text-center align-middle">{{adherent.prenom}}</td>
+						<td class="text-center align-middle ">{{adherent.email}}</td>
+						{% if biblio %}
+							<td class="text-center align-middle">
+								Est inscrit à la Bibliothèque des objets ({{actifText}})
+							</td>
+						</td>
+						<td class="text-center align-middle">
+							{% if actif %}
+								<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-id={{adherent.id}} data-adherent-nom={{adherent.nom}} data-adherent-prenom={{adherent.prenom}} data-action="click->search#selectAdh">
+							{% else %}
+								-
+							{% endif %}
+						</td>
+					{% else %}
+						<td class="text-center align-middle">
+							N'est pas inscrit à la Bibliothèque des objets
+						</td>
+						<td class="text-center align-middle">-</td>
+					{% endif %}
 				</tr>
-			{% endfor %}
-		{% endif %}
-	{% endfor %}
-{% endif %}
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		{% for adh in adherent %}
+			<tr>
+				<td class="text-center align-middle">{{adh.nom}}</td>
+				<td class="text-center align-middle">{{adh.prenom}}</td>
+				<td class="text-center align-middle ">{{adh.email}}</td>
+				<td class="text-center align-middle ">{{key == 'sadmin' ? "Super Admin" : "Adhérent"}}</td>
+				<td class="text-center align-middle">
+					<input type="radio" name="selectedAdh" data-search-target="selectedAdh" data-adherent-id={{adh.id}} data-action='click->search#selectAdh'>
+				</td>
+			</tr>
+		{% endfor %}
+	{% endif %}
+{% endfor %}{% endif %}

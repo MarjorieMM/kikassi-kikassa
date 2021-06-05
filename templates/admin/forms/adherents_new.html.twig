@@ -23,24 +23,24 @@
 			<div>
 				<div class="container" data-arrows-target="firstPart">
 					<div class="row">
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.nom, {'attr': {'class': 'form-control p-4'}}) }}
 							</div>
 						</div>
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.prenom, {'attr': {'class': 'form-control p-4'}}) }}
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.date_naissance, {'attr': {'class': 'form-control p-4'}}) }}
 							</div>
 						</div>
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.lieu_naissance, {'attr': {'class': 'form-control p-4'}}) }}
 							</div>
@@ -54,12 +54,12 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.cp, {'attr': {'class': 'form-control p-4'}}) }}
 							</div>
 						</div>
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.ville, {'attr': {'class': 'form-control p-4'}}) }}
 							</div>
@@ -68,12 +68,12 @@
 				</div>
 				<div class="container" data-arrows-target="secondPart">
 					<div class="row">
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.telephone, {'attr': {'class': 'form-control p-4'}}) }}
 							</div>
 						</div>
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.email, {'attr': {'class': 'form-control p-4',  'data-arrows-target':'email', 'data-action':'arrows#emailChange'}}) }}
 								<p class="email-obligatoire text-danger" data-arrows-target="emailObligatoire">Adresse email obligatoire pour l'inscription à la bibliothèque</p>
@@ -81,24 +81,24 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.montant_cotisation, {'attr': {'class': 'form-control p-4'}}) }}
 							</div>
 						</div>
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.moyen_paiement, {'attr': {'class': 'form-control select-height'}}) }}
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								{{ form_widget(form.etat_cotisation, {'attr': {'class': 'form-control select-height'}}) }}
 							</div>
 						</div>
-						<div class="col">
+						<div class="col-12 col-lg-6">
 							<div class="form-group biblio-select">
 								<select type="radio" name="biblio" class="biblio form-control select-height" data-action="change->arrows#toggleBiblio" data-arrows-target='select' required>
 									<option value="">Inscription à la bibliothèque</option>

@@ -20,7 +20,6 @@ export default class extends Controller {
 			preview: 1,
 		});
 		const response = await fetch(`${this.urlValue}?${params.toString()}`);
-		console.log(response);
 		this.foundSsCatTarget.innerHTML = await response.text();
 	}
 }

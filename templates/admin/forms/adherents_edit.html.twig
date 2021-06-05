@@ -39,13 +39,13 @@
 			</div>
 			<div class="container">
 				<div class="row">
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group">
 							{{ form_label(form.nom) }}
 							{{ form_widget(form.nom, {'attr': {'class': 'form-control p-4'}}) }}
 						</div>
 					</div>
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group">
 							{{ form_label(form.prenom) }}
 							{{ form_widget(form.prenom, {'attr': {'class': 'form-control p-4'}}) }}
@@ -53,13 +53,13 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group">
 							{{ form_label(form.date_naissance) }}
 							{{ form_widget(form.date_naissance, {'attr': {'class': 'form-control p-4'}}) }}
 						</div>
 					</div>
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group">
 							{{ form_label(form.lieu_naissance) }}
 							{{ form_widget(form.lieu_naissance, {'attr': {'class': 'form-control p-4'}}) }}
@@ -75,13 +75,13 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group">
 							{{ form_label(form.cp) }}
 							{{ form_widget(form.cp, {'attr': {'class': 'form-control p-4'}}) }}
 						</div>
 					</div>
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group">
 							{{ form_label(form.ville) }}
 							{{ form_widget(form.ville, {'attr': {'class': 'form-control p-4'}}) }}
@@ -89,13 +89,13 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group">
 							{{ form_label(form.telephone) }}
 							{{ form_widget(form.telephone, {'attr': {'class': 'form-control p-4'}}) }}
 						</div>
 					</div>
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group">
 							{{ form_label(form.email) }}
 							{{ form_widget(form.email, {'attr': {'class': 'form-control p-4'}}) }}
@@ -103,14 +103,14 @@
 					</div>
 				</div>
 				<div class="row text-nowrap">
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group">
 							{{ form_label(form.montant_cotisation) }}
 							{{ form_widget(form.montant_cotisation, {'attr': {'class': 'form-control select-height'}
 							}) }}
 						</div>
 					</div>
-					<div class="col">
+					<div class="col-12 col-lg-6">
 						<div class="form-group">
 							{{ form_label(form.moyen_paiement) }}
 							{{ form_widget(form.moyen_paiement, {'attr': {'class': 'form-control select-height'}, value : valuePaie|lower
@@ -124,7 +124,6 @@
 						</div>
 					</div>
 				</div>
-
 				{% if adherent.adhesionbibliotheque is not null %}
 					<div class="mt-4 row text-center">
 						<div class="col">{{form_widget(form.saveAndContinue, {'label': 'Modifier <br> l\'Inscription à la Bibliothèque', 'attr' : {'class' : 'btn btn-danger p-2'} })}}</div>
@@ -140,24 +139,4 @@
 	</body>
 </div>
 {{macros.footer_color(section, return_path, envoi, continue )}}
-{{ form_end(form)}}</body>{% endblock %}{% block footer %}{% endblock %}{# {% if adherent.adhesionBibliotheque is not null %}
-																<div class="col">
-																	<div class="form-group biblio-select-edit">
-																		<label for="biblio">Inscription à la bibliothèque</label>
-																		<select type="radio" name="biblio" class="biblio form-control select-height" required disabled>
-																			<option value="">Inscription à la bibliothèque</option>
-																			<option value="oui" selected>Oui</option>
-																			<option value="non">Non</option>
-																		</select>
-																	</div>
-																</div> #}{# {% else %}
-																						<div class="col">
-																							<div class="form-group biblio-select-edit">
-																								<label for="biblio">Inscription à la bibliothèque</label>
-																								<select type="radio" name="biblio" class="biblio form-control select-height" required>
-																									<option value="">Inscription à la bibliothèque</option>
-																									<option value="oui">Oui</option>
-																									<option value="non">Non</option>
-																								</select>
-																							</div>
-																						</div> #}{# {% endif %} #}
+{{ form_end(form)}}</body>{% endblock %}{% block footer %}{% endblock %}

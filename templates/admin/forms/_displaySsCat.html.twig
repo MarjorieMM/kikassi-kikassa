@@ -1,10 +1,12 @@
-<div class="col">
-	<input class="form-control select-height" list="ssCatOptions" placeholder="Choisir ou entrer une nouvelle sous-catégorie" data-action='change->categories#selSsCategorie'>
-	<datalist id="ssCatOptions" data-categories-target='foundSsCat'>
-		{% if ssCategories is defined %}
-			{% for ssCategorie in ssCategories %}
-				<option value="{{ssCategorie.nomsscategorie}}"></option>
-			{% endfor %}
-		{% endif %}
-	</datalist>
+<div class="col-12 col-lg-6">
+	<div class="form-group">
+		<input class="form-control select-height" list="ssCatOptions" placeholder="Choisir ou entrer une nouvelle sous-catégorie" data-action='change->categories#selSsCategorie'>
+		<datalist id="ssCatOptions" data-categories-target='foundSsCat'>
+			{% if ssCategories is defined %}
+				{% for ssCategorie in ssCategories %}
+					<option value="{{ssCategorie.nomsscategorie}}"></option>
+				{% endfor %}
+			{% endif %}
+		</datalist>
+	</div>
 </div>

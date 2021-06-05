@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Objet;
 use App\Entity\Photo;
 use App\Entity\Adherent;
+use App\Entity\Categorie;
 use App\Form\ObjetFormType;
 use App\Form\SearchFormType;
 use App\Entity\SousCategorie;
@@ -82,44 +83,37 @@ class ObjetsListController extends AbstractController
         EntityManagerInterface $manager,
         AdherentRepository $adherentRepository,
         SousCategorieRepository $ssCatRepository,
-        CategorieRepository $catRepository,
-        SuperAdminRepository $superAdminRepository
+        CategorieRepository $catRepository
     ): Response {
         $objet = new Objet();
-        $categories = $catRepository->findAll();
-        // $sousCategories = $ssCatRepository->findAll();
-
-        // $formCat = $this->createForm(CategorieFormType::class, null, ['categories' => $categories, 'sousCategories' => $sousCategories]);
-
         $form = $this->createForm(ObjetFormType::class, $objet);
 
         ///////////////////
-        // Partie recherche de l'emprunteur
+        // Partie recherche de l'adhérent propriétaire de l'objet (si applicable)
 
         $searchAdh = $request->query->get('adh');
-        $isAdh = $adherentRepository->findByNomPrenom(
+        $adherents = $adherentRepository->findByNomPrenom(
             $searchAdh
         );
-        $isAdmin = $superAdminRepository->findByNomPrenom(
-            $searchAdh
-        );
-        $adherents = ['adh' => $isAdh, 'sadmin' => $isAdmin];
 
         if ($request->query->get('previewadh')) {
             return $this->render('admin/forms/_searchAdherent.html.twig', [
                 'adherents' => $adherents
             ]);
         }
-
+        // Je récupère l'adhérent sélectionné:
+        $adherent = $adherentRepository->findOneById(
+            $request->request->get('adherent')
+        );
+        $objet->setAdherent($adherent);
         ///////////////////////
-        //Partie affichage sous catégories :
-
+        //Partie affichage des catégories et sous-catégories :
+        $categories = $catRepository->findAll();
         $searchCat = $catRepository->findOneByName($request->query->get('cat'));
 
         if ($searchCat) {
             $ssCategories =  $ssCatRepository->findBy(['categorie' =>  $searchCat->getId()]);
         }
-
 
         if ($request->query->get('preview')) {
             return $this->render('admin/forms/_displaySsCat.html.twig', [
@@ -127,28 +121,52 @@ class ObjetsListController extends AbstractController
             ]);
         }
 
-
         ///////////////////
+        // Partie setting catégorie et sous catégorie
 
-        $adherent = $adherentRepository->findOneById(
-            $request->request->get('adherent')
-        );
-        $ssCat = $ssCatRepository->findOneSCByName(
-            $request->request->get('sscat')
-        );
-        $cat = $catRepository->findOneByName(
-            $request->request->get('cat')
-        );
-        //dump($cat); // null si non existant
-        dump($ssCat, $cat);
-        $objet->setAdherent($adherent);
-        $objet->setSousCategorie($ssCat);
+        $sousCategorie = "";
+        $textSsCat = $request->request->get('sscat');
+        $textCat = $request->request->get('cat');
+        // je recherche si la catégorie existe :
+        $categorie = $catRepository->findOneByName($textCat);
+        // si la catégorie existe :
+        if ($textCat) {
+            if ($categorie) {
+                // je recherche si la sous-catégorie existe dans la catégorie :
+                $ssCat = $ssCatRepository->findOneSCByName($textSsCat, $categorie->getId());
+                // si sous-catégorie existe :
+                if ($ssCat) {
+                    $sousCategorie = $ssCat;
+                } else {
+                    // la sous-categorie n'existe pas, je la créé
+                    $sousCategorie = new SousCategorie();
+                    $sousCategorie->setNomSsCategorie($textSsCat);
+                    $sousCategorie->setCategorie($categorie);
+                    $manager->persist($sousCategorie);
+                    $manager->flush();
+                }
+                // la catégorie n'existe pas, je créé les 2 et les lie
+            } else {
+                $newCategorie = new Categorie();
+                $newCategorie->setNomCategorie($textCat);
+                $sousCategorie = new SousCategorie();
+                $sousCategorie->setNomSsCategorie($textSsCat);
+                $sousCategorie->setCategorie($newCategorie);
+                $manager->persist($newCategorie, $sousCategorie);
+                $manager->flush();
+            }
+        }
+
+        if ($sousCategorie) {
+            $objet->setSousCategorie($sousCategorie);
+        }
 
         $form->handleRequest($request);
 
         $submitted = $form->isSubmitted() ? 'was-validated' : '';
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Je set les photos de l'objet (si applicable)
             $directory = 'photos';
             $file = $form['photos']->getData();
 
@@ -171,6 +189,7 @@ class ObjetsListController extends AbstractController
                 $manager->persist($img);
             }
 
+
             $objet->setStatut('Disponible');
             $manager->persist($objet);
             $manager->flush();
@@ -191,24 +210,21 @@ class ObjetsListController extends AbstractController
             'return_path' => 'menu-objet',
             'color' => 'objets-color',
             'form' => $form->createView(),
-            // 'formSearch' => $formSearch->createView(),
             'submitted' => $submitted,
-            // 'formCat' => $formCat->createView(),
-            // 'ssCategories' => $ssCategories,
             'categories' => $categories,
             'searchCat' => $searchCat
         ]);
     }
 
-    #[Route('/admin/objets/new/cat', name: 'admin_objets_cat')]
+    // #[Route('/admin/objets/new/cat', name: 'admin_objets_cat')]
 
-    public function getCats(
-        Request $request,
-        SousCategorieRepository $ssCatRepo
-    ): Response {
-        $ssCats = new SousCategorie();
-        $data = $request->request->get('cat');
-        $ssCats = $ssCatRepo->findBy(['categorie' => $data]);
-        return $this->json($ssCats, 200, [], ['groups' => 'categorie']);
-    }
+    // public function getCats(
+    //     Request $request,
+    //     SousCategorieRepository $ssCatRepo
+    // ): Response {
+    //     $ssCats = new SousCategorie();
+    //     $data = $request->request->get('cat');
+    //     $ssCats = $ssCatRepo->findBy(['categorie' => $data]);
+    //     return $this->json($ssCats, 200, [], ['groups' => 'categorie']);
+    // }
 }

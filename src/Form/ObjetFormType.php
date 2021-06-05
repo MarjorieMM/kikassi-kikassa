@@ -44,8 +44,7 @@ class ObjetFormType extends AbstractType
             ->add('photos', FileType::class, [
                 'mapped' => false,
                 'required' => false,
-                'label' => '',
-                'attr' => ['placeholder' => 'photos de l\'objet'],
+                'attr' => ['placeholder' => 'Photos de l\'objet'],
                 'multiple' => true,
             ])
 
@@ -95,7 +94,7 @@ class ObjetFormType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'label' =>
-                    '<div class="btn-text p-1 px-2">Ajouter <br> le nouvel objet</div>',
+                '<div class="btn-text p-1 px-2">Ajouter <br> le nouvel objet</div>',
                 'label_html' => true,
                 'attr' => ['class' => 'envoi-btn font-raleway'],
             ]);

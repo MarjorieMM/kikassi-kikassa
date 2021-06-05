@@ -33,12 +33,12 @@
 			{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" ,  'enctype':'multipart/form-data' }})}}
 			<input type="hidden" name='adherent' data-search-target='adherent'/>
 			<div class="row">
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{ form_widget(form.denomination ,  {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
 				</div>
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{ form_widget(form.marque, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
@@ -52,60 +52,61 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col">
-					<div class="form-group">
-						{{ form_widget(form.photos, {'attr': {'class': 'form-control p-4'}}) }}
-					</div>
+				<div class="col-12 col-lg-6 d-flex pb-3 align-items-center">
+					{{ form_label(form.photos, 'Photos', { 'label_attr': {'class': 'mb-0 mx-3'}}) }}
+					{{ form_widget(form.photos, {'attr': {'class': 'form-control-file'}}) }}
 				</div>
-			</div>
-			<div class="row" {{stimulus_controller('categories', {url: path( pageUrl )} )}}>
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{ form_widget(form.lieu, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
 				</div>
-				<div class="col">
-					<input class="form-control select-height" name='cat' list="catlistOptions" data-action='change->categories#selCategorie' placeholder="Choisir ou entrer une nouvelle Catégorie">
-					<datalist id="catlistOptions">
-						{% for categorie in categories %}
-							<option value="{{categorie.nomcategorie}}"></option>
-						{% endfor %}
-					</datalist>
+			</div>
+			<div class="row" {{stimulus_controller('categories', {url: path( pageUrl )} )}}>
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						<input class="form-control select-height p-4" name='cat' list="catlistOptions" data-action='change->categories#selCategorie' placeholder="Choisir ou entrer une nouvelle Catégorie">
+						<datalist id="catlistOptions">
+							{% for categorie in categories %}
+								<option value="{{categorie.nomcategorie}}"></option>
+							{% endfor %}
+						</datalist>
+					</div>
 				</div>
 				{% include '/admin/forms/_displaySsCat.html.twig' %}
 				<input type='hidden' data-categories-target='hiddenSsCat' name="sscat">
 			</div>
 			<div class="row">
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{ form_widget(form.observation, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
 				</div>
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{ form_widget(form.catalogue, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{ form_widget(form.valeur_achat, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
 				</div>
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{ form_widget(form.coef_usure, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{ form_widget(form.pourcent_calcul, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>
 				</div>
-				<div class="col">
+				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						{{ form_widget(form.vitrine, {'attr': {'class': 'form-control select-height'}}) }}
 					</div>

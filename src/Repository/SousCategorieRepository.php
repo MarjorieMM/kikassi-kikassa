@@ -36,10 +36,12 @@ class SousCategorieRepository extends ServiceEntityRepository
     }
     */
 
-    public function findOneSCByName($value): ?SousCategorie
+    public function findOneSCByName($value, $param): ?SousCategorie
     {
         return $this->createQueryBuilder('c')
+            ->where('c.categorie = :param')
             ->andWhere('c.nom_ss_categorie = :val')
+            ->setParameter('param', $param)
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult();
