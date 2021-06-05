@@ -87,9 +87,9 @@ class ObjetsListController extends AbstractController
     ): Response {
         $objet = new Objet();
         $categories = $catRepository->findAll();
-        $sousCategories = $ssCatRepository->findAll();
+        // $sousCategories = $ssCatRepository->findAll();
 
-        $formCat = $this->createForm(CategorieFormType::class, null, ['categories' => $categories, 'sousCategories' => $sousCategories]);
+        // $formCat = $this->createForm(CategorieFormType::class, null, ['categories' => $categories, 'sousCategories' => $sousCategories]);
 
         $form = $this->createForm(ObjetFormType::class, $objet);
 
@@ -111,19 +111,36 @@ class ObjetsListController extends AbstractController
             ]);
         }
 
+        ///////////////////////
+        //Partie affichage sous catégories :
+
+        $searchCat = $catRepository->findOneByName($request->query->get('cat'));
+
+        if ($searchCat) {
+            $ssCategories =  $ssCatRepository->findBy(['categorie' =>  $searchCat->getId()]);
+        }
+
+
+        if ($request->query->get('preview')) {
+            return $this->render('admin/forms/_displaySsCat.html.twig', [
+                'ssCategories' => $ssCategories
+            ]);
+        }
+
+
         ///////////////////
 
         $adherent = $adherentRepository->findOneById(
             $request->request->get('adherent')
         );
-        $ssCat = $ssCatRepository->findOneById(
-            $request->request->get('ss_cat')
+        $ssCat = $ssCatRepository->findOneSCByName(
+            $request->request->get('sscat')
         );
         $cat = $catRepository->findOneByName(
             $request->request->get('cat')
         );
-        dump($cat); // null si non existant
-
+        //dump($cat); // null si non existant
+        dump($ssCat, $cat);
         $objet->setAdherent($adherent);
         $objet->setSousCategorie($ssCat);
 
@@ -176,9 +193,10 @@ class ObjetsListController extends AbstractController
             'form' => $form->createView(),
             // 'formSearch' => $formSearch->createView(),
             'submitted' => $submitted,
-            'formCat' => $formCat->createView(),
-            'sousCategories' => $sousCategories,
-            'categories' => $categories
+            // 'formCat' => $formCat->createView(),
+            // 'ssCategories' => $ssCategories,
+            'categories' => $categories,
+            'searchCat' => $searchCat
         ]);
     }
 
