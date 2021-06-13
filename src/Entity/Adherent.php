@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Entity\AdhesionBibliotheque;
 use App\Repository\AdherentRepository;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -21,6 +22,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\HasLifecycleCallbacks
  */
 
+#[ApiResource(
+    normalizationContext: ['groups' => ['person']],
+    // denormalizationContext: ['groups' => ['write']],
+)]
+
 #[UniqueEntity('email', message: "L'adresse email existe déjà dans la base de données")]
 
 class Adherent
@@ -31,8 +37,8 @@ class Adherent
      * @ORM\Column(type="integer")
      *  
      */
-    
-#[Groups(['person'])]
+
+    #[Groups(['person'])]
     private $id;
 
     /**
@@ -41,7 +47,7 @@ class Adherent
      */
     #[Groups(['person'])]
 
-    #[Assert\NotBlank(message:"Veuillez entrer un nom")]
+    #[Assert\NotBlank(message: "Veuillez entrer un nom")]
     #[Assert\Length(
         min: 2,
         max: 30,
@@ -54,10 +60,10 @@ class Adherent
      * @ORM\Column(type="string", length=255)
      * 
      */
-#[Groups(['person'])]
-    
-     #[Assert\NotBlank(message:"Veuillez entrer un prénom")]
-     #[Assert\Length(
+    #[Groups(['person'])]
+
+    #[Assert\NotBlank(message: "Veuillez entrer un prénom")]
+    #[Assert\Length(
         min: 2,
         max: 30,
         minMessage: 'Le prénom doit faire plus de {{ limit }} caractères',
@@ -73,12 +79,12 @@ class Adherent
      *
      */
 
-    #[Assert\NotBlank(message:"Veuillez entrer une adresse")]
+    #[Assert\NotBlank(message: "Veuillez entrer une adresse")]
     #[Assert\Length(
         min: 5,
         minMessage: 'L\'adresse doit faire plus de {{ limit }} caractères',
     )]
-#[Groups(['person'])]
+    #[Groups(['person'])]
 
     private $adresse;
 
@@ -86,21 +92,21 @@ class Adherent
      * @ORM\Column(type="string", length=6)
      */
 
-    #[Assert\NotBlank(message:"Veuillez entrer un code postal")]
-#[Groups(['person'])]
-    
+    #[Assert\NotBlank(message: "Veuillez entrer un code postal")]
+    #[Groups(['person'])]
+
     private $cp;
 
     /**
      * @ORM\Column(type="string", length=255)
      * 
      */
-    #[Assert\NotBlank(message:"Veuillez entrer une ville")]
+    #[Assert\NotBlank(message: "Veuillez entrer une ville")]
     #[Assert\Length(
         min: 3,
         minMessage: 'La ville doit faire plus de {{ limit }} caractères',
     )]
-#[Groups(['person'])]
+    #[Groups(['person'])]
 
     private $ville;
 
@@ -110,7 +116,7 @@ class Adherent
     #[Assert\Email(
         message: 'Veuillez entrer un email valide',
     )]
-#[Groups(['person'])]
+    #[Groups(['person'])]
 
     private $email;
 
@@ -118,14 +124,16 @@ class Adherent
      * @ORM\Column(type="string", length=255)
      * 
      */
-    #[Assert\NotBlank(message:"Veuillez entrer un numéro de téléphone")]
-    #[Assert\Positive(message:"Veuillez entrer un numéro de téléphone valide ")]
-    #[Assert\Length( min: 10,
-    max:10,
-    exactMessage:"Veuillez entrer un numéro de téléphone valide (10 chiffres sans espace)")]
-#[Groups(['person'])]
-    
-    
+    #[Assert\NotBlank(message: "Veuillez entrer un numéro de téléphone")]
+    #[Assert\Positive(message: "Veuillez entrer un numéro de téléphone valide ")]
+    #[Assert\Length(
+        min: 10,
+        max: 10,
+        exactMessage: "Veuillez entrer un numéro de téléphone valide (10 chiffres sans espace)"
+    )]
+    #[Groups(['person'])]
+
+
     private $telephone;
 
     /**
@@ -134,9 +142,9 @@ class Adherent
      */
     #[Groups(['person'])]
 
-    #[Assert\Type("\DateTimeInterface", message:"Veuillez entrer une date de naissance valide")]
-    #[Assert\NotBlank(message:"Veuillez entrer une date de naissance")]
-  
+    #[Assert\Type("\DateTimeInterface", message: "Veuillez entrer une date de naissance valide")]
+    #[Assert\NotBlank(message: "Veuillez entrer une date de naissance")]
+
     private $date_naissance;
 
     /**
@@ -145,7 +153,7 @@ class Adherent
      */
     #[Groups(['person'])]
 
-    #[Assert\NotBlank(message:"Veuillez entrer un lieu de naissance")]
+    #[Assert\NotBlank(message: "Veuillez entrer un lieu de naissance")]
     #[Assert\Length(
         min: 3,
         minMessage: 'Le lieu de naissance doit faire plus de {{ limit }} caractères',
@@ -156,29 +164,29 @@ class Adherent
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
-#[Groups(['person'])]
+    #[Groups(['person'])]
 
-    #[Assert\PositiveOrZero(message:"Veuillez entrer un montant de cotisation valide ou 0")]
+    #[Assert\PositiveOrZero(message: "Veuillez entrer un montant de cotisation valide ou 0")]
     private $montant_cotisation;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-#[Groups(['person'])]
+    #[Groups(['person'])]
 
     private $moyen_paiement;
 
     /**
      * @ORM\Column(type="date")
      */
-#[Groups(['person'])]
+    #[Groups(['person'])]
 
     private $date_adhesion;
 
     /**
      * @ORM\Column(type="boolean")
      */
-#[Groups(['person'])]
+    #[Groups(['person'])]
 
     private $compte_actif;
 
@@ -187,7 +195,7 @@ class Adherent
      */
 
     #[Groups(['person'])]
-    
+
     private $adhesionBibliotheque;
 
     /**
@@ -206,8 +214,8 @@ class Adherent
     /**
      * @ORM\Column(type="string", length=255)
      */
-#[Groups(['person'])]
-    
+    #[Groups(['person'])]
+
     private $slug;
 
     /**
@@ -215,8 +223,8 @@ class Adherent
      */
     #[Groups(['person'])]
 
-    #[Assert\NotNull(message:"Veuillez indiquer un état pour la cotisation")]
-    
+    #[Assert\NotNull(message: "Veuillez indiquer un état pour la cotisation")]
+
     private $etat_cotisation;
 
     /**
@@ -229,7 +237,7 @@ class Adherent
     {
         if (empty($this->slug)) {
             $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->getNom().time().hash('sha1', $this->getPrenom()));
+            $this->slug = $slugify->slugify($this->getNom() . time() . hash('sha1', $this->getPrenom()));
         }
     }
 
@@ -247,7 +255,7 @@ class Adherent
         }
     }
 
-    
+
 
     public function __construct()
     {
@@ -286,7 +294,7 @@ class Adherent
 
     public function getNomprenom(): ?string
     {
-        return $this->nom.' '.$this->prenom;
+        return $this->nom . ' ' . $this->prenom;
     }
 
     public function setNomprenom(?string $nomprenom): self

@@ -6,6 +6,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,6 +15,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=CategorieRepository::class)
  * @ORM\HasLifecycleCallbacks
  */
+
+#[ApiResource(
+    normalizationContext: ['groups' => ['objet', 'categorie']],
+    // denormalizationContext: ['groups' => ['write']],
+)]
 class Categorie
 {
     /**
@@ -22,13 +28,15 @@ class Categorie
      * @ORM\Column(type="integer")
      */
 
+    #[Groups(['objet', 'categorie'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
 
-    #[Assert\NotBlank(message:"Veuillez entrer un nom pour la catagorie")]
+    #[Assert\NotBlank(message: "Veuillez entrer un nom pour la catagorie")]
+    #[Groups(['objet', 'categorie'])]
 
     private $nom_categorie;
 
@@ -41,6 +49,9 @@ class Categorie
     /**
      * @ORM\OneToMany(targetEntity=SousCategorie::class, mappedBy="categorie", orphanRemoval=true)
      */
+
+    #[Groups([ 'categorie'])]
+
     private $sousCategories;
 
     public function __construct()

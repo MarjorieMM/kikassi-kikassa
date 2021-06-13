@@ -6,6 +6,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ObjetRepository;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,6 +15,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=ObjetRepository::class)
  * @ORM\HasLifecycleCallbacks
  */
+
+
+#[ApiResource(
+    normalizationContext: ['groups' => ['objet']],
+    // denormalizationContext: ['groups' => ['write']],
+)]
 class Objet
 {
     /**
@@ -23,13 +30,14 @@ class Objet
      */
 
     #[Groups(['objet'])]
+
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
 
-    #[Assert\NotBlank(message:"Veuillez entrer un nom pour l'objet")]
+    #[Assert\NotBlank(message: "Veuillez entrer un nom pour l'objet")]
     #[Assert\Length(
         min: 2,
         max: 30,
@@ -44,7 +52,7 @@ class Objet
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Assert\NotBlank(message:"Veuillez entrer une marque pour l'objet")]
+    #[Assert\NotBlank(message: "Veuillez entrer une marque pour l'objet")]
     #[Assert\Length(
         min: 2,
         max: 30,
@@ -61,7 +69,7 @@ class Objet
      * @ORM\Column(type="text")
      */
 
-    #[Assert\NotBlank(message:"Veuillez entrer une description pour l'objet")]
+    #[Assert\NotBlank(message: "Veuillez entrer une description pour l'objet")]
     #[Assert\Length(
         min: 2,
         minMessage: 'La description doit faire plus de {{ limit }} caractères'
@@ -74,18 +82,18 @@ class Objet
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
      */
-    #[Assert\NotBlank(message:"Veuillez entrer une valeur du neuf de l'objet")]
-    #[Assert\Positive(message:"Veuillez entrer une valeur du neuf valide ")]
-   
+    #[Assert\NotBlank(message: "Veuillez entrer une valeur du neuf de l'objet")]
+    #[Assert\Positive(message: "Veuillez entrer une valeur du neuf valide ")]
+
     #[Groups(['objet'])]
-   
+
     private $valeur_achat;
 
     /**
      * @ORM\Column(type="integer")
      */
 
-    #[Assert\NotNull(message:"Veuillez entrer un coefficient d'usure pour l'objet")]
+    #[Assert\NotNull(message: "Veuillez entrer un coefficient d'usure pour l'objet")]
 
     #[Groups(['objet'])]
 
@@ -94,7 +102,7 @@ class Objet
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
      */
-    #[Assert\NotNull(message:"Veuillez entrer un pourcentage de calcul pour l'objet")]
+    #[Assert\NotNull(message: "Veuillez entrer un pourcentage de calcul pour l'objet")]
 
     #[Groups(['objet'])]
 
@@ -103,7 +111,7 @@ class Objet
     /**
      * @ORM\Column(type="boolean")
      */
-    #[Assert\NotNull(message:"Veuillez choisir de mettre ou non l'objet dans la vitrine")]
+    #[Assert\NotNull(message: "Veuillez choisir de mettre ou non l'objet dans la vitrine")]
     #[Groups(['objet'])]
 
     private $vitrine;
@@ -125,7 +133,7 @@ class Objet
      */
 
     #[Groups(['objet'])]
-    
+
     private $emprunts;
 
     /**
@@ -133,8 +141,9 @@ class Objet
      *  @ORM\JoinColumn(nullable=false)
      */
 
-    #[Assert\NotNull(message:"Veuillez choisir une sous-catégorie")]
-   
+    #[Assert\NotNull(message: "Veuillez choisir une sous-catégorie")]
+    #[Groups(['objet'])]
+
     private $sous_categorie;
 
     /**
@@ -149,13 +158,17 @@ class Objet
      * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="objets")
      * @ORM\JoinColumn(nullable=false)
      */
-    #[Assert\NotNull(message:"Veuillez choisir un lieu de stockage")]
+    #[Assert\NotNull(message: "Veuillez choisir un lieu de stockage")]
 
+    #[Groups(['objet'])]
     private $lieu;
 
     /**
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="objet")
      */
+
+    #[Groups(['objet'])]
+
     private $photos;
 
     /**
@@ -179,14 +192,18 @@ class Objet
      * @ORM\JoinColumn(nullable=false)
      */
 
-    #[Assert\NotNull(message:"Veuillez choisir un catalogue")]
+    #[Assert\NotNull(message: "Veuillez choisir un catalogue")]
+    #[Groups(['objet'])]
+
     private $catalogue;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
 
-    #[Assert\Type("\DateTimeInterface", message:"Veuillez entrer une date de sortie de stock valide")]
+    #[Assert\Type("\DateTimeInterface", message: "Veuillez entrer une date de sortie de stock valide")]
+
+    #[Groups(['objet'])]
     private $date_sortie_stock;
 
     /**

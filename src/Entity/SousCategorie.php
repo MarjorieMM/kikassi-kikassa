@@ -6,6 +6,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SousCategorieRepository;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -13,6 +14,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=SousCategorieRepository::class)
  * @ORM\HasLifecycleCallbacks
  */
+
+#[ApiResource(
+    normalizationContext: ['groups' => ['objet', 'categorie']],
+    // denormalizationContext: ['groups' => ['write']],
+)]
 class SousCategorie
 {
     /**
@@ -20,14 +26,14 @@ class SousCategorie
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['categorie'])]
+    #[Groups(['categorie', 'objet'])]
 
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['categorie'])]
+    #[Groups(['categorie', 'objet'])]
 
     private $nom_ss_categorie;
 
@@ -47,6 +53,8 @@ class SousCategorie
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="sousCategories")
      * @ORM\JoinColumn(nullable=false)
      */
+    // #[Groups(['objet'])]
+
     private $categorie;
 
     /**

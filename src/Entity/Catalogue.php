@@ -2,15 +2,22 @@
 
 namespace App\Entity;
 
-use App\Repository\CatalogueRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CatalogueRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CatalogueRepository::class)
  */
+
+#[ApiResource(
+    normalizationContext: ['groups' => ['objet']],
+    // denormalizationContext: ['groups' => ['write']],
+)]
 class Catalogue
 {
     /**
@@ -18,19 +25,25 @@ class Catalogue
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+
+
+
+    #[Groups(['objet'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Assert\NotBlank(message:"Veuillez entrer un nom pour le catalogue")]
+    #[Assert\NotBlank(message: "Veuillez entrer un nom pour le catalogue")]
+    #[Groups(['objet'])]
 
     private $nom_catalogue;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Assert\NotNull(message:"Veuillez choisir une catégorie de fourmi")]
+    #[Assert\NotNull(message: "Veuillez choisir une catégorie de fourmi")]
+    #[Groups(['objet'])]
 
     private $categorie_fourmi;
 

@@ -2,12 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\PhotoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PhotoRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PhotoRepository::class)
  */
+
+#[ApiResource(
+    normalizationContext: ['groups' => ['objet']],
+    // denormalizationContext: ['groups' => ['write']],
+)]
 class Photo
 {
     /**
@@ -15,16 +22,21 @@ class Photo
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['objet'])]
+
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['objet'])]
+
     private $lien;
 
     /**
      * @ORM\ManyToOne(targetEntity=Objet::class, inversedBy="photos")
      */
+
     private $objet;
 
     public function getId(): ?int
