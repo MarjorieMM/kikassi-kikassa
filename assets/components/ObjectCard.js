@@ -8,15 +8,18 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
+const greenAnt = "#439b56";
+const blueAnt = "#5594c0";
+
 const useStyles = makeStyles({
 	root: {
 		maxWidth: 345,
 	},
 	catalogueVert: {
-		border: "4px solid green",
+		border: `4px solid ${greenAnt}`,
 	},
 	catalogueBleu: {
-		border: "4px solid blue",
+		border: `4px solid ${blueAnt}`,
 	},
 });
 
@@ -40,7 +43,7 @@ export default function ObjectCard({ object }) {
 					image={
 						photo.length > 0
 							? `photos/${photo[0]}`
-							: "photos/kikassa-defaut.jpg"
+							: "photos/logos/kikassa-default.png"
 					}
 					// title={object.denomination}
 				/>

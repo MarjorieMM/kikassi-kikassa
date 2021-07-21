@@ -20,11 +20,17 @@ import "./bootstrap";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { App } from "./components/App";
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
+import App from "./components/App";
 
 ReactDOM.render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
+	<BrowserRouter>
+		<React.StrictMode>
+			<Route exact path="/">
+				<Redirect to="/bibliotheque-objets" />
+			</Route>
+			<Route exact path="/bibliotheque-objets" component={App} />
+		</React.StrictMode>
+	</BrowserRouter>,
 	document.getElementById("root")
 );

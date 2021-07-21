@@ -10,16 +10,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ShowProductsController extends AbstractController
 {
-    #[Route('/', name: 'front_show_products')]
+    /**
+     * @Route("/{reactRouting}", name="index", priority="-1", requirements={"reactRouting"="^(?!admin).+"}, defaults={"reactRouting": null})
+     */
+
     public function index(ObjetRepository $repo, AdherentRepository $adhRepo): Response
     {
-        $objets = $repo->findAll();
-        $adherents = $adhRepo->findAll();
+        // $objets = $repo->findAll();
+        // $adherents = $adhRepo->findAll();
 
         return $this->render('front/show_products/index.html.twig', [
             'controller_name' => 'ShowProductsController',
-            'objets' => $objets,
-            'adherents' => $adherents
+            // 'objets' => $objets,
+            // 'adherents' => $adherents
         ]);
     }
 }

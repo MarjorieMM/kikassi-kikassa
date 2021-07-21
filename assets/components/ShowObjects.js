@@ -32,8 +32,12 @@ export function ShowObjects() {
 		return data;
 	};
 
-	console.log(categories);
+	const sscat = categories.map((cat) =>
+		cat.sousCategories.map((c) => c.nom_ss_categorie)
+	);
+	// console.log(sscat);
 
+	console.log(categories);
 	// useEffect(() => {
 	// 	fetch("/api/objets")
 	// 		.then((res) => res.json())
@@ -64,7 +68,11 @@ export function ShowObjects() {
 				<div className="row">
 					{objects.map((object) => (
 						<div className="col-12 col-md-6 col-lg-4" key={object.id}>
-							<ObjectCard object={object} categories={categories} />
+							<ObjectCard
+								object={object}
+								categories={categories}
+								// souscategories={categories.sousCategories}
+							/>
 						</div>
 					))}
 				</div>

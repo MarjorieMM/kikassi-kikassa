@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 
-const ObjetsContext = () => {
-	return <div></div>;
-};
+// const ObjetsContext = () => {
+// 	return <div></div>;
+// };
 
-export default ObjetsContext;
+// export default ObjetsContext;
