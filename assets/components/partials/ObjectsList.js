@@ -6,7 +6,6 @@ import ObjectCard from "./ObjectCard";
 export function ObjectsList() {
 	const { data: objects, error, isLoaded } = useFetch("/api/objets");
 	const { data: categories } = useFetch("/api/categories");
-
 	// const sscat = categories.map((cat) =>
 	// 	cat.sousCategories.map((c) => c.nom_ss_categorie)
 	// );
@@ -14,9 +13,9 @@ export function ObjectsList() {
 	// console.log(objects.map((obj) => obj.vitrine));
 
 	if (error) {
-		return <div>Error: {error.message}</div>;
+		return <div>Erreur: {error}</div>;
 	} else if (!isLoaded) {
-		return <div>Loading...</div>;
+		return <div>Chargement...</div>;
 	} else {
 		return (
 			<div className="container">

@@ -1,27 +1,22 @@
 import React from "react";
-import { Link, BrowserRouter as Router } from "react-router-dom";
+import { Link, BrowserRouter } from "react-router-dom";
 import logo from "../../../public/photos/logos/FOURMI LOGO5.1. vert web 1000Px.png";
-import Account from "../users/Account";
-import Borrowings from "../users/Borrowings";
 
 function Navbar() {
 	return (
-		<div>
 			<nav>
-				<Router>
-					<Link to="/">
-						<img src={logo} alt="logo-fourmi-kikassa" width="10%" />
-					</Link>
-					<Link to="/bibliotheque-objets/se-connecter">
+				<Link to="/">
+					<img src={logo} alt="logo-fourmi-kikassa" width="10%" />
+				</Link>
+				{/* <Link to="/bibliotheque-objets/se-connecter">
 						Connexion à mon compte
-					</Link>
-					<Link to="/bibliotheque-objets/mon-compte">Mon profil</Link>
-					<Link to="/bibliotheque-objets/mon-compte/mon-historique">
-						Mes emprunts
-					</Link>
-				</Router>
+					</Link> */}
+				<Link to="/bibliotheque-objets/mon-compte">Mon profil</Link>
+				<Link to="/bibliotheque-objets/mon-compte/mon-historique">
+					Mes emprunts
+				</Link>
+				<Link to="/bibliotheque-objets">Les objets</Link>
 			</nav>
-		</div>
 	);
 }
 

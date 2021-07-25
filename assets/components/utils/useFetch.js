@@ -43,7 +43,8 @@ const useFetch = (url) => {
 			})
 			.catch((err) => {
 				setIsLoaded(false);
-				setError(err.message);
+				console.log(err);
+				setError("La page ne peut être affichée.");
 			});
 	}, [url]);
 
