@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import useFetch from "../utils/useFetch";
 import ObjectCard from "./ObjectCard";
 
-export function ShowObjects() {
+export function ObjectsList() {
 	const { data: objects, error, isLoaded } = useFetch("/api/objets");
 	const { data: categories } = useFetch("/api/categories");
 

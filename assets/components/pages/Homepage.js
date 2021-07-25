@@ -1,10 +1,12 @@
 import React from "react";
-import { Featured } from "../partials/Featured";
+import Featured from "../partials/Featured";
+import Connexion from "../partials/Connexion";
 
-function Homepage() {
-	return <div>
-		<Featured/>
-	</div>;
+export default function Homepage() {
+	return (
+		<div>
+			<Connexion />
+			<Featured />
+		</div>
+	);
 }
-
-export default Homepage;

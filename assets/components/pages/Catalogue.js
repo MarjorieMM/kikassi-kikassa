@@ -1,10 +1,10 @@
 import React from "react";
-import { ShowObjects } from "../partials/ShowObjects";
+import { ObjectsList } from "../partials/ObjectsList";
 
 function Catalogue() {
 	return (
 		<div>
-			<ShowObjects />
+			<ObjectsList />
 		</div>
 	);
 }

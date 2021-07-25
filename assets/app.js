@@ -7,6 +7,7 @@
 
 require("@fortawesome/fontawesome-free/css/all.min.css");
 require("@fortawesome/fontawesome-free/js/all.js");
+require("./components/App");
 
 // any CSS you import will output into a single css file (app.css in this case)
 import "./styles/app.sass";
@@ -15,26 +16,5 @@ import "./styles/admin.sass";
 import "./styles/switch.sass";
 
 // start the Stimulus application
-
+import "./components/App";
 import "./bootstrap";
-
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Redirect } from "react-router-dom";
-import App from "./components/App";
-import Catalogue from "./components/pages/Catalogue";
-import Layout from "./components/layout/Layout";
-import Homepage from "./components/pages/Homepage";
-
-ReactDOM.render(
-	<BrowserRouter>
-		<React.StrictMode>
-			<Layout>
-				<Route exact path="/" component={Homepage} />
-
-				<Route exact path="/bibliotheque-objets" component={Catalogue} />
-			</Layout>
-		</React.StrictMode>
-	</BrowserRouter>,
-	document.getElementById("root")
-);

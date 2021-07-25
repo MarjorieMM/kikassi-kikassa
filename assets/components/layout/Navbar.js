@@ -15,10 +15,8 @@ function Navbar() {
 					<Link to="/bibliotheque-objets/se-connecter">
 						Connexion à mon compte
 					</Link>
-					<Link to="/bibliotheque-objets/mon-compte" component={Account}>
-						Mon profil
-					</Link>
-					<Link to="/bibliotheque-objets/mes-emprunts" component={Borrowings}>
+					<Link to="/bibliotheque-objets/mon-compte">Mon profil</Link>
+					<Link to="/bibliotheque-objets/mon-compte/mon-historique">
 						Mes emprunts
 					</Link>
 				</Router>

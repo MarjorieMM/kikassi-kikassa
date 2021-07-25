@@ -1,16 +1,30 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Route } from "react-router-dom";
+import Catalogue from "./pages/Catalogue";
 import Layout from "./layout/Layout";
-import Catalogue from './pages/Catalogue';
+import Homepage from "./pages/Homepage";
+import Borrowings from "./users/Borrowings";
+import Account from "./users/Account";
 
-const App = () => {
-	return (
-		<div>
-			{/* <Layout> */}
-				<Catalogue />
-			{/* </Layout> */}
-		</div>
-	);
-};
-
-export default App;
+ReactDOM.render(
+	<BrowserRouter>
+		<React.StrictMode>
+			<Layout>
+				<Route exact path="/" component={Homepage} />
+				<Route exact path="/bibliotheque-objets" component={Catalogue} />
+				<Route
+					exact
+					path="/bibliotheque-objets/mon-compte/mon-historique"
+					component={Borrowings}
+				/>
+				<Route
+					exact
+					path="/bibliotheque-objets/mon-compte"
+					component={Account}
+				/>
+			</Layout>
+		</React.StrictMode>
+	</BrowserRouter>,
+	document.getElementById("root")
+);

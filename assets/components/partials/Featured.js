@@ -2,7 +2,7 @@ import React from "react";
 import useFetch from "../utils/useFetch";
 import ObjectCard from "./ObjectCard";
 
-export function Featured() {
+export default function Featured() {
 	const { data: objects, error, isLoaded } = useFetch("/api/objets");
 
 	// const tab = [];

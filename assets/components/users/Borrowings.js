@@ -3,7 +3,7 @@ import React from "react";
 function Borrowings() {
 	return (
 		<div>
-			<h1>Les emprunts</h1>
+			<h1>Mes emprunts</h1>
 		</div>
 	);
 }
