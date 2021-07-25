@@ -22,14 +22,18 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import App from "./components/App";
+import Catalogue from "./components/pages/Catalogue";
+import Layout from "./components/layout/Layout";
+import Homepage from "./components/pages/Homepage";
 
 ReactDOM.render(
 	<BrowserRouter>
 		<React.StrictMode>
-			<Route exact path="/">
-				<Redirect to="/bibliotheque-objets" />
-			</Route>
-			<Route exact path="/bibliotheque-objets" component={App} />
+			<Layout>
+				<Route exact path="/" component={Homepage} />
+
+				<Route exact path="/bibliotheque-objets" component={Catalogue} />
+			</Layout>
 		</React.StrictMode>
 	</BrowserRouter>,
 	document.getElementById("root")

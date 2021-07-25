@@ -1,15 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Layout from "./layout/Layout";
-
-import { ShowObjects } from "./ShowObjects";
+import Catalogue from './pages/Catalogue';
 
 const App = () => {
 	return (
 		<div>
-			<Layout>
-			<ShowObjects />
-			</Layout>
+			{/* <Layout> */}
+				<Catalogue />
+			{/* </Layout> */}
 		</div>
 	);
 };

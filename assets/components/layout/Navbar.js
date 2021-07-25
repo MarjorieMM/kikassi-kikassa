@@ -1,6 +1,6 @@
 import React from "react";
-import logo from "../../../public/photos/logos/FOURMI LOGO5.1. vert web 1000Px.png";
 import { Link, BrowserRouter as Router } from "react-router-dom";
+import logo from "../../../public/photos/logos/FOURMI LOGO5.1. vert web 1000Px.png";
 import Account from "../users/Account";
 import Borrowings from "../users/Borrowings";
 
