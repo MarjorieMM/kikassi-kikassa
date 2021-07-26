@@ -57,7 +57,7 @@ export default function ObjectCard({ object }) {
 				</CardContent>
 			</CardActionArea>
 			<CardActions>
-				<Button size="small" color="primary">
+				<Button variant="contained" size="small" color="primary">
 					Voir plus
 				</Button>
 				{/* <Button size="small" color="primary">

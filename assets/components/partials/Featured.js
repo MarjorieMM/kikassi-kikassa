@@ -17,14 +17,14 @@ export default function Featured() {
 		return (
 			<div className="container">
 				<div className="d-flex flex-row">
-					{objects.map(
+					{/* {objects.map(
 						(object) =>
 							object.vitrine && (
 								<div key={object.id}>
 									<ObjectCard object={object} />
 								</div>
 							)
-					)}
+					)} */}
 				</div>
 			</div>
 		);

@@ -8,6 +8,55 @@ import Layout from "./layout/Layout";
 import Homepage from "./pages/Homepage";
 import Borrowings from "./users/Borrowings";
 import Account from "./users/Account";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import RalewayWoff2 from "../fonts/raleway-v19-latin-regular.woff2";
+import RalewayWoff from "../fonts/raleway-v19-latin-regular.woff";
+import RalewayEot from "../fonts/raleway-v19-latin-regular.eot";
+import RalewayTtf from "../fonts/raleway-v19-latin-regular.ttf";
+
+// If font doesn't work when in prod : see https://material-ui.com/customization/typography/
+const raleway = {
+	fontFamily: "Raleway",
+	fontStyle: "normal",
+	fontDisplay: "swap",
+	fontWeight: 400,
+	src: `
+    local('Raleway'),
+    local('Raleway-Regular'),
+    url(${RalewayWoff2}) format('woff2')
+    url(${RalewayWoff}) format('woff')
+    url(${RalewayTtf}) format('truetype')
+    url(${RalewayEot}) format('embedded-opentype')
+  `,
+	unicodeRange:
+		"U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF",
+};
+
+const theme = createMuiTheme({
+	spacing: 15,
+	palette: {
+		primary: {
+			// light: "#6fed8b",
+			main: "#439b56",
+			// dark: "#18381f",
+			// contrastText: "#fff",
+		},
+		secondary: {
+			main: "#5594c0",
+		},
+	},
+	typography: {
+		fontFamily: "Raleway, Arial",
+	},
+	overrides: {
+		MuiCssBaseline: {
+			"@global": {
+				"@font-face": [raleway],
+			},
+		},
+	},
+});
 
 function App() {
 	return (
@@ -37,9 +86,12 @@ function App() {
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<Layout>
-				<App />
-			</Layout>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<Layout>
+					<App />
+				</Layout>
+			</ThemeProvider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById("root")

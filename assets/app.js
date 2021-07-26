@@ -16,5 +16,4 @@ import "./styles/admin.sass";
 import "./styles/switch.sass";
 
 // start the Stimulus application
-import "./components/App";
 import "./bootstrap";
