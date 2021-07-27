@@ -4,7 +4,7 @@ import { ObjectsList } from "../partials/ObjectsList";
 
 export default function Order() {
 	return (
-		<Box mt={10}>
+		<Box mt={12}>
 			<h1>Emprunter l'objet </h1>
 		</Box>
 	);

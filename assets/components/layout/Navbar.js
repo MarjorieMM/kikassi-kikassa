@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../public/photos/logos/FOURMI LOGO5.1. vert web 1000Px.png";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-// import Button from "@material-ui/core/Button";
-import { styled } from "@material-ui/core/styles";
+import { makeStyles, styled } from "@material-ui/core/styles";
+import {
+	AppBar,
+	Toolbar,
+	Box,
+	useMediaQuery,
+	List,
+	ListItem,
+	Accordion,
+	AccordionSummary,
+	Divider,
+} from "@material-ui/core";
 import { spacing } from "@material-ui/system";
 import MuiButton from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import { Box, useMediaQuery } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import Menu from "@material-ui/core/Menu";
-import { MenuItem } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
-import Divider from "@material-ui/core/Divider";
+import MenuIcon from "@material-ui/icons/Menu";
+import TitleBar from "./TitleBar";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -34,17 +32,27 @@ const useStyles = makeStyles((theme) => ({
 			"rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
 	},
 	primary: {
-		backgroundColor: theme.palette.primary.main,
+		backgroundColor: "#fafafa",
 	},
 	darkPrimary: {
 		backgroundColor: theme.palette.primary.dark,
 	},
 	lightPrimary: {
-		backgroundColor: theme.palette.primary.light,
+		backgroundColor: theme.palette.primary.main,
 	},
+	mainColor: {
+		color: theme.palette.primary.main,
+	},
+	mainBgColor: {
+		backgroundColor: theme.palette.primary.main,
+	},
+
 	linkText: {
 		color: "#fff",
 		fontWeight: "bold",
+		"&:hover": {
+			color: theme.palette.primary.dark,
+		},
 	},
 	centerLinks: {
 		justifyContent: "center",
@@ -60,20 +68,22 @@ const AccordionDetails = styled(MuiAccordionDetails)(spacing);
 
 function Navbar() {
 	const [open, setOpen] = useState(false);
+	const [visibleTitle, setVisibleTitle] = useState(true);
 	const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 	const classes = useStyles();
 
 	const handleOpenAccordion = () => {
 		!open ? setOpen(true) : setOpen(false);
+		visibleTitle ? setVisibleTitle(false) : setVisibleTitle(true);
 	};
 
 	return (
-		<AppBar className={classes.appBar}>
+		<AppBar className={classes.primary}>
 			{isMobile ? (
 				<Accordion className={classes.primary} expanded={open}>
 					<AccordionSummary
 						onClick={handleOpenAccordion}
-						expandIcon={<MenuIcon className={classes.linkText} />}
+						expandIcon={<MenuIcon className={classes.mainColor} />}
 						aria-controls="mobile-menu"
 						id="mobile-menu"
 					>
@@ -136,7 +146,7 @@ function Navbar() {
 							my={1}
 							mx={0.5}
 							p={1}
-							className={`${classes.lightPrimary} ${classes.shadowButton}`}
+							className={`${classes.mainBgColor} ${classes.shadowButton}`}
 							variant="contained"
 						>
 							<Link
@@ -151,7 +161,7 @@ function Navbar() {
 							mx={0.5}
 							p={1}
 							variant="contained"
-							className={`${classes.lightPrimary} ${classes.shadowButton}`}
+							className={`${classes.mainBgColor} ${classes.shadowButton}`}
 						>
 							<Link
 								to="/bibliotheque-objets/mon-compte/mon-historique"
@@ -165,7 +175,7 @@ function Navbar() {
 							mx={0.5}
 							p={1}
 							variant="contained"
-							className={`${classes.lightPrimary} ${classes.shadowButton}`}
+							className={`${classes.mainBgColor} ${classes.shadowButton}`}
 						>
 							<Link
 								to="/bibliotheque-objets/mon-compte/mon-historique"
@@ -179,7 +189,7 @@ function Navbar() {
 							mx={0.5}
 							p={1}
 							variant="contained"
-							className={`${classes.lightPrimary} ${classes.shadowButton}`}
+							className={`${classes.mainBgColor} ${classes.shadowButton}`}
 						>
 							<Link to="/bibliotheque-objets" className={classes.linkText}>
 								Les objets
@@ -188,6 +198,7 @@ function Navbar() {
 					</Box>
 				</Toolbar>
 			)}
+			<TitleBar visible={visibleTitle} />
 		</AppBar>
 	);
 }

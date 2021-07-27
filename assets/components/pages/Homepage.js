@@ -6,7 +6,8 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 
 export default function Homepage() {
 	return (
-		<Box mt={10}>
+		<Box mt={12}>
+			<h1>Bienvenue</h1>
 			<ListSubheader>Subheader</ListSubheader>
 			<Connexion />
 			<Featured />
