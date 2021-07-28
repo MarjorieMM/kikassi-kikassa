@@ -5,7 +5,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 
 function Catalogue() {
 	return (
-		<Box mt={12}>
+		<Box mt={15}>
 			<h1>Le Catalogue</h1>
 			<ObjectsList />
 		</Box>

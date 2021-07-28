@@ -37,10 +37,7 @@ const theme = createMuiTheme({
 	spacing: 15,
 	palette: {
 		primary: {
-			// light: "#6fed8b",
 			main: "#439b56",
-			// dark: "#18381f",
-			// contrastText: "#fff",
 		},
 		secondary: {
 			main: "#5594c0",
@@ -49,6 +46,7 @@ const theme = createMuiTheme({
 	typography: {
 		fontFamily: "Raleway, Arial",
 	},
+	
 	overrides: {
 		MuiCssBaseline: {
 			"@global": {

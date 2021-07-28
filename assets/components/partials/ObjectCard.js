@@ -8,28 +8,39 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-const greenAnt = "#439b56";
-const blueAnt = "#5594c0";
-
-const useStyles = makeStyles({
-	root: {
+const useStyles = makeStyles((theme) => ({
+	list: {
 		maxWidth: 345,
+		maxHeight: 450,
+		marginBottom: "20px",
+		margin: "auto",
+	},
+
+	featured: {
+		width: "100%",
+		flexShrink: 0,
+		flexGrow: 1,
+		width: "calc(100% / 3)",
 	},
 	catalogueVert: {
-		border: `4px solid ${greenAnt}`,
+		border: `8px solid ${theme.palette.secondary.main}`,
 	},
 	catalogueBleu: {
-		border: `4px solid ${blueAnt}`,
+		border: `8px solid ${theme.palette.primary.main}`,
 	},
-});
+}));
 
-export default function ObjectCard({ object }) {
+export default function ObjectCard({
+	denomination,
+	description,
+	photo,
+	catalogue,
+	list,
+}) {
 	const classes = useStyles();
-	const catalogue = object.catalogue.categorie_fourmi;
-	const photo = object.photos.map((photo) => photo.lien);
 
 	return (
-		<Card className={classes.root}>
+		<Card className={list ? classes.list : classes.featured}>
 			<CardActionArea>
 				<CardMedia
 					className={
@@ -39,30 +50,24 @@ export default function ObjectCard({ object }) {
 					}
 					component="img"
 					alt="Objet"
-					height="140"
-					image={
-						photo.length > 0
-							? `photos/${photo[0]}`
-							: "photos/logos/kikassa-default.png"
-					}
-					// title={object.denomination}
+					height="250"
+					image={photo}
 				/>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="h2">
-						{object.denomination}
+						{denomination}
 					</Typography>
-					<Typography variant="body2" color="textSecondary" component="p">
-						{object.description}
-					</Typography>
+					{description && (
+						<Typography variant="body2" color="textSecondary" component="p">
+							{description}
+						</Typography>
+					)}
 				</CardContent>
 			</CardActionArea>
 			<CardActions>
 				<Button variant="contained" size="small" color="primary">
-					Voir plus
+					Voir l'objet
 				</Button>
-				{/* <Button size="small" color="primary">
-					Learn More
-				</Button> */}
 			</CardActions>
 		</Card>
 	);
