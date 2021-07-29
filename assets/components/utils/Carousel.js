@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles, styled } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { Button } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
 	container: { width: "100%" },
 	wrapper: { width: "100%", position: "relative" },
 	contentWrapper: { overflow: "hidden", width: "100%", height: "100%" },
@@ -16,47 +16,45 @@ const useStyles = makeStyles((theme) => ({
 	arrows: {
 		position: "absolute",
 		zIndex: 1,
-		top: "50%",
+		top: "55%",
 		transform: "translateY(-200%)",
 		width: "48px",
 		height: "48px",
 		borderRadius: "24px",
-		backgroundColor: "white",
-		border: "1px solid #ddd",
 	},
 	leftArrow: {
-		left: "24px",
+		left: "-50px",
 	},
 	rightArrow: {
-		right: "24px",
+		right: "-50px",
 	},
-}));
+});
 
 const Carousel = (props) => {
 	const { children, infiniteLoop } = props;
 	const [touchPosition, setTouchPosition] = useState(null);
 	const [length, setLength] = useState(children.length);
-	const [currentIndex, setCurrentIndex] = useState(infiniteLoop ? 3 : 0);
+	const [currentIndex, setCurrentIndex] = useState(infiniteLoop ? 4 : 0);
 	const [isRepeating, setIsRepeating] = useState(
-		infiniteLoop && children.length > 3
+		infiniteLoop && children.length > 4
 	);
 	const [transitionEnabled, setTransitionEnabled] = useState(true);
 
 	useEffect(() => {
 		setLength(children.length);
-		setIsRepeating(infiniteLoop && children.length > 3);
+		setIsRepeating(infiniteLoop && children.length > 4);
 	}, [children, infiniteLoop]);
 
 	useEffect(() => {
 		if (isRepeating) {
-			if (currentIndex === 3 || currentIndex === length) {
+			if (currentIndex === 4 || currentIndex === length) {
 				setTransitionEnabled(true);
 			}
 		}
 	}, [currentIndex, isRepeating, length]);
 
 	const next = () => {
-		if (isRepeating || currentIndex < length - 3) {
+		if (isRepeating || currentIndex < length - 4) {
 			setCurrentIndex((prevState) => prevState + 1);
 		}
 	};
@@ -98,16 +96,16 @@ const Carousel = (props) => {
 			if (currentIndex === 0) {
 				setTransitionEnabled(false);
 				setCurrentIndex(length);
-			} else if (currentIndex === length + 3) {
+			} else if (currentIndex === length + 4) {
 				setTransitionEnabled(false);
-				setCurrentIndex(3);
+				setCurrentIndex(4);
 			}
 		}
 	};
 
 	const renderExtraPrev = () => {
 		let output = [];
-		for (let index = 0; index < 3; index++) {
+		for (let index = 0; index < 4; index++) {
 			output.push(children[length - 1 - index]);
 		}
 		output.reverse();
@@ -116,7 +114,7 @@ const Carousel = (props) => {
 
 	const renderExtraNext = () => {
 		let output = [];
-		for (let index = 0; index < 3; index++) {
+		for (let index = 0; index < 4; index++) {
 			output.push(children[index]);
 		}
 		return output;
@@ -144,17 +142,17 @@ const Carousel = (props) => {
 					<div
 						className={classes.content}
 						style={{
-							transform: `translateX(-${currentIndex * (100 / 3)}%)`,
+							transform: `translateX(-${currentIndex * (100 / 4)}%)`,
 							transition: !transitionEnabled ? "none" : undefined,
 						}}
 						onTransitionEnd={() => handleTransitionEnd()}
 					>
-						{length > 3 && isRepeating && renderExtraPrev()}
+						{length > 4 && isRepeating && renderExtraPrev()}
 						{children}
-						{length > 3 && isRepeating && renderExtraNext()}
+						{length > 4 && isRepeating && renderExtraNext()}
 					</div>
 				</Grid>
-				{(isRepeating || currentIndex < length - 3) && (
+				{(isRepeating || currentIndex < length - 4) && (
 					<Button
 						onClick={next}
 						className={`${classes.arrows} ${classes.rightArrow}`}

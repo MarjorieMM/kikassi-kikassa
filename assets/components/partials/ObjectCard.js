@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import useCapitalize from "../utils/useCapitalize";
 
 const useStyles = makeStyles((theme) => ({
 	list: {
@@ -17,16 +18,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	featured: {
+		padding: "2px",
 		width: "100%",
 		flexShrink: 0,
 		flexGrow: 1,
-		width: "calc(100% / 3)",
+		width: "calc(100% / 4)",
 	},
 	catalogueVert: {
-		border: `8px solid ${theme.palette.secondary.main}`,
+		border: `6px solid ${theme.palette.secondary.main}`,
 	},
 	catalogueBleu: {
-		border: `8px solid ${theme.palette.primary.main}`,
+		border: `6px solid ${theme.palette.primary.main}`,
 	},
 }));
 
@@ -38,6 +40,7 @@ export default function ObjectCard({
 	list,
 }) {
 	const classes = useStyles();
+	const capName = useCapitalize(denomination);
 
 	return (
 		<Card className={list ? classes.list : classes.featured}>
@@ -50,12 +53,12 @@ export default function ObjectCard({
 					}
 					component="img"
 					alt="Objet"
-					height="250"
+					height={list ? "250" : "150"}
 					image={photo}
 				/>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="h2">
-						{denomination}
+						{capName}
 					</Typography>
 					{description && (
 						<Typography variant="body2" color="textSecondary" component="p">

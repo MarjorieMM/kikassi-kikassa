@@ -7,21 +7,18 @@ export default function Featured() {
 	const { data: objects, error, isLoaded } = useFetch("/api/objets");
 	const { data: categories } = useFetch("/api/categories");
 
-	const tab = [];
-	objects.map((obj) => obj.vitrine && tab.push(obj));
-	// objects.map((obj) => console.log(obj.vitrine));
-
-	// console.log(tab);
+	const vitrine = [];
+	objects.map((obj) => obj.vitrine && vitrine.push(obj));
 
 	if (error) {
-		return <div>Error: {error.message}</div>;
+		return <div>Erreur: {error.message}</div>;
 	} else if (!isLoaded) {
-		return <div>Loading...</div>;
+		return <div>Chargement...</div>;
 	} else {
 		return (
 			<div>
 				<Carousel infiniteLoop={true}>
-					{tab.map((object) => (
+					{vitrine.map((object) => (
 						<ObjectCard
 							list={false}
 							key={object.id}
