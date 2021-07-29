@@ -13,8 +13,12 @@ const useStyles = makeStyles((theme) => ({
 	margin: {
 		margin: `${theme.spacing(1)}px 0`,
 	},
-	padding: {
-		padding: theme.spacing(2),
+	marginTop: {
+		marginTop: theme.spacing(2),
+	},
+	paper: {
+		padding: `${theme.spacing(4)}px ${theme.spacing(3)}px`,
+		borderRadius: "30px",
 	},
 }));
 
@@ -22,7 +26,7 @@ function Connexion() {
 	const classes = useStyles();
 	return (
 		<Box>
-			<Paper elevation={10} className={classes.padding}>
+			<Paper elevation={5} className={classes.paper}>
 				<Typography align="center" className={classes.margin} variant="h5">
 					Connectez-vous à votre compte
 				</Typography>
@@ -36,6 +40,7 @@ function Connexion() {
 						fullWidth
 					/>
 					<TextField
+						required
 						className={classes.margin}
 						id="password"
 						label="Votre Mot de Passe"
@@ -43,7 +48,12 @@ function Connexion() {
 						variant="outlined"
 						fullWidth
 					/>
-					<Button variant="contained" size="small" color="secondary">
+					<Button
+						className={classes.marginTop}
+						variant="contained"
+						size="small"
+						color="secondary"
+					>
 						Valider
 					</Button>
 				</form>

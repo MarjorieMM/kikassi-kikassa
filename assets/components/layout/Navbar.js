@@ -18,6 +18,7 @@ import MuiButton from "@material-ui/core/Button";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
 import MenuIcon from "@material-ui/icons/Menu";
 import TitleBar from "./TitleBar";
+import BigButton from "../partials/BigButton";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -77,6 +78,16 @@ function Navbar() {
 		!open ? setOpen(true) : setOpen(false);
 		visibleTitle ? setVisibleTitle(false) : setVisibleTitle(true);
 	};
+
+	const array = [
+		{ link: "/", titre: "Accueil" },
+		{ link: "/bibliotheque-objets/mon-compte", titre: "Mon profil" },
+		{
+			link: "/bibliotheque-objets/mon-compte/mon-historique",
+			titre: "Mes emprunts",
+		},
+		{ link: "/bibliotheque-objets", titre: "Les objets" },
+	];
 
 	return (
 		<AppBar className={classes.primary}>
@@ -143,59 +154,9 @@ function Navbar() {
 						<img src={logo} alt="logo-fourmi-kikassa" width="12%" />
 					</Link>
 					<Box display="flex" flexDirection="row" justifyContent="flex-end">
-						<Button
-							my={1}
-							mx={0.5}
-							p={1}
-							className={`${classes.mainBgColor} ${classes.shadowButton}`}
-							variant="contained"
-						>
-							<Link
-								to="/bibliotheque-objets/mon-compte"
-								className={classes.linkText}
-							>
-								Mon profil
-							</Link>
-						</Button>
-						<Button
-							my={1}
-							mx={0.5}
-							p={1}
-							variant="contained"
-							className={`${classes.mainBgColor} ${classes.shadowButton}`}
-						>
-							<Link
-								to="/bibliotheque-objets/mon-compte/mon-historique"
-								className={classes.linkText}
-							>
-								Mes emprunts
-							</Link>
-						</Button>
-						<Button
-							my={1}
-							mx={0.5}
-							p={1}
-							variant="contained"
-							className={`${classes.mainBgColor} ${classes.shadowButton}`}
-						>
-							<Link
-								to="/bibliotheque-objets/mon-compte/mon-historique"
-								className={classes.linkText}
-							>
-								Mes emprunts
-							</Link>
-						</Button>
-						<Button
-							my={1}
-							mx={0.5}
-							p={1}
-							variant="contained"
-							className={`${classes.mainBgColor} ${classes.shadowButton}`}
-						>
-							<Link to="/bibliotheque-objets" className={classes.linkText}>
-								Les objets
-							</Link>
-						</Button>
+						{array.map((arr) => (
+							<BigButton link={arr.link} titre={arr.titre} />
+						))}
 					</Box>
 				</Toolbar>
 			)}

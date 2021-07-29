@@ -33,7 +33,7 @@ function Footer() {
 						<Grid
 							item
 							xs={12}
-							md={4}
+							sm={4}
 							container
 							direction="column"
 							alignItems="center"
@@ -48,7 +48,7 @@ function Footer() {
 						{/* <Grid item md={1}>
 							<Divider orientation="vertical" flexItem />
 						</Grid> */}
-						<Grid item xs={12} md={4} className={classes.marginAuto}>
+						<Grid item xs={12} sm={4} className={classes.marginAuto}>
 							<Typography component="div">
 								<Box textAlign="center">
 									<Link
@@ -74,7 +74,7 @@ function Footer() {
 						<Grid
 							item
 							xs={12}
-							md={4}
+							sm={4}
 							container
 							direction="column"
 							alignItems="center"

@@ -11,8 +11,10 @@ import useCapitalize from "../utils/useCapitalize";
 
 const useStyles = makeStyles((theme) => ({
 	list: {
-		maxWidth: 345,
-		maxHeight: 450,
+		// maxWidth: 345,
+		// maxHeight: 450,
+		maxWidth: "90%",
+		maxHeight: "500px",
 		marginBottom: "20px",
 		margin: "auto",
 	},
@@ -22,13 +24,27 @@ const useStyles = makeStyles((theme) => ({
 		width: "100%",
 		flexShrink: 0,
 		flexGrow: 1,
+
+		// backgroundColor: `${theme.palette.secondary.main}20`,
+	},
+
+	featuredCarousel: {
 		width: "calc(100% / 4)",
 	},
+
 	catalogueVert: {
 		border: `6px solid ${theme.palette.secondary.main}`,
 	},
 	catalogueBleu: {
 		border: `6px solid ${theme.palette.primary.main}`,
+	},
+	image: {
+		borderRadius: "10px",
+		objectFit: "contain",
+	},
+
+	padding: {
+		paddingBottom: 0,
 	},
 }));
 
@@ -38,28 +54,33 @@ export default function ObjectCard({
 	photo,
 	catalogue,
 	list,
+	mobile,
 }) {
 	const classes = useStyles();
 	const capName = useCapitalize(denomination);
-
+	const classList = list ? classes.list : classes.featured;
+	const colorCatalog =
+		catalogue === "Bleue" ? classes.catalogueBleu : classes.catalogueVert;
+	const carousel = mobile || list ? "" : classes.featuredCarousel;
 	return (
-		<Card className={list ? classes.list : classes.featured}>
+		<Card className={`${classList} ${carousel}`}>
 			<CardActionArea>
 				<CardMedia
-					className={
-						catalogue === "Bleue"
-							? classes.catalogueBleu
-							: classes.catalogueVert
-					}
+					className={`${colorCatalog} ${classes.image}`}
 					component="img"
 					alt="Objet"
 					height={list ? "250" : "150"}
 					image={photo}
 				/>
-				<CardContent>
-					<Typography gutterBottom variant="h5" component="h2">
-						{capName}
-					</Typography>
+				<CardContent className={classes.padding}>
+					{list ? (
+						<Typography gutterBottom variant="h5" component="h2">
+							{capName}
+						</Typography>
+					) : (
+						<Typography component="p">{capName}</Typography>
+					)}
+
 					{description && (
 						<Typography variant="body2" color="textSecondary" component="p">
 							{description}
@@ -67,11 +88,13 @@ export default function ObjectCard({
 					)}
 				</CardContent>
 			</CardActionArea>
-			<CardActions>
-				<Button variant="contained" size="small" color="primary">
-					Voir l'objet
-				</Button>
-			</CardActions>
+			{!mobile && (
+				<CardActions>
+					<Button variant="contained" size="small" color="primary">
+						Voir l'objet
+					</Button>
+				</CardActions>
+			)}
 		</Card>
 	);
 }

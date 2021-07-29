@@ -6,9 +6,18 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles({
-	container: { width: "100%" },
-	wrapper: { width: "100%", position: "relative" },
-	contentWrapper: { overflow: "hidden", width: "100%", height: "100%" },
+	container: {
+		width: "100%",
+	},
+	wrapper: {
+		width: "100%",
+		position: "relative",
+	},
+	contentWrapper: {
+		overflow: "hidden",
+		width: "100%",
+		height: "100%",
+	},
 	content: {
 		transition: "all 250ms linear",
 		display: "flex",
@@ -30,8 +39,7 @@ const useStyles = makeStyles({
 	},
 });
 
-const Carousel = (props) => {
-	const { children, infiniteLoop } = props;
+const Carousel = ({ children, infiniteLoop }) => {
 	const [touchPosition, setTouchPosition] = useState(null);
 	const [length, setLength] = useState(children.length);
 	const [currentIndex, setCurrentIndex] = useState(infiniteLoop ? 4 : 0);

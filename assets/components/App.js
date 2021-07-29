@@ -6,6 +6,7 @@ import DetailsObject from "./pages/DetailsObject";
 import Order from "./pages/Order";
 import Layout from "./layout/Layout";
 import Homepage from "./pages/Homepage";
+import Fonctionnement from "./pages/Fonctionnement";
 import Borrowings from "./users/Borrowings";
 import Account from "./users/Account";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -46,7 +47,7 @@ const theme = createMuiTheme({
 	typography: {
 		fontFamily: "Raleway, Arial",
 	},
-	
+
 	overrides: {
 		MuiCssBaseline: {
 			"@global": {
@@ -73,6 +74,10 @@ function App() {
 				<Route
 					path="/bibliotheque-objets/objet/:id"
 					component={DetailsObject}
+				/>
+				<Route
+					path="/bibliotheque-objets/comment-ca-marche"
+					component={Fonctionnement}
 				/>
 				<Route path="/bibliotheque-objets" component={Catalogue} />
 				<Route exact path="/" component={Homepage} />
