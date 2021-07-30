@@ -15,7 +15,12 @@ function DetailsObject(props) {
 		<Box mt={15}>
 			<Box p={3}>
 				{object.map((obj) => (
-					<Details key={obj.id} name={obj.denomination} photos={obj.photos} />
+					<Details
+						key={obj.id}
+						slug={obj.slug}
+						name={obj.denomination}
+						photos={obj.photos}
+					/>
 				))}
 			</Box>
 		</Box>
