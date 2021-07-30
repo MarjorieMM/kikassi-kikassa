@@ -26,7 +26,6 @@ export default function Homepage() {
 	return (
 		<Box mt={15}>
 			<Container>
-				<h1>Bienvenue</h1>
 				{/* <ListSubheader>Subheader</ListSubheader> */}
 				<Grid container>
 					<Grid item xs={12} md={6}>

@@ -154,8 +154,8 @@ function Navbar() {
 						<img src={logo} alt="logo-fourmi-kikassa" width="12%" />
 					</Link>
 					<Box display="flex" flexDirection="row" justifyContent="flex-end">
-						{array.map((arr) => (
-							<BigButton link={arr.link} titre={arr.titre} />
+						{array.map((arr, i) => (
+							<BigButton key={i} link={arr.link} titre={arr.titre} />
 						))}
 					</Box>
 				</Toolbar>

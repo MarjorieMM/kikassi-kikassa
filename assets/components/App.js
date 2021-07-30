@@ -72,7 +72,7 @@ function App() {
 					component={Order}
 				/>
 				<Route
-					path="/bibliotheque-objets/objet/:id"
+					path="/bibliotheque-objets/objet/details-objet/:slug"
 					component={DetailsObject}
 				/>
 				<Route

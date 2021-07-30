@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	featuredCarousel: {
-		width: "calc(100% / 4)",
+		width: (show) => `calc(100% / ${show})`,
 	},
 
 	catalogueVert: {
@@ -46,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
 	padding: {
 		paddingBottom: 0,
 	},
+	center: {
+		justifyContent: "center",
+	},
 }));
 
 export default function ObjectCard({
@@ -55,13 +59,16 @@ export default function ObjectCard({
 	catalogue,
 	list,
 	mobile,
+	slug,
+	show,
 }) {
-	const classes = useStyles();
+	const classes = useStyles(show);
 	const capName = useCapitalize(denomination);
 	const classList = list ? classes.list : classes.featured;
 	const colorCatalog =
 		catalogue === "Bleue" ? classes.catalogueBleu : classes.catalogueVert;
 	const carousel = mobile || list ? "" : classes.featuredCarousel;
+
 	return (
 		<Card className={`${classList} ${carousel}`}>
 			<CardActionArea>
@@ -89,9 +96,11 @@ export default function ObjectCard({
 				</CardContent>
 			</CardActionArea>
 			{!mobile && (
-				<CardActions>
+				<CardActions className={classes.center}>
 					<Button variant="contained" size="small" color="primary">
-						Voir l'objet
+						<Link to={`/bibliotheque-objets/objet/details-objet/${slug}`}>
+							Voir l'objet
+						</Link>
 					</Button>
 				</CardActions>
 			)}

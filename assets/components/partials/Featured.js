@@ -9,6 +9,7 @@ export default function Featured() {
 
 	const vitrine = [];
 	objects.map((obj) => obj.vitrine && vitrine.push(obj));
+	const numShown = 4;
 
 	if (error) {
 		return <div>Erreur: {error.message}</div>;
@@ -17,9 +18,10 @@ export default function Featured() {
 	} else {
 		return (
 			<div>
-				<Carousel infiniteLoop={true}>
+				<Carousel infiniteLoop={true} show={numShown}>
 					{vitrine.map((object) => (
 						<ObjectCard
+							show={numShown}
 							list={false}
 							key={object.id}
 							denomination={object.denomination}

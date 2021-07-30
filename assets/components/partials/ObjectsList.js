@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import useFetch from "../utils/useFetch";
 import ObjectCard from "./ObjectCard";
+import ObjectsTabs from "./ObjectsTabs";
 
 export function ObjectsList() {
 	const { data: objects, error, isLoaded } = useFetch("/api/objets");
@@ -20,6 +21,7 @@ export function ObjectsList() {
 	} else {
 		return (
 			<Grid container>
+				{/* <ObjectsTabs val={objects} /> */}
 				{objects.map((object) => (
 					<Grid item xs={12} sm={6} md={4} key={object.id}>
 						<ObjectCard
@@ -33,6 +35,7 @@ export function ObjectsList() {
 									? `photos/${object.photos[0].lien}`
 									: "photos/logos/kikassa-default.png"
 							}
+							slug={object.slug}
 							// souscategories={categories.sousCategories}
 						/>
 					</Grid>
