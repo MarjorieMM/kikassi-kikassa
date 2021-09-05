@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ShowProductsController extends AbstractController
 {
     /**
-     * @Route("/{reactRouting}", name="index", priority="-1", requirements={"reactRouting"="^(?!admin).+"}, defaults={"reactRouting": null})
+     * @Route("/{reactRouting}", name="index", priority="-1", requirements={"reactRouting"="^(?!admin)(?!api).+"}, defaults={"reactRouting": null})
      */
 
     public function index(ObjetRepository $repo, AdherentRepository $adhRepo): Response
