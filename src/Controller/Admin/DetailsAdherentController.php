@@ -312,6 +312,7 @@ class DetailsAdherentController extends AbstractController
         );
     }
 
+
     #[Route('/admin/details/adherent/bon_biblio/{slug}', name: 'admin_adherents_biblio_pdf')]
     public function biblioPdf(Adherent $adherent, Pdf $knpSnappyPdf): Response
     {
