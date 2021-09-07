@@ -25,7 +25,7 @@ class SuperAdmin implements UserInterface
      * @ORM\Column(type="integer")
      */
 
-   #[Groups(['person'])]
+    #[Groups(['person'])]
     private $id;
 
     /**
@@ -36,7 +36,7 @@ class SuperAdmin implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Assert\NotBlank(message:"Veuillez entrer un nom")]
+    #[Assert\NotBlank(message: "Veuillez entrer un nom")]
     #[Assert\Length(
         min: 2,
         max: 30,
@@ -44,13 +44,13 @@ class SuperAdmin implements UserInterface
         maxMessage: 'Le nom doit faire {{ limit }} caractères maximum',
     )]
 
-   #[Groups(['person'])]
+    #[Groups(['person'])]
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Assert\NotBlank(message:"Veuillez entrer un prénom")]
+    #[Assert\NotBlank(message: "Veuillez entrer un prénom")]
     #[Assert\Length(
         min: 2,
         max: 30,
@@ -58,24 +58,24 @@ class SuperAdmin implements UserInterface
         maxMessage: 'Le prénom doit faire {{ limit }} caractères maximum',
     )]
 
-   #[Groups(['person'])]
+    #[Groups(['person'])]
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Assert\NotBlank(message:"Veuillez entrer une adresse email")]
+    #[Assert\NotBlank(message: "Veuillez entrer une adresse email")]
     #[Assert\Email(
         message: 'Veuillez entrer un email valide',
     )]
 
-   #[Groups(['person'])]
+    #[Groups(['person'])]
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Assert\NotBlank(message:"Veuillez entrer un mot de passe de 8 caractères au moins")]
+    #[Assert\NotBlank(message: "Veuillez entrer un mot de passe de 8 caractères au moins")]
 
     private $mot_de_passe;
 
@@ -83,7 +83,7 @@ class SuperAdmin implements UserInterface
      * @ORM\Column(type="date")
      */
 
-   #[Groups(['person'])]
+    #[Groups(['person'])]
     private $date_creation;
 
     /**
@@ -91,7 +91,7 @@ class SuperAdmin implements UserInterface
      */
     private $emprunts;
 
-        /**
+    /**
      *
      * @ORM\PrePersist
      * @ORM\PreUpdate
@@ -221,6 +221,13 @@ class SuperAdmin implements UserInterface
     public function getUsername()
     {
     }
+
+    // new to symfony 5.3, should remove getusername but get erroes when I do so
+    public function getUserIdentifier()
+    {
+        return $this->email;
+    }
+
 
     public function getRoles(): array
     {

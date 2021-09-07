@@ -102,10 +102,15 @@ class ObjetsListController extends AbstractController
             ]);
         }
         // Je récupère l'adhérent sélectionné:
-        $adherent = $adherentRepository->findOneById(
-            $request->request->get('adherent')
-        );
-        $objet->setAdherent($adherent);
+        if ($request->request->get('adherent') != "") {
+            $adherent = $adherentRepository->findOneById(
+                $request->request->get('adherent')
+            );
+            $objet->setAdherent($adherent);
+        }
+
+
+
         ///////////////////////
         //Partie affichage des catégories et sous-catégories :
         $categories = $catRepository->findAll();
