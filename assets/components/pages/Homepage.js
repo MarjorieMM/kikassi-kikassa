@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Featured from "../partials/Featured";
 import Connexion from "../partials/Connexion";
 import Box from "@material-ui/core/Box";
 import { useMediaQuery } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import { makeStyles } from "@material-ui/core/styles";
 import BigButton from "../partials/BigButton";
 import FeaturedMobile from "../partials/FeaturedMobile";
@@ -21,12 +20,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Homepage() {
+	const [token, setToken] = useState();
 	const isMobile = useMediaQuery((theme) => theme.breakpoints.down("xs"));
 	const classes = useStyles();
 	return (
 		<Box mt={15}>
 			<Container>
-				{/* <ListSubheader>Subheader</ListSubheader> */}
 				<Grid container>
 					<Grid item xs={12} md={6}>
 						<Box my={1} mx={6}>
@@ -35,7 +34,7 @@ export default function Homepage() {
 					</Grid>
 					<Grid item xs={12} md={6}>
 						<Box my={1} mt={6} mb={8}>
-							<Connexion />
+							{!token ? <Connexion setToken={setToken} /> : ""}
 						</Box>
 					</Grid>
 				</Grid>

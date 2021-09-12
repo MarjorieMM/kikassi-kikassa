@@ -33,10 +33,11 @@ class ObjetRepository extends ServiceEntityRepository
 
     public function findByText($value)
     {
+        $pattern = strtolower($value);
         return $this->createQueryBuilder('o')
-            ->where('o.denomination LIKE :val')
-            ->orWhere('o.marque LIKE :val')
-            ->setParameter('val', $value . '%')
+            ->where('LOWER(o.denomination) LIKE :val')
+            ->orWhere('LOWER(o.marque) LIKE :val')
+            ->setParameter('val', $pattern . '%')
             ->getQuery()
             ->getResult();
     }

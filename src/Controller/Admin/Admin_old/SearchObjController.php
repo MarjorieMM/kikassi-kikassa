@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\Admin_old;;
 
 use App\Entity\Objet;
 use App\Repository\ObjetRepository;

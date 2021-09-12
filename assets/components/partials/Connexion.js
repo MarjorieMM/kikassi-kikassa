@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -9,6 +9,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
+import useLogin from "../utils/useLogin";
 
 const useStyles = makeStyles((theme) => ({
 	margin: {
@@ -25,7 +26,29 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function Connexion() {
+function Connexion({ setToken }) {
+	const [email, setEmail] = useState();
+	const [password, setPassword] = useState();
+	const {
+		data: adherent,
+		error,
+		isLoaded,
+	} = useLogin("/api/adherents", {
+		email,
+		password,
+	});
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		console.log(email, password);
+		await fetch("/api/adhesion_bibliotheques", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ email, password }),
+		}).then((data) => console.log(data.json()));
+	};
 	const classes = useStyles();
 	return (
 		<Box fontWeight="bold">
@@ -39,7 +62,7 @@ function Connexion() {
 					Connectez-vous à votre compte
 					<br /> Kikassi Kikassa
 				</Typography>
-				<form noValidate noValidate autoComplete="off">
+				<form onSubmit={handleSubmit} noValidate autoComplete="off">
 					<TextField
 						className={classes.margin}
 						required
@@ -47,6 +70,7 @@ function Connexion() {
 						label="Votre addresse email"
 						variant="outlined"
 						fullWidth
+						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<TextField
 						required
@@ -57,6 +81,7 @@ function Connexion() {
 						helperText={<Link to="/">Mot de passe oublié</Link>}
 						variant="outlined"
 						fullWidth
+						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<Box textAlign="center">
 						<Button
@@ -64,6 +89,7 @@ function Connexion() {
 							variant="contained"
 							size="large"
 							color="secondary"
+							type="submit"
 						>
 							Valider
 						</Button>

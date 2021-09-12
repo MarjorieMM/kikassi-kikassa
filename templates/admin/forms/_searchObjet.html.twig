@@ -15,7 +15,7 @@
 				{% endfor %}
 			</td>
 			<td class="text-center align-middle">
-				<input type="radio" name="selectedObj" data-search-target="selectedObj" data-objet-id={{objet.id}} data-action='click->search#selectObj'>
+				<input type="radio" name="selectedObj" data-search-target="selectedObj" data-objet-id={{objet.id}} data-objet-denomination={{objet.denomination}} data-objet-marque={{objet.marque}} data-objet-slug={{objet.slug}} data-action='click->search#selectObj'>
 			</td>
 		</tr>
 	{% endfor %}

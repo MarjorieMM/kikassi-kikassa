@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AdhesionBibliothequeRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -13,6 +14,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass=AdhesionBibliothequeRepository::class)
  * @ORM\HasLifecycleCallbacks
  */
+
+#[ApiResource(
+    normalizationContext: ['groups' => ['person']],
+)]
 
 #[UniqueEntity('email', message: "L'adresse email existe déjà dans la base de données")]
 class AdhesionBibliotheque implements UserInterface
@@ -239,7 +244,7 @@ class AdhesionBibliotheque implements UserInterface
     {
     }
 
-    // new to symfony 5.3, should remove getusername but get erroes when I do so
+    // new to symfony 5.3, should remove getusername but get errors when I do so
     public function getUserIdentifier()
     {
         return $this->email;

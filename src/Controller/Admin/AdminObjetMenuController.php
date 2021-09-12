@@ -25,7 +25,7 @@ class AdminObjetMenuController extends AbstractController
                 [
                     'text' => 'MODIFIER UN OBJET',
                     'icon' => 'pen',
-                    'link' => 'test',
+                    'link' => 'admin_objets_select',
                 ],
                 [
                     'text' => 'AJOUTER / MODIFIER UN CATALOGUE',

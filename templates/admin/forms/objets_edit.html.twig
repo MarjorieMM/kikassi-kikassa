@@ -1,0 +1,137 @@
+{% extends './admin/base-admin.html.twig' %}
+{% import './admin/_macros.html.twig' as macros %}
+
+{% set envoi = "<div>" ~ form_widget(form.save) ~ "</div>" %}
+{% set continue = "" %}
+{% set colorSection = 'objets' %}
+{% set pageUrl = 'admin_objets_edit' %}
+
+
+{% set proprietaire = objet.adherent ? objet.adherent.nom|capitalize ~ " " ~ objet.adherent.prenom|capitalize : "Kikassi Kikassa" %}
+
+
+{% block title %}Objets
+{% endblock %}
+
+{% block body %}
+	<body class={{color}}>
+		<div class="main-title font-raleway container">
+			<h1 class="text-center font-raleway mb-5">Edition de l'Objet :
+				{{objet.denomination}}
+			</h1>
+			<div class="container">
+				{% include './admin/error_mess.html.twig' %}</div>
+			<div class="row">
+				<div class="col">
+					<div class="form-group proprio-select">
+						<select name="proprio" class="proprio form-control select-height" required data-action="change->search#toggleProprio">
+							<option value="">L'objet appartient à</option>
+							<option value="association">L'Association</option>
+							<option value="adherent">Un adhérent</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="search-module d-none" data-search-target="proprio">
+				{% include '/admin/forms/adherent_search.html.twig' %}</div>
+			{{ form_start(form, {'attr': {'autocomplete' : 'off', 'novalidate' : true, 'class' : submitted ? submitted : "" ,  'enctype':'multipart/form-data' }})}}
+			<input type="hidden" name='adherent' data-search-target='adherent'/>
+			<div class="row">
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						{{ form_label(form.denomination) }}
+						{{ form_widget(form.denomination ,  {'attr': {'class': 'form-control select-height'}}) }}
+					</div>
+				</div>
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						{{ form_label(form.marque) }}
+						{{ form_widget(form.marque, {'attr': {'class': 'form-control select-height'}}) }}
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="form-group">
+						{{ form_label(form.description) }}
+						{{ form_widget(form.description, {'attr': {'class': 'form-control p-4'}}) }}
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 col-lg-6 d-flex pb-3 align-items-center">
+					{{ form_label(form.photos, 'Photos', { 'label_attr': {'class': 'mb-0 mx-3'}}) }}
+					{{ form_widget(form.photos, {'attr': {'class': 'form-control-file'}}) }}
+				</div>
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						{{ form_label(form.lieu) }}
+						{{ form_widget(form.lieu, {'attr': {'class': 'form-control select-height'}}) }}
+					</div>
+				</div>
+			</div>
+			<div class="row" {{stimulus_controller('categories', {url: path( pageUrl, {slug: objet.slug} )} )}}>
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						<input class="form-control select-height p-4" name='cat' list="catlistOptions" data-action='change->categories#selCategorie' placeholder="Choisir ou entrer une nouvelle Catégorie">
+						<datalist id="catlistOptions">
+							{% for categorie in categories %}
+								<option value="{{categorie.nomcategorie}}"></option>
+							{% endfor %}
+						</datalist>
+					</div>
+				</div>
+				{% include '/admin/forms/_displaySsCat.html.twig' %}
+				<input type='hidden' data-categories-target='hiddenSsCat' name="sscat">
+			</div>
+			<div class="row">
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						{{ form_label(form.observation) }}
+						{{ form_widget(form.observation, {'attr': {'class': 'form-control select-height'}}) }}
+					</div>
+				</div>
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						{{ form_label(form.catalogue) }}
+						{{ form_widget(form.catalogue, {'attr': {'class': 'form-control select-height'}}) }}
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						{{ form_label(form.valeur_achat) }}
+						{{ form_widget(form.valeur_achat, {'attr': {'class': 'form-control select-height'}}) }}
+					</div>
+				</div>
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						{{ form_label(form.coef_usure) }}
+						{{ form_widget(form.coef_usure, {'attr': {'class': 'form-control select-height'}}) }}
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						{{ form_label(form.pourcent_calcul) }}
+						{{ form_widget(form.pourcent_calcul, {'attr': {'class': 'form-control select-height'}}) }}
+					</div>
+				</div>
+				<div class="col-12 col-lg-6">
+					<div class="form-group">
+						{{ form_label(form.vitrine) }}
+						{{ form_widget(form.vitrine, {'attr': {'class': 'form-control select-height'}}) }}
+					</div>
+
+				</div>
+			</div>
+			<div data-controller="hide-arrows">
+				{{macros.footer_color(section, return_path, envoi, continue)}}
+			</div>
+		</div>
+		{{ form_end(form)}}
+	</body>
+{% endblock %}
+{% block footer %}{% endblock %}

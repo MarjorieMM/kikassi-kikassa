@@ -5,6 +5,9 @@ export default class extends Controller {
 	static values = {
 		url: String,
 		objetId: Number,
+		objetDenomination: String,
+		objetMarque: String,
+		objetSlug: String,
 		adherentId: Number,
 		adherentNom: String,
 		adherentPrenom: String,
@@ -19,6 +22,7 @@ export default class extends Controller {
 		"adherentAdmin",
 		"adhResult",
 		"objResult",
+		"link",
 		"btn",
 		"adminForm",
 		"adminStatus",
@@ -82,7 +86,7 @@ export default class extends Controller {
 	selectAdh(event) {
 		const adherent = event.currentTarget;
 		const adherents = this.selectedAdhTargets;
-		const selAdherentId = event.currentTarget.dataset.adherentId;
+		const selAdherentId = adherent.dataset.adherentId;
 		if (this.hasAdherentTarget) {
 			this.adherentTarget.value = selAdherentId;
 		}
@@ -108,8 +112,13 @@ export default class extends Controller {
 	selectObj(event) {
 		const objet = event.currentTarget;
 		const objets = this.selectedObjTargets;
-		const selObjetId = event.currentTarget.dataset.objetId;
+		const selObjetId = objet.dataset.objetId;
 		this.objetTarget.value = selObjetId;
 		this.highlight(objet, objets);
+		if (this.hasBtnTarget) {
+			this.linkTarget.setAttribute("href", `edit/${objet.dataset.objetSlug}`);
+			this.btnTarget.classList.remove("d-none");
+			this.btnTarget.textContent = `Modifier les infos de ${objet.dataset.objetDenomination} ${objet.dataset.objetMarque}`;
+		}
 	}
 }

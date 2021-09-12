@@ -40,11 +40,8 @@ class ObjetsListController extends AbstractController
     }
     #[Route('/admin/details/objet/{slug}', name: 'admin_details_objet')]
     public function showDetails(
-        $slug,
-        ObjetRepository $objetRepository,
         Objet $objet
     ): Response {
-        // $objet = $objetRepository->findOneBySlug($slug);
 
         return $this->render('admin/pages_details/details_objet.html.twig', [
             'controller_name' => 'DetailsObjetController',
@@ -220,6 +217,73 @@ class ObjetsListController extends AbstractController
             'searchCat' => $searchCat
         ]);
     }
+
+
+    #[Route('/admin/objets/selection', name: 'admin_objets_select')]
+
+    public function selectObjet(Request $request,  ObjetRepository $objetRepository): Response
+    {
+
+        $searchTerm = $request->query->get('obj');
+        $objets = $objetRepository->findByText(
+            $searchTerm
+        );
+
+        if ($request->query->get('previewobj')) {
+            return $this->render('admin/forms/_searchObjet.html.twig', [
+                'objets' => $objets
+            ]);
+        }
+
+
+        return $this->render('admin/forms/objets_select.html.twig', [
+            'controller_name' => 'DetailsObjetController',
+            'arrow' => true,
+            'return_path' => 'menu-objet',
+            'section' => 'section-objets',
+            'color' => 'objets-color',
+            'searchTerm' => $searchTerm,
+        ]);
+    }
+
+    #[Route('/admin/objets/edit/{slug}', name: 'admin_objets_edit')]
+
+    public function editObjet(
+        AdherentRepository $adherentRepository,
+        SousCategorieRepository $ssCatRepository,
+        CategorieRepository $catRepository,
+        Objet $objet,
+        Request $request,
+        EntityManagerInterface $manager
+    ): Response {
+        $form = $this->createForm(ObjetFormType::class, $objet);
+        $form->handleRequest($request);
+
+        $ssCategorie = $objet->getSousCategorie();
+
+        $submitted = $form->isSubmitted() ? 'was-validated' : '';
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($objet);
+            $manager->flush();
+
+            return $this->redirectToRoute('admin_objets_details', [
+                'slug' => $objet->getSlug(),
+            ]);
+        }
+
+        return $this->render('admin/forms/objets_edit.html.twig', [
+            'controller_name' => 'DetailsObjetController',
+            'objet' => $objet,
+            'arrow' => true,
+            'form' => $form->createView(),
+            'submitted' => $submitted,
+            'return_path' => 'menu-objet',
+            'section' => 'section-objets',
+            'color' => 'objets-color',
+        ]);
+    }
+
 
     // #[Route('/admin/objets/new/cat', name: 'admin_objets_cat')]
 
